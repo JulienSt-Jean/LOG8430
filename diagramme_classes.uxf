@@ -204,12 +204,12 @@ Responsibilities
     <id>Relation</id>
     <coordinates>
       <x>165</x>
-      <y>270</y>
-      <w>195</w>
-      <h>15</h>
+      <y>265</y>
+      <w>200</w>
+      <h>20</h>
     </coordinates>
-    <panel_attributes>lt=&lt;-&gt;</panel_attributes>
-    <additional_attributes>10.0;10.0;370.0;10.0</additional_attributes>
+    <panel_attributes/>
+    <additional_attributes>10.0;20.0;380.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -320,7 +320,7 @@ Responsibilities
       <w>15</w>
       <h>70</h>
     </coordinates>
-    <panel_attributes>lt=&lt;-
+    <panel_attributes>
 m1=1
 m2=1
 
