@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?><diagram program="umlet" version="13.3">
+  <zoom_level>4</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>128</x>
+      <y>240</y>
+      <w>148</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>RingAccountSummaryFragment
+Package::cx.ring.account
+--
+-TAG:String
+-FRAGMENT_DIALOG_REVOCATION: String
+--
++onConfirmRevocation(String deviceId)
++deviceRevocationEnded(String device, int status)
++onDeviceRevocationAsked(String deviceId)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>120</x>
+      <y>152</y>
+      <w>172</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>ConfirmRevocationDialog
+Package::cx.ring.account
+--
++&lt;&lt;interface&gt;&gt; ConfirmeRevocationListener
++onConfirmRevocation(String deviceId, String password)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>200</x>
+      <y>180</y>
+      <w>12</w>
+      <h>68</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>420</x>
+      <y>248</y>
+      <w>116</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>AccountEditionActivity
+Package::cx.ring.account
+--
++ACCOUNT_ID_KEY: String
++TAG: String
+--
+Responsibilities
++createDeleteDialog(): AlertDialog
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>476</x>
+      <y>196</y>
+      <w>28</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>50.0;10.0;10.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>492</x>
+      <y>180</y>
+      <w>116</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;AccountEditionView&gt;&gt;
+Package::cx.ring.account
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>308</x>
+      <y>300</y>
+      <w>84</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>RegisterNameDialog
+Package::cr.ring.account
+{handle Blockchain link}
+--
+Responsibilities
++onCreateDialog
+-hanldeBlockchainResult(state: int, name String)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>580</x>
+      <y>248</y>
+      <w>84</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>AccountEditionPresenter
+Package::account
+--
+-TAG: String
+--
+Responsibilities
++removeAccount()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>596</x>
+      <y>196</y>
+      <w>36</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>648</x>
+      <y>488</y>
+      <w>156</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Account
+Package::cx.ring.model
+--
+-accountID: String;
+-mVolatileDetails: AccountConfig;
+-mDetails: AccountConfig;
+-credentiallsDetails: ArrayList&lt;AccountCredentials&gt;
+-devices: HashMap&lt;&gt;();
+-mContact: HashMap&lt;&gt;();
+-mrequest: HashMap&lt;&gt;();
+--
++getters()
++setters()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>648</x>
+      <y>360</y>
+      <w>164</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>AccountService
+Package::cx.ring.services.AccountService
+--
+-mAccountList: List&lt;Account&gt;
+-mCurrentAccount: Account
+--
++addAccount(map:Map) Account
++getCurrentAccount
++exportOnRing(accountId:String, password:String) String
++removeAccount(Account:id)
++setAccountDetails
++setAccountActive
++revokeDevice
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>724</x>
+      <y>428</y>
+      <w>12</w>
+      <h>68</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;150.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>632</x>
+      <y>292</y>
+      <w>24</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>lt=-
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;260.0;40.0;260.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>616</x>
+      <y>292</y>
+      <w>40</w>
+      <h>252</h>
+    </coordinates>
+    <panel_attributes>lt=-
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;610.0;80.0;610.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>532</x>
+      <y>268</y>
+      <w>56</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>120.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>272</x>
+      <y>272</y>
+      <w>84</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>190.0;70.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>352</x>
+      <y>272</y>
+      <w>76</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>170.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>272</x>
+      <y>264</y>
+      <w>156</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>370.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
