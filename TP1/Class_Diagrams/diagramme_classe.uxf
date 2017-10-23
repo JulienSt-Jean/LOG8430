@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="UTF-8"?><diagram program="umlet" version="13.3">
+  <zoom_level>4</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>572</x>
+      <y>236</y>
+      <w>116</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>AccountEditionActivity
+Package::cx.ring.account
+--
++ACCOUNT_ID_KEY: String
++TAG: String
+--
+Responsibilities
++createDeleteDialog(): AlertDialog
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>628</x>
+      <y>184</y>
+      <w>28</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>50.0;10.0;10.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>644</x>
+      <y>168</y>
+      <w>116</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;AccountEditionView&gt;&gt;
+Package::cx.ring.account
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>732</x>
+      <y>236</y>
+      <w>84</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>AccountEditionPresenter
+Package::account
+--
+-TAG: String
+--
+Responsibilities
++removeAccount()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>748</x>
+      <y>184</y>
+      <w>36</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>388</x>
+      <y>628</y>
+      <w>156</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Account
+Package::cx.ring.model
+--
+-accountID: String;
+-mVolatileDetails: AccountConfig;
+-mDetails: AccountConfig;
+-credentiallsDetails: ArrayList&lt;AccountCredentials&gt;
+-devices: HashMap&lt;&gt;();
+-mContact: HashMap&lt;&gt;();
+-mrequest: HashMap&lt;&gt;();
+--
++getters()
++setters()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>544</x>
+      <y>472</y>
+      <w>176</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>AccountService
+Package::cx.ring.services.AccountService
+--
+-mAccountList: List&lt;Account&gt;
+-mCurrentAccount: Account
+--
++addAccount(map:Map) Account
++getCurrentAccount
++exportOnRing(accountId:String, password:String) String
++removeAccount(Account:id)
++setAccountDetails
++setAccountActive
++revokeDevice
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>464</x>
+      <y>540</y>
+      <w>168</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;220.0;10.0;70.0;400.0;70.0;400.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>652</x>
+      <y>280</y>
+      <w>120</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>lt=.&gt;
+uses
+</panel_attributes>
+    <additional_attributes>280.0;10.0;280.0;380.0;10.0;380.0;10.0;480.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>684</x>
+      <y>256</y>
+      <w>56</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>120.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>380</x>
+      <y>0</y>
+      <w>120</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>HomeActivity
+Package::cx.ring.client
+Point d'entrée de l'application
+--
+Responsibilities
++onNavigationSectionSelected()
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>372</x>
+      <y>112</y>
+      <w>136</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>AccountManagementFragement
+Package::cx.ring.fragments
+Fragment de gestion des accounts
+--
+Responsibilities
++launchAccountEditActivity(Account account)
++launchWizardActivity()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>436</x>
+      <y>44</y>
+      <w>40</w>
+      <h>76</h>
+    </coordinates>
+    <panel_attributes>lt=-
+
+instantiate</panel_attributes>
+    <additional_attributes>10.0;170.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>448</x>
+      <y>156</y>
+      <w>132</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>lt=-
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;260.0;310.0;260.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>220</y>
+      <w>124</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>AccountWizard
+Package::cx.ring.client
+activité permettant de créer un compte
+--
+-mPhotoProfile: Bitmap
+-mFullName: String
+-mUserName: String
+-mPassword: String
+-mPin: String
+-mAccountType: String
+-Account: mAccount
+-mCreatedAccountId; String;
+--
+Responsibilities
++createAccount()
++createNewAccount()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>120</x>
+      <y>156</y>
+      <w>316</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>lt=-
+</panel_attributes>
+    <additional_attributes>770.0;10.0;770.0;260.0;50.0;260.0;10.0;260.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>480</x>
+      <y>780</y>
+      <w>84</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>AccountCredentials
+Package::cx.ring.model
+--
+-mUsername: String;
+-mPassword: String;
+-mRealm: String;
+stractOperation()/
+--
+Responsibilities
++ setDetails(ConfigKye key, String value)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>356</x>
+      <y>780</y>
+      <w>108</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>AccountConfig
+Package::cx.ring.model
+--
+-mValue: Map&gt;COnfigKey, String&gt;
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>408</x>
+      <y>704</y>
+      <w>56</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+m1=1
+m2= *
+</panel_attributes>
+    <additional_attributes>120.0;10.0;10.0;190.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>472</x>
+      <y>704</y>
+      <w>60</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;130.0;190.0</additional_attributes>
+  </element>
+  <element>
+    <type>com.baselet.element.old.element.Class</type>
+    <coordinates>
+      <x>96</x>
+      <y>404</y>
+      <w>108</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>RingAccountCreationFragment 
+Package::account</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.baselet.element.old.element.Class</type>
+    <coordinates>
+      <x>108</x>
+      <y>328</y>
+      <w>84</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+RingAccountCreationView
+Package::account
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.baselet.element.old.element.Relation</type>
+    <coordinates>
+      <x>136</x>
+      <y>344</y>
+      <w>20</w>
+      <h>68</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>12;12;12;60</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>244</x>
+      <y>400</y>
+      <w>148</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>BaseFragment&lt;RingAccountCreationPresenter&gt;
+Package::cx.ring.account
+--
++createAccount()
++checkForm()
++handleBlockchainResult()
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>220</x>
+      <y>340</y>
+      <w>152</w>
+      <h>16</h>
+    </coordinates>
+    <panel_attributes>Rootpresenter&lt;RingAccountCreationView&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>288</x>
+      <y>352</y>
+      <w>12</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>324</x>
+      <y>436</y>
+      <w>268</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=.&gt;
+uses
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;40.0;650.0;40.0;650.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>220</x>
+      <y>460</y>
+      <w>164</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>RingAccountViewModel
+Package::cx.ring.services.AccountService
+--
+-mAccount: List&lt;Account&gt;
+-mAccountType:String
+-mCreatedAccountId:String
+-mFullName:String
+-mPassword:String
+-mPhotoProfile
+-mPin:String
+-mUsername:String
+--
++getter
++setter</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>200</x>
+      <y>412</y>
+      <w>52</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>110.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>300</x>
+      <y>436</y>
+      <w>24</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=-
+uses
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>304</x>
+      <y>544</y>
+      <w>140</w>
+      <h>92</h>
+    </coordinates>
+    <panel_attributes>lt=-
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0;330.0;100.0;330.0;210.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>76</x>
+      <y>312</y>
+      <w>40</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>lt=-
+instantiate</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;250.0;50.0;250.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>716</x>
+      <y>488</y>
+      <w>148</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..1
+-mAccountList</panel_attributes>
+    <additional_attributes>350.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>856</x>
+      <y>468</y>
+      <w>68</w>
+      <h>52</h>
+    </coordinates>
+    <panel_attributes>Storage
+{innerclass
+LocalCache
+innerclass}
+
+{innerclass
+Daemon
+innerclass}
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
