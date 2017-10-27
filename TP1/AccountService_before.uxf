@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>310</y>
+      <w>1030</w>
+      <h>1030</h>
+    </coordinates>
+    <panel_attributes>AccountService
+--
+-TAG = AccountService.class.getSimpleName(): String
+-VCARD_CHUNK_SIZE = 1000: int
+/*~mExecutor: ExecutorService*/
+/*~mApplicationExecutor: ExecutorService*/
+/*~mDeviceRuntimeService: DeviceRuntimeService*/
+/*-mCurrentAccount: Account*/
+/*-mAccountList: List&lt;Account&gt;*/
+/*-mCallbackHandler: ConfigurationCallbackHandler*/
+/*-mHasSipAccount: boolean*/
+/*-mHasRingAccount: boolean*/
+--
++AccounsService(): ctor
+/*+getCallbackHandler(): ConfigurationCallbackHandler*/
+/*+hasSipAccount(): boolean*/
+/*+hasRingAccount(): boolean*/
+/*+loadAccountsFromDaemon(final boolean isConnected): void*/
+/*-refreshAccountsCacheFromDaemon(): void*/
+-getAccountByName(final String name): Account
++getNewAccountName(final String prefix): String
++addAccount(final Map map): Account
+/*+getCurrentAccount(): Account*/
+/*+setCurrentAccount(Account currentAccount): void*/
++getAccount(String accountId): Account
+/*+getAccounts(): List&lt;Account&gt;*/
++sendProfile(final String callId, final String accountId): void
+/*+getAccountList(): List&lt;String&gt;*/
+/*+setAccountOrder(final List&lt;String&gt; accountOrder): void*/
++guessAccount(Uri uri): Account
++getAccountDetails(final String accountId): Map&lt;String, String&gt;
++setAccountDetails(final String accountId, final Map map): void
++setAccountActive(final String accountId, final boolean active): void
+/*+setAccountsActive(final boolean active): void*/
+/*+setAccountsVideoEnabled(boolean isEnabled): void*/
++getVolatileAccountDetails(final String accountId): Map&lt;String, String&gt;
++getAccountTemplate(final String accountType): Map&lt;String, String&gt;
++removeAccount(final String accountId): void
++exportOnRing(final String accountId, final String password): String
+/*+getKnownRingDevices(final String accountId): Map&lt;String, String&gt;*/
+/*+revokeDevice(final String accountId, final String password, final String deviceId): void*/
+/*+renameDevice(final String accountId, final String newName): void*/
++setActiveCodecList(final List codecs, final String accountId): void
++getCodecList(final String accountId): List&lt;Codec&gt;
+/*+validateCertificatePath(final String accountID, final String certificatePath, final String privateKeyPath, final String privateKeyPass): Map&lt;String, String&gt;*/
+/*+validateCertificate(final String accountId, final String certificate): Map&lt;String, String&gt;*/
+/*+getCertificateDetailsPath(final String certificatePath): Map&lt;String, String&gt;*/
+/*+getCertificateDetails(final String certificateRaw): Map&lt;String, String&gt;*/
+/*+getTlsSupportedMethods(): List&lt;String&gt;*/
+/*+getCredentials(final String accountId): List&lt;Map&lt;String, String&gt;&gt;*/
+/*+setCredentials(final String accountId, final List creds): void*/
+/*+registerAllAccounts(): void*/
+/*+backupAccounts(final List accountIds, final String toDir, final String password): int*/
+/*+restoreAccounts(final String archivePath, final String password): int*/
+/*+registerName(final Account account, final String password, final String name): void*/
+/*+registerName(final String account, final String password, final String name): void*/
+/*+getTrustRequests(final String accountId): List&lt;Map&lt;String, String&gt;&gt;*/
+/*+acceptTrustRequest(final String accountId, final String from): Boolean*/
+/*+discardTrustRequest(final String accountId, final String from): void*/
+/*+sendTrustRequest(final String accountId, final String to, final Blob message): void*/
+/*+addContact(final String accountId, final String uri): void*/
+/*+removeContact(final String accountId, final String uri, final boolean ban): void*/
+/*+getContacts(final String accountId): List&lt;Map&lt;String, String&gt;&gt;*/
+/*+lookupName(final String account, final String nameserver, final String name): void*/
+/*+lookupAddress(final String account, final String nameserver, final String address): void*/</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1040</x>
+      <y>310</y>
+      <w>690</w>
+      <h>490</h>
+    </coordinates>
+    <panel_attributes>ContactService
+--
+-TAG = ContactService.class.getName(): String
+~mPreferencesService: PreferencesService
+~mDeviceRuntimeService: DeviceRuntimeService
+~mApplicationExecutor: ExecutorService
+-mContactList: Map&lt;Long, CallContact&gt;
+-mContactsRing: Map&lt;String, CallContact&gt;
+-mAccountId: String
+--
++ContactService(): ctor
+#loadContactsFromSystem(boolean loadRingContacts, boolean loadSipContacts): Map&lt;Long, CallContact&gt;
+#findContactByIdFromSystem(Long contactId, String contactKey): CallContact
+#findContactBySipNumberFromSystem(String number): CallContact
+#findContactByNumberFromSystem(String number): CallContact
++loadContactData(CallContact callContact): void
++saveVCardContactData(CallContact contact): void
++loadVCardContactData(CallContact contact): void
++loadContacts(final boolean loadRingContacts, final boolean loadSipContacts, final Account account): void
++addContact(CallContact contact): void
++getContact(Uri uri): CallContact
++setRingContactName(String accountId, Uri uri, String name): boolean
+-getContacts(): Collection&lt;CallContact&gt;
++getContactsNoBanned(): Collection&lt;CallContact&gt;
++getContactsDaemon(): Collection&lt;CallContact&gt;
++findContactById(long id): CallContact
++findContactById(long id, String key): CallContact
++findContactByNumber(String number): CallContact
++findContact(Uri uri): CallContact
++findContact(long contactId, String contactKey, Uri contactNumber): CallContact
++getCredentials(final String accountId): List&lt;Map&lt;String, String&gt;&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>860</x>
+      <y>0</y>
+      <w>360</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>Observable
+--
+-mObservers: List&lt;WeakReference&lt;Observer&gt;&gt;
+-mIsChanged: boolean
+--
++addObserver(Observer observer): void
++setChanged(): void
++clearChanged(): void
++notifyObservers(): void
++notifyObservers(Object argument): void
++removeObserver(Observer observerToRemove): void
++hasChanged(): boolean
++countObservers(): int
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>500</x>
+      <y>190</y>
+      <w>540</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>520.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1060</x>
+      <y>190</y>
+      <w>360</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;340.0;120.0</additional_attributes>
+  </element>
+</diagram>

@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLDeployment</id>
+    <coordinates>
+      <x>60</x>
+      <y>210</y>
+      <w>750</w>
+      <h>530</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;device&gt;&gt; Android Cellphone
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLDeployment</id>
+    <coordinates>
+      <x>110</x>
+      <y>320</y>
+      <w>410</w>
+      <h>360</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;execution environment&gt;&gt; ART
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLDeployment</id>
+    <coordinates>
+      <x>70</x>
+      <y>250</y>
+      <w>700</w>
+      <h>470</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;execution environment&gt;&gt; Android OS
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLDeployment</id>
+    <coordinates>
+      <x>970</x>
+      <y>190</y>
+      <w>230</w>
+      <h>590</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;device&gt;&gt; Other Ring Clients</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>220</x>
+      <y>390</y>
+      <w>170</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>symbol=artifact
+Classes.dex</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>1010</x>
+      <y>340</y>
+      <w>140</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+OpenDHT</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>1010</x>
+      <y>440</y>
+      <w>140</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+PJSIP</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>560</x>
+      <y>380</y>
+      <w>170</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>symbol=artifact
+libring.so</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>1000</x>
+      <y>300</y>
+      <w>160</w>
+      <h>460</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;component&gt;&gt; RingCore</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>1010</x>
+      <y>550</y>
+      <w>140</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+GnuTLS</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>1010</x>
+      <y>660</y>
+      <w>140</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+LIBAV
+FFMPEG</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLDeployment</id>
+    <coordinates>
+      <x>990</x>
+      <y>230</y>
+      <w>190</w>
+      <h>540</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;execution environment&gt;&gt;
+Any supported os</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>570</x>
+      <y>520</y>
+      <w>170</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+RingCore
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>140</x>
+      <y>540</y>
+      <w>140</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+Account</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>320</x>
+      <y>540</y>
+      <w>160</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+AccountService</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>730</x>
+      <y>520</y>
+      <w>290</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Protocol&gt;&gt;
+TLS/TCP/IP
+</panel_attributes>
+    <additional_attributes>10.0;20.0;270.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>730</x>
+      <y>560</y>
+      <w>290</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Protocol&gt;&gt;
+TLS/UDP/IP
+</panel_attributes>
+    <additional_attributes>10.0;20.0;270.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>190</x>
+      <y>450</y>
+      <w>120</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Manifest&gt;&gt;
+lt=&lt;..
+</panel_attributes>
+    <additional_attributes>10.0;90.0;100.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>340</x>
+      <y>450</y>
+      <w>120</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Manifest&gt;&gt;
+lt=&lt;..
+</panel_attributes>
+    <additional_attributes>60.0;90.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>630</x>
+      <y>450</y>
+      <w>100</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Manifest&gt;&gt;
+lt=&lt;..
+</panel_attributes>
+    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
