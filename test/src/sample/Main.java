@@ -14,7 +14,6 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import netscape.javascript.JSObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
@@ -25,8 +24,10 @@ import java.net.URL;
 
 public class Main extends Application {
 
+    private Controller controller;
     @Override
     public void start(Stage primaryStage) throws Exception{
+
 
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("LOG8430 - TP2 : Test JavaFX web engine");
