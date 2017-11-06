@@ -1,12 +1,19 @@
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <name>Music Player</name>
-    </head>
-    <body>
-        <h1>Test Hello World</h1>
-        <p>En cliquant sur le bouton suivant, le compteur s'incrémente de 1 et le message "Hello World" s'affiche dans la console Java</p>
-        <button id="hellobutton">Hello World</button>
-        <p id="counter">0</p>
-    </body>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<frameset rows="5%,85%,10%" noresize>
+    <frame src="header.html"></frame>
+    <frameset cols="20%, 80%">
+        <frame src="leftPanel.html"></frame>
+        <frame src="main.html"></frame>
+    </frameset>
+    <frameset cols="20%, 80%">
+        <frame src="playlistManager"></frame>
+        <frame src="player.html"></frame>
+    </frameset>
+</frameset>
+
+
 </html>

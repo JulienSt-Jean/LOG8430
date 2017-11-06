@@ -108,11 +108,11 @@ public class Main extends Application {
         }
 
         @Override protected double computePrefWidth(double height) {
-            return 750;
+            return 1280;
         }
 
         @Override protected double computePrefHeight(double width) {
-            return 500;
+            return 1024;
         }
 
         public class JavaApplication {
