@@ -47,6 +47,7 @@ public class SpotifyHandler implements ApiWrapper {
 
         JsonObject jsonObject = new JsonParser().parse(response).getAsJsonObject();
         JsonElement trackList = jsonObject.get("tracks").getAsJsonObject().get("items");
+
         return new ArrayList(Arrays.asList(gson.fromJson(trackList, Track[].class)));
     }
 
@@ -164,14 +165,12 @@ public class SpotifyHandler implements ApiWrapper {
             String track = jsonObj.get("name").getAsString();
 
             JsonArray jsonArtists = jsonObj.get("artists").getAsJsonArray();
-            String artists = "";
+            StringBuilder artists = new StringBuilder();
             for(JsonElement jsonArtist : jsonArtists){
-                artists += jsonArtist.getAsJsonObject().get("name").getAsString() + ", ";
+                artists.append(jsonArtist.getAsJsonObject().get("name").getAsString() + ", ");
             }
 
-            artists = artists.substring(0, artists.length() - 2);
-
-            return new Metadata(track, artists, album);
+            return new Metadata(track, artists.toString().substring(0, artists.length() - 2), album);
         }
     }
 
@@ -180,9 +179,11 @@ public class SpotifyHandler implements ApiWrapper {
         @Override
         public Playlist deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
             Gson gson = new Gson();
-            Playlist playList = gson.fromJson(jsonElement, Playlist.class);
+            Playlist playlist = gson.fromJson(jsonElement, Playlist.class);
 
-            return null;
+            playlist.setTrackListUrl(jsonElement.getAsJsonObject().get("tracks").getAsJsonObject().get("href").getAsString());
+
+            return playlist;
         }
     }
 }
