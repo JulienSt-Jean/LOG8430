@@ -12,8 +12,4 @@ import java.util.ArrayList;
 public interface ApiWrapper {
     ArrayList<Track> searchTrack(String searchEntry);
     void readTrack(String trackId);
-
-    class TrackDeserializer{
-
-    }
 }

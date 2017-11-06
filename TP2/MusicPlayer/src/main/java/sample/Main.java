@@ -20,7 +20,10 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Paths;
 
 public class Main extends Application {
 
@@ -28,8 +31,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("sample.fxml"));
+        loader.setController(new Controller());
         primaryStage.setTitle("LOG8430 - TP2 : Test JavaFX web engine");
 
         // Create scene with web browser
@@ -70,7 +73,12 @@ public class Main extends Application {
                     }); // addListener()
 
             // load the web page
-            URL urlHello = getClass().getResource("/view/index.html");
+            URL urlHello = null;
+            try {
+                urlHello = Paths.get("./src/main/java/view/index.html").toUri().toURL();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
             webEngine.load(urlHello.toExternalForm());
             //add the web view to the scene
             getChildren().add(browser);
