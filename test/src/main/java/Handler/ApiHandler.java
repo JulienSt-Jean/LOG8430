@@ -26,9 +26,9 @@ public class ApiHandler {
     public ArrayList<Track> searchTrack(String searchEntry){
         ArrayList<Track> results = new ArrayList<Track>();
 
-        JSONArray beatportResults = beatportHandler.searchTrack(searchEntry);
+        /*JSONArray beatportResults = beatportHandler.searchTrack(searchEntry);
         JSONArray deezerResults = deezerHandler.searchTrack(searchEntry);
-        JSONArray spotifyResults = spotifyHandler.searchTrack(searchEntry);
+        JSONArray spotifyResults = spotifyHandler.searchTrack(searchEntry);*/
 
         /*
         add result from each library to final and unified result

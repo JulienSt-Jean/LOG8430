@@ -96,8 +96,28 @@ public class SpotifyHTTPRequestBuilder{
         return refreshToken;
     }
 
-    public HTTPRequest buildUserProfileRequest(){
+    public HTTPRequest buildUserProfileRequest() {
         HTTPRequest request = new HTTPRequest(buildAPIRequestURL("me"));
+
+        request.putRequestProperty("Authorization", "Bearer " + access_token);
+
+        return request;
+    }
+
+    public HTTPRequest buildSearchTrackRequest(String query, int limit){
+        HTTPRequest request = new HTTPRequest(buildAPIRequestURL("search"));
+
+        request.putURLParameter("q", query.replace(" ", "+"));
+        request.putURLParameter("type", "track");
+        request.putURLParameter("limit", String.valueOf(limit));
+
+        request.putRequestProperty("Authorization", "Bearer " + access_token);
+
+        return request;
+    }
+
+    public HTTPRequest buildGetPlaylistRequest(){
+        HTTPRequest request = new HTTPRequest(buildAPIRequestURL("me/playlists"));
 
         request.putRequestProperty("Authorization", "Bearer " + access_token);
 
@@ -106,5 +126,9 @@ public class SpotifyHTTPRequestBuilder{
 
     private String buildAPIRequestURL(String endpoint){
         return API_URL + API_VERSION + endpoint;
+    }
+
+    public String getAccess_token() {
+        return access_token;
     }
 }

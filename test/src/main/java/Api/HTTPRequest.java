@@ -101,20 +101,25 @@ public class HTTPRequest {
     }
 
     private String fetchResponse(InputStream inputStream) throws IOException {
-        try (BufferedReader br =
-                     new BufferedReader(new InputStreamReader(inputStream))) {
-            StringBuffer sb = new StringBuffer();
-            String line = "";
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
+        if(inputStream != null) {
+            try (BufferedReader br =
+                         new BufferedReader(new InputStreamReader(inputStream))) {
+                StringBuffer sb = new StringBuffer();
+                String line = "";
+                while ((line = br.readLine()) != null) {
+                    sb.append(line);
+                }
+                return sb.toString();
             }
-            return sb.toString();
         }
+
+        return "";
     }
 
     public String getResponse() throws WebApiException {
         try {
-            if (connection.getResponseCode() == HttpURLConnection.HTTP_ACCEPTED) {
+            System.out.println(connection.getResponseCode());
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 return fetchResponse();
             } else {
                 throw new WebApiException(fetchErrorResponse());

@@ -1,5 +1,9 @@
 package Model;
 
+import com.google.gson.*;
+
+import java.lang.reflect.Type;
+
 public class Track {
 
     private Metadata metadata;
@@ -27,6 +31,4 @@ public class Track {
     public void setMetadata(Metadata metadata) {
         this.metadata = metadata;
     }
-
-
 }

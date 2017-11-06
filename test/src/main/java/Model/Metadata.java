@@ -1,30 +1,34 @@
 package Model;
 
+import com.google.gson.*;
+
+import java.lang.reflect.Type;
+
 public class Metadata {
-    private String title;
-    private String artiste;
+    private String name;
+    private String artists;
     private String album;
 
-    public Metadata(String title, String artiste, String album) {
-        this.title = title;
-        this.artiste = artiste;
+    public Metadata(String name, String artists, String album) {
+        this.name = name;
+        this.artists = artists;
         this.album = album;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getArtiste() {
-        return artiste;
+    public String getArtists() {
+        return artists;
     }
 
-    public void setArtiste(String artiste) {
-        this.artiste = artiste;
+    public void setArtists(String artists) {
+        this.artists = artists;
     }
 
     public String getAlbum() {

@@ -1,9 +1,11 @@
 package Api;
 
-import org.json.JSONArray;
+import Model.Track;
+
+import java.util.ArrayList;
 
 public class DeezerHandler implements ApiWrapper {
-    public JSONArray searchTrack(String searchEntry) {
+    public ArrayList<Track> searchTrack(String searchEntry) {
         return null;
     }
 

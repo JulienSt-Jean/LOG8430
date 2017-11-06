@@ -7,29 +7,28 @@ import java.util.ArrayList;
 public class Playlist {
 
     private String id;
-    private String title;
+    private String name;
 
-    @SerializedName("/tracks/href")
     private String trackListUrl;
     private ArrayList<Track> listTrack;
 
     //Constructor
-    public Playlist(String title, ArrayList<Track> listTrack) {
-        this.title = title;
+    public Playlist(String name, ArrayList<Track> listTrack) {
+        this.name = name;
         this.listTrack = listTrack;
     }
-    public Playlist(String title) {
-        this.title = title;
+    public Playlist(String name) {
+        this.name = name;
        
     }
 
     //Getters and Setters
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public ArrayList<Track> getListTrack() {
@@ -55,4 +54,7 @@ public class Playlist {
         }
     }
 
+    public void setTrackListUrl(String trackListUrl) {
+        this.trackListUrl = trackListUrl;
+    }
 }
