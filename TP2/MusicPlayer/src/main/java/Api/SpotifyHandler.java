@@ -1,70 +1,59 @@
 package Api;
 
 import Api.Exceptions.WebApiException;
-import Model.Metadata;
 import Model.Playlist;
 import Model.Track;
-import com.google.gson.*;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class SpotifyHandler implements ApiWrapper {
+    private String userId;
+    private SpotifyHTTPRequestBuilder httpRequestBuilder = new SpotifyHTTPRequestBuilder();
+    private SpotifyResponseParser parser = new SpotifyResponseParser();
+
+    public SpotifyHandler() {
+        JsonElement response = this.executeRequestWithRetryOnExpiredToken(httpRequestBuilder.buildUserProfileRequest());
+        setUserId(response);
+
+
+    }
+
     public static void main(String args[]) {
         SpotifyHandler handler = new SpotifyHandler();
         ArrayList<Playlist> list = handler.getPlayLists();
-        System.out.println(list.toString());
-    }
-
-    private String userId;
-
-    private SpotifyHTTPRequestBuilder httpRequestBuilder = new SpotifyHTTPRequestBuilder();
-
-    private Gson gson;
-
-    private enum ApiError {
-        ACCESS_TOKEN_EXPIRED,
-        UNKNOWN
-    }
-
-    public SpotifyHandler(){
-        String response = this.executeRequestWithRetryOnExpiredToken(httpRequestBuilder.buildUserProfileRequest());
-        setUserId(response);
-
-        GsonBuilder builder = new GsonBuilder()
-                .registerTypeAdapter(Track.class, new TrackDeserializer())
-                .registerTypeAdapter(Metadata.class, new MetadataDeserializer());
-
-        this.gson = builder.create();
+        System.out.println(list.get(0).getTrackListUrl());
     }
 
     public ArrayList<Track> searchTrack(String searchEntry) {
-        String response = this.executeRequestWithRetryOnExpiredToken(httpRequestBuilder.buildSearchTrackRequest(searchEntry, 50));
+        JsonElement response = this.executeRequestWithRetryOnExpiredToken(httpRequestBuilder.buildSearchTrackRequest(searchEntry, 50));
 
-        JsonObject jsonObject = new JsonParser().parse(response).getAsJsonObject();
-        JsonElement trackList = jsonObject.get("tracks").getAsJsonObject().get("items");
-
-        return new ArrayList(Arrays.asList(gson.fromJson(trackList, Track[].class)));
+        return parser.parseTrackList(response.getAsJsonObject().get("tracks"));
     }
 
     public void readTrack(String trackId) {
 
     }
 
-    public ArrayList<Playlist> getPlayLists(){
-        String response = this.executeRequestWithRetryOnExpiredToken(httpRequestBuilder.buildGetPlaylistRequest());
+    public ArrayList<Playlist> getPlayLists() {
+        JsonElement playlistResponse = this.executeRequestWithRetryOnExpiredToken(httpRequestBuilder.buildGetPlaylistRequest());
 
-        JsonObject jsonObject = new JsonParser().parse(response).getAsJsonObject();
-        JsonElement playLists = jsonObject.get("items");
+        ArrayList<Playlist> playlists = parser.parsePlaylists(playlistResponse);
 
-        return new ArrayList(Arrays.asList(gson.fromJson(playLists, Playlist[].class)));
+        for (Playlist playlist : playlists) {
+            JsonElement tracskResponse = this.executeRequestWithRetryOnExpiredToken(httpRequestBuilder.buildRequest(playlist.getTrackListUrl()));
+            playlist.setListTrack(parser.parseTrackList(tracskResponse));
+        }
+
+        return playlists;
     }
 
-    private void generateAccessToken(){
+    private void generateAccessToken() {
         HTTPRequest request = httpRequestBuilder.buildAccessTokenRequest();
 
         try {
@@ -78,7 +67,7 @@ public class SpotifyHandler implements ApiWrapper {
         }
     }
 
-    private void refreshAccessToken(){
+    private void refreshAccessToken() {
         HTTPRequest request = httpRequestBuilder.buildRefreshAccessTokenRequest();
 
         JsonObject jsonResponse = null;
@@ -101,35 +90,34 @@ public class SpotifyHandler implements ApiWrapper {
         }
     }
 
-    private String executeRequestWithRetryOnExpiredToken(HTTPRequest request){
-        while(true) {
+    private JsonElement executeRequestWithRetryOnExpiredToken(HTTPRequest request) {
+        while (true) {
             try {
                 request.makeConnection();
                 System.out.println(request.getResponseCode());
-                return request.getResponse();
+                return new JsonParser().parse(request.getResponse());
             } catch (IOException e) {
                 e.printStackTrace();
                 break;
             } catch (WebApiException e) {
                 ApiError error = testErrorResponse(e.getMessage());
-                if (error == ApiError.ACCESS_TOKEN_EXPIRED){
+                if (error == ApiError.ACCESS_TOKEN_EXPIRED) {
                     refreshAccessToken();
                     request.putRequestProperty("Authorization", "Bearer " + httpRequestBuilder.getAccess_token());
-                }
-                else {
+                } else {
                     e.printStackTrace();
                     break;
                 }
             }
         }
 
-        return "";
+        return new JsonParser().parse("");
     }
 
-    private ApiError testErrorResponse(String response){
+    private ApiError testErrorResponse(String response) {
         JsonObject jsonResponse = new JsonParser().parse(response).getAsJsonObject();
 
-        switch(jsonResponse.get("error").getAsJsonObject().get("message").getAsString()){
+        switch (jsonResponse.get("error").getAsJsonObject().get("message").getAsString()) {
             case "The access token expired":
                 return ApiError.ACCESS_TOKEN_EXPIRED;
             default:
@@ -137,53 +125,13 @@ public class SpotifyHandler implements ApiWrapper {
         }
     }
 
-    private void setUserId(String response){
-        JsonObject jsonResponse = new JsonParser().parse(response).getAsJsonObject();
+    private void setUserId(JsonElement response) {
+        JsonObject jsonResponse = response.getAsJsonObject();
         userId = jsonResponse.get("id").getAsString();
     }
 
-    private class TrackDeserializer implements JsonDeserializer<Track>{
-
-        @Override
-        public Track deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-            Gson gson = new Gson();
-            Track track = gson.fromJson(jsonElement, Track.class);
-
-            track.setMetadata(jsonDeserializationContext.deserialize(jsonElement, Metadata.class));
-
-            return track;
-        }
-    }
-
-    private class MetadataDeserializer implements JsonDeserializer<Metadata>{
-
-        @Override
-        public Metadata deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-            JsonObject jsonObj = jsonElement.getAsJsonObject();
-
-            String album = jsonObj.get("album").getAsJsonObject().get("name").getAsString();
-            String track = jsonObj.get("name").getAsString();
-
-            JsonArray jsonArtists = jsonObj.get("artists").getAsJsonArray();
-            StringBuilder artists = new StringBuilder();
-            for(JsonElement jsonArtist : jsonArtists){
-                artists.append(jsonArtist.getAsJsonObject().get("name").getAsString() + ", ");
-            }
-
-            return new Metadata(track, artists.toString().substring(0, artists.length() - 2), album);
-        }
-    }
-
-    private class PlaylistDeserializer implements JsonDeserializer<Playlist>{
-
-        @Override
-        public Playlist deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-            Gson gson = new Gson();
-            Playlist playlist = gson.fromJson(jsonElement, Playlist.class);
-
-            playlist.setTrackListUrl(jsonElement.getAsJsonObject().get("tracks").getAsJsonObject().get("href").getAsString());
-
-            return playlist;
-        }
+    private enum ApiError {
+        ACCESS_TOKEN_EXPIRED,
+        UNKNOWN
     }
 }

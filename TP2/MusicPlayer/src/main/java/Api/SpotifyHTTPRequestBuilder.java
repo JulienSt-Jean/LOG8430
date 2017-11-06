@@ -124,6 +124,14 @@ public class SpotifyHTTPRequestBuilder{
         return request;
     }
 
+    public HTTPRequest buildRequest(String url){
+        HTTPRequest request = new HTTPRequest(url);
+
+        request.putRequestProperty("Authorization", "Bearer " + access_token);
+
+        return request;
+    }
+
     private String buildAPIRequestURL(String endpoint){
         return API_URL + API_VERSION + endpoint;
     }

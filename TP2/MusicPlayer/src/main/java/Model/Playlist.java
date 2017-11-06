@@ -57,4 +57,8 @@ public class Playlist {
     public void setTrackListUrl(String trackListUrl) {
         this.trackListUrl = trackListUrl;
     }
+
+    public String getTrackListUrl() {
+        return trackListUrl;
+    }
 }
