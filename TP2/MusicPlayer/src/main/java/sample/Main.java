@@ -19,6 +19,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
+import org.w3c.dom.html.HTMLFrameElement;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -49,7 +50,12 @@ public class Main extends Application {
 
     class Browser extends Region {
 
-        public Document currentDOM;
+        // DOM de chaque frame HTML
+        public Document mainDOM;
+        public Document leftPanelDOM;
+        public Document mainPanelDOM;
+        public Document playlistManagerDOM;
+        public Document playerDOM;
 
         final WebView browser = new WebView();
         final WebEngine webEngine = browser.getEngine();
@@ -64,11 +70,38 @@ public class Main extends Application {
                         if (newValue == Worker.State.SUCCEEDED) {
                             System.out.println("finished loading");
 
-                            currentDOM  = webEngine.getDocument();
+                            // On récupère les DOM de chaque frame HTML
+                            mainDOM  = webEngine.getDocument();
+                            HTMLFrameElement frame = (HTMLFrameElement) mainDOM.getElementById("left_panel");
+                            leftPanelDOM = frame.getContentDocument();
+                            frame = (HTMLFrameElement) mainDOM.getElementById("main_panel");
+                            mainPanelDOM = frame.getContentDocument();
+                            frame = (HTMLFrameElement) mainDOM.getElementById("playlistManager_panel");
+                            playlistManagerDOM = frame.getContentDocument();
+                            frame = (HTMLFrameElement) mainDOM.getElementById("player_panel");
+                            playerDOM = frame.getContentDocument();
 
-                            Element button = currentDOM.getElementById("hellobutton");
+                            // On récupère l'élément à l'Id "playlists" dans le DOM du left panel
+                            Element playlists = leftPanelDOM.getElementById("playlists");
 
-                            ((EventTarget) button).addEventListener("click", helloClick, false);
+                            // Création de playlists bidon
+                            Element playlist_1 = leftPanelDOM.createElement("li");
+                            playlist_1.setTextContent("Playlist 1");
+                            Element playlist_2 = leftPanelDOM.createElement("li");
+                            playlist_2.setTextContent("Playlist 2");
+                            Element playlist_3 = leftPanelDOM.createElement("li");
+                            playlist_3.setTextContent("Playlist 3");
+
+                            // On ajoute les éléments créés dans l'élément parent
+                            playlists.appendChild(playlist_1);
+                            playlists.appendChild(playlist_2);
+                            playlists.appendChild(playlist_3);
+
+
+
+                            // A SUPPRIMER : Assignation d'un listener déclenché lors du "click" sur un bouton
+                            // Element button = currentDOM.getElementById("hellobutton");
+                            //((EventTarget) button).addEventListener("click", helloClick, false);
                         }
                     }); // addListener()
 
@@ -85,15 +118,20 @@ public class Main extends Application {
 
         }
 
-        EventListener helloClick = new EventListener() {
-            public void handleEvent(Event ev) {
-                System.out.println("Hello World");
 
-                Element counter = currentDOM.getElementById("counter");
-                Integer nb = Integer.parseInt(counter.getTextContent()) + 1;
-                counter.setTextContent(nb.toString());
-            }
-        };
+// A SUPPRIMER : Exemple de listener (à assigner à un clic sur bouton par exemple)
+
+//        EventListener helloClick = new EventListener() {
+//            public void handleEvent(Event ev) {
+//                System.out.println("Hello World");
+//
+//                Element counter = currentDOM.getElementById("counter");
+//                Integer nb = Integer.parseInt(counter.getTextContent()) + 1;
+//                counter.setTextContent(nb.toString());
+//            }
+//        };
+// =================================================================================
+
 
         private Node createSpacer() {
             Region spacer = new Region();
