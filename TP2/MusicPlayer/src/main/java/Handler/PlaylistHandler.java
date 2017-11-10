@@ -28,5 +28,11 @@ public class PlaylistHandler {
         player.addToQueue(playlist.getListTrack());
     }
 
+    public ArrayList<Playlist> getPlaylists() {
+        return playlists;
+    }
 
+    public Player getPlayer() {
+        return player;
+    }
 }

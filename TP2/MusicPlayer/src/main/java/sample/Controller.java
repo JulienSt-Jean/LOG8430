@@ -55,4 +55,28 @@ public class Controller {
         playlistHandler.playPlaylist(playlist);
     }
 
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public PlaylistHandler getPlaylistHandler() {
+        return playlistHandler;
+    }
+
+    public void setPlaylistHandler(PlaylistHandler playlistHandler) {
+        this.playlistHandler = playlistHandler;
+    }
+
+    public ApiHandler getApiHandler() {
+        return apiHandler;
+    }
+
+    public void setApiHandler(ApiHandler apiHandler) {
+        this.apiHandler = apiHandler;
+    }
 }
