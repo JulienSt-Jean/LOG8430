@@ -1,6 +1,7 @@
 package sample;
 
 
+import Api.Exceptions.PlaylistException;
 import Handler.ApiHandler;
 import Handler.PlaylistHandler;
 import Model.Playlist;
@@ -31,8 +32,11 @@ public class Controller {
         player.play(track);
     }
 
-    public void createPlaylist(String title){
-        playlistHandler.createPlaylist(title);
+    public void createPlaylist(String title) throws PlaylistException{
+
+            playlistHandler.createPlaylist(title);
+            System.out.println("new playlist : "+title);
+
     }
 
     public void deletePlaylist(Playlist playlist){

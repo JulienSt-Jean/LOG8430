@@ -1,5 +1,6 @@
 package Handler;
 
+import Api.Exceptions.PlaylistException;
 import Model.Playlist;
 import Player.Player;
 
@@ -15,8 +16,17 @@ public class PlaylistHandler {
         System.out.println("PlaylistHandler created");
     }
 
-    public void createPlaylist(String title){
+    public void createPlaylist(String title) throws PlaylistException{
+        for(Playlist playlist : playlists){
+            if(playlist.getName().equals(title)){
+                throw new PlaylistException("La playlist existe deja");
+
+            }
+        }
+        System.out.println("ajout de la playlist");
         playlists.add(new Playlist(title));
+
+
     }
 
     public void deletePlaylist(Playlist playlist){

@@ -1,5 +1,6 @@
 package sample;
 
+import Api.Exceptions.PlaylistException;
 import Model.Playlist;
 import javafx.application.Application;
 import javafx.concurrent.Worker;
@@ -10,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -24,6 +26,7 @@ import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLFrameElement;
 
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -64,13 +67,14 @@ class Browser extends Region {
     public Document mainPanelDOM;
     public Document playlistManagerDOM;
     public Document playerDOM;
-
+    
     private Controller controller;
     final WebView browser = new WebView();
     final WebEngine webEngine = browser.getEngine();
 
     public Browser() {
         //apply the styles
+
         controller = new Controller();
         getStyleClass().add("browser");
 
@@ -129,14 +133,27 @@ class Browser extends Region {
     private void addPlaylist(String title){
         Element playlists = this.leftPanelDOM.getElementById("playlists");
         Element p = this.leftPanelDOM.createElement("li");
-        p.setTextContent(title);
+        Element button = this.leftPanelDOM.createElement("button");
+        button.setTextContent(title);
+        button.setAttribute("id", title);
+        ((EventTarget) button).addEventListener("click", handlePlaylist, false);
+        p.appendChild(button);
 
         playlists.appendChild(p);
     }
 
+    EventListener handlePlaylist = new EventListener(){
+        public void handleEvent(Event ev) {
+            System.out.println(ev.getTarget());
+
+
+
+
+        }
+    };
     EventListener createPlaylist = new EventListener() {
         public void handleEvent(Event ev) {
-            System.out.println("Create a playlist !");
+
             TextInputDialog dialog = new TextInputDialog("Ma playlist");
             dialog.setTitle("Créer votre playlist !");
             dialog.setContentText("Donner un nom à votre playlist");
@@ -144,9 +161,25 @@ class Browser extends Region {
             // Traditional way to get the response value.
             Optional<String> result = dialog.showAndWait();
             if (result.isPresent()){
-                System.out.println("Your new playlist: " + result.get());
-                controller.createPlaylist(result.get().toString());
-                addPlaylist(result.get().toString());
+
+
+                try {
+                    controller.createPlaylist(result.get().toString());
+                    addPlaylist(result.get().toString());
+                } catch (PlaylistException e) {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Avertissement");
+                    alert.setHeaderText("Une playlist existe déja avec le même nom");
+
+
+                    Optional<ButtonType> r = alert.showAndWait();
+                    if (r.get() == ButtonType.OK){
+                        // ... user chose OK
+                    } else {
+                        // ... user chose CANCEL or closed the dialog
+                    }
+                }
+
             }
         }
     };
