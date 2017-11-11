@@ -26,14 +26,14 @@ public class SpotifyResponseParser {
         JsonObject jsonObject = json.getAsJsonObject();
         JsonElement trackList = jsonObject.get("items");
 
-        return new ArrayList(Arrays.asList(gson.fromJson(trackList, Track[].class)));
+        return new ArrayList<Track>(Arrays.asList(gson.fromJson(trackList, Track[].class)));
     }
 
     public ArrayList<Playlist> parsePlaylists(JsonElement json){
         JsonObject jsonObject = json.getAsJsonObject();
         JsonElement playLists = jsonObject.get("items");
 
-        return new ArrayList(Arrays.asList(gson.fromJson(playLists, Playlist[].class)));
+        return new ArrayList<Playlist>(Arrays.asList(gson.fromJson(playLists, Playlist[].class)));
     }
 
     private class TrackDeserializer implements JsonDeserializer<Track> {
@@ -41,6 +41,11 @@ public class SpotifyResponseParser {
         @Override
         public Track deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
             Gson gson = new Gson();
+
+            if (jsonElement.getAsJsonObject().has("track")) {
+                jsonElement = jsonElement.getAsJsonObject().get("track");
+            }
+
             Track track = gson.fromJson(jsonElement, Track.class);
 
             track.setMetadata(jsonDeserializationContext.deserialize(jsonElement, Metadata.class));
@@ -61,7 +66,7 @@ public class SpotifyResponseParser {
             JsonArray jsonArtists = jsonObj.get("artists").getAsJsonArray();
             StringBuilder artists = new StringBuilder();
             for(JsonElement jsonArtist : jsonArtists){
-                artists.append(jsonArtist.getAsJsonObject().get("name").getAsString() + ", ");
+                artists.append(jsonArtist.getAsJsonObject().get("name").getAsString()).append(", ");
             }
 
             return new Metadata(track, artists.toString().substring(0, artists.length() - 2), album);

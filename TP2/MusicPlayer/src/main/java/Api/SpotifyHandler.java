@@ -20,8 +20,6 @@ public class SpotifyHandler implements ApiWrapper {
     public SpotifyHandler() {
         JsonElement response = this.executeRequestWithRetryOnExpiredToken(httpRequestBuilder.buildUserProfileRequest());
         setUserId(response);
-
-
     }
 
     public static void main(String args[]) {
@@ -94,7 +92,6 @@ public class SpotifyHandler implements ApiWrapper {
         while (true) {
             try {
                 request.makeConnection();
-                System.out.println(request.getResponseCode());
                 return new JsonParser().parse(request.getResponse());
             } catch (IOException e) {
                 e.printStackTrace();
