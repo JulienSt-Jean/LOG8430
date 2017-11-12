@@ -26,6 +26,7 @@ public class MenuFrame extends Frame {
         Element button = DOM.createElement("button");
         button.setTextContent(title);
         button.setAttribute("id", title);
+//        p.setAttribute("style", "background-color: #002233");
         p.appendChild(button);
         playlists.appendChild(p);
         ((EventTarget) button).addEventListener("click", clickOnPlaylist, false);
@@ -39,6 +40,7 @@ public class MenuFrame extends Frame {
 
         for (Playlist playlist : controller.getPlaylistHandler().getPlaylists()) {
             Element p = this.DOM.createElement("li");
+
             p.setTextContent(playlist.getName());
             playlists.appendChild(p);
         }
@@ -47,11 +49,17 @@ public class MenuFrame extends Frame {
     EventListener clickOnPlaylist = new EventListener() {
         public void handleEvent(Event ev) {
 
-            Element button =(Element)ev.getTarget();
+            Element button =(Element) ev.getTarget();
+            Element li = (Element) button.getParentNode();
+//            li.setAttribute("style", "background-color: #009999;");
             String playlistName = button.getAttribute("id").toString();
             controller.displayPlaylistInMain(playlistName);
             System.out.println(playlistName);
         }
     };
+
+    public void changeSelectedColor(){
+
+    }
 
 }
