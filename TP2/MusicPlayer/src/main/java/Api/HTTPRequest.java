@@ -130,4 +130,8 @@ public class HTTPRequest {
 
         return "";
     }
+
+    public InputStream getInputStream() throws IOException {
+        return connection.getInputStream();
+    }
 }

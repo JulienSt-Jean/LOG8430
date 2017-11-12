@@ -18,14 +18,13 @@ public class SpotifyHandler implements ApiWrapper {
     private SpotifyResponseParser parser = new SpotifyResponseParser();
 
     public SpotifyHandler() {
-        JsonElement response = this.executeRequestWithRetryOnExpiredToken(httpRequestBuilder.buildUserProfileRequest());
-        setUserId(response);
+        //JsonElement response = this.executeRequestWithRetryOnExpiredToken(httpRequestBuilder.buildUserProfileRequest());
+        //setUserId(response);
     }
 
     public static void main(String args[]) {
         SpotifyHandler handler = new SpotifyHandler();
         ArrayList<Playlist> list = handler.getPlayLists();
-        System.out.println(list.get(0).getTrackListUrl());
     }
 
     public ArrayList<Track> searchTrack(String searchEntry) {
@@ -50,6 +49,8 @@ public class SpotifyHandler implements ApiWrapper {
 
         return playlists;
     }
+
+
 
     private void generateAccessToken() {
         HTTPRequest request = httpRequestBuilder.buildAccessTokenRequest();
