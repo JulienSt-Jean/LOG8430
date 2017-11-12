@@ -26,14 +26,18 @@ public class SpotifyResponseParser {
         JsonObject jsonObject = json.getAsJsonObject();
         JsonElement trackList = jsonObject.get("items");
 
-        return new ArrayList<Track>(Arrays.asList(gson.fromJson(trackList, Track[].class)));
+        return new ArrayList<>(Arrays.asList(gson.fromJson(trackList, Track[].class)));
     }
 
     public ArrayList<Playlist> parsePlaylists(JsonElement json){
         JsonObject jsonObject = json.getAsJsonObject();
         JsonElement playLists = jsonObject.get("items");
 
-        return new ArrayList<Playlist>(Arrays.asList(gson.fromJson(playLists, Playlist[].class)));
+        return new ArrayList<>(Arrays.asList(gson.fromJson(playLists, Playlist[].class)));
+    }
+
+    public Playlist parsePlaylist(JsonElement json) {
+        return gson.fromJson(json, Playlist.class);
     }
 
     private class TrackDeserializer implements JsonDeserializer<Track> {

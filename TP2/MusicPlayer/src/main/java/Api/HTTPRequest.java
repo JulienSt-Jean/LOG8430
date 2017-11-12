@@ -24,16 +24,16 @@ public class HTTPRequest {
     private Map<String, String> requestProperties = new HashMap<>();
     private boolean doOutput = true;
     private boolean doInput = true;
+    private String body = "";
     private HttpURLConnection connection;
 
     public HTTPRequest(String url) {
         this.strUrl = url;
+        this.putContentType("application/json");
     }
 
     public void putURLParameter(String parameter, String value) {
         urlParameters.put(parameter, value);
-
-        this.putContentType("application/json");
     }
 
     public void setRequestMethod(String requestMethod) {
@@ -86,6 +86,12 @@ public class HTTPRequest {
         for (Map.Entry<String, String> entry : requestProperties.entrySet()) {
             connection.setRequestProperty(entry.getKey(), entry.getValue());
         }
+
+        if (!body.isEmpty()) {
+            OutputStreamWriter wr = new OutputStreamWriter(connection.getOutputStream());
+            wr.write(body);
+            wr.close();
+        }
     }
 
     public int getResponseCode() throws IOException {
@@ -119,7 +125,7 @@ public class HTTPRequest {
     public String getResponse() throws WebApiException {
         try {
             System.out.println(connection.getResponseCode());
-            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+            if (connection.getResponseCode() < HttpURLConnection.HTTP_BAD_REQUEST) {
                 return fetchResponse();
             } else {
                 throw new WebApiException(fetchErrorResponse());
@@ -133,5 +139,9 @@ public class HTTPRequest {
 
     public InputStream getInputStream() throws IOException {
         return connection.getInputStream();
+    }
+
+    public void setBody(String body) {
+        this.body = body;
     }
 }

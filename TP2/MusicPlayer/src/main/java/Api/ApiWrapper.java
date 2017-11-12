@@ -1,5 +1,6 @@
 package Api;
 
+import Model.Playlist;
 import Model.Track;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -11,5 +12,5 @@ import java.util.ArrayList;
 
 public interface ApiWrapper {
     ArrayList<Track> searchTrack(String searchEntry);
-    void readTrack(String trackId);
+    ArrayList<Playlist> getPlaylists();
 }

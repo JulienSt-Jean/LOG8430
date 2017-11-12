@@ -1,7 +1,5 @@
 package Model;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.ArrayList;
 
 public class Playlist {
@@ -17,9 +15,9 @@ public class Playlist {
         this.name = name;
         this.listTrack = listTrack;
     }
+
     public Playlist(String name) {
         this.name = name;
-       
     }
 
     //Getters and Setters
@@ -41,24 +39,24 @@ public class Playlist {
 
 
     //Add a track to the playlist
-    public void addTrack(Track track){
-        if(!listTrack.contains(track)){
+    public void addTrack(Track track) {
+        if (!listTrack.contains(track)) {
             listTrack.add(track);
         }
     }
 
     //Remove a track from the playlist
-    public void removeTrack(Track track){
-        if(listTrack.contains(track)) {
+    public void removeTrack(Track track) {
+        if (listTrack.contains(track)) {
             listTrack.remove(track);
         }
     }
 
-    public void setTrackListUrl(String trackListUrl) {
-        this.trackListUrl = trackListUrl;
-    }
-
     public String getTrackListUrl() {
         return trackListUrl;
+    }
+
+    public void setTrackListUrl(String trackListUrl) {
+        this.trackListUrl = trackListUrl;
     }
 }

@@ -1,5 +1,6 @@
 package Api;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -18,7 +19,7 @@ public class SpotifyHTTPRequestBuilder{
     private final String CLIENT_SECRET = "f0ac2909f1314bc685e0a1259764d501";
     private final String REDIRECT_URI = "https://github.com/PhilippeMarcotte";
 
-    private String auth_code = "AQCGmf5SlfKJzxHo3Vttly2LbGcQtIGQzkEGdS8_C7P_KBA4mf3pF2zttw2fcVMFYYnexPPnF5dAO2j_ifMp86H4A78Zd4W7xkQd1cEZ0t9a0YCbo4VSilMX4QBzhs3BUdFYMY8Q33X-Kyr5ZFCX5N6tg4a__o4LpnJ9ignl2_2JZTNc8OhKLWKRpiJNKb4pQ-kEGjOQm3zI";
+    private String auth_code = "AQCCUDzcMrB5_0XTk8eJ3TydPgHCdoy_o3LLnYL24dxWHeFhYDF9jJCK9f86ksImirc4uY2xt5jbyAug44oyOPQ1y6_ytcXUydgKq-x-u--A3XRoub8WsYj8ehAjFWUKCCUL1-us4t9JyCEt6nVa4ILBXqdNsqfN0qhi2GWGKHpbBe7K7NWUN2yiB10JanuBCHgWJ2YyoF9bzHrwyKjvXfen8FwPgVnBuU9Myo8pnXXrut2HCiNS_djAJS4dKhGOzcTzC9HF2gSSTA";
     private String access_token;
     private String refreshToken;
 
@@ -29,11 +30,13 @@ public class SpotifyHTTPRequestBuilder{
     private final String API_URL = "https://api.spotify.com/";
     private final String API_VERSION = "v1/";
 
+    private String userId;
+
     public SpotifyHTTPRequestBuilder(){
         loadToken();
     }
 
-    public HTTPRequest buildAccessTokenRequest(){
+    public HTTPRequest buildAccessTokenRequest(String [] scopes){
         HTTPRequest request = new HTTPRequest(ACCOUNT_URL + ACCOUNT_TOKEN_ENDPOINT);
         request.putURLParameter("grant_type", "authorization_code");
         request.putURLParameter("code", auth_code);
@@ -63,12 +66,13 @@ public class SpotifyHTTPRequestBuilder{
         return request;
     }
 
-    public String generateAuthUrl() {
+    public String generateAuthUrl(String [] scopes) {
         HTTPRequest request = new HTTPRequest(ACCOUNT_URL + ACCOUNT_AUTH_ENDPOINT);
         request.putURLParameter("client_id", CLIENT_ID);
         request.putURLParameter("response_type", "code");
         request.putURLParameter("redirect_uri", REDIRECT_URI);
         request.putURLParameter("show_dialog", "true");
+        request.putURLParameter("scope", String.join(" ", scopes));
 
         try {
             return request.buildUrl();
@@ -124,6 +128,21 @@ public class SpotifyHTTPRequestBuilder{
         return request;
     }
 
+    public HTTPRequest buildCreatePlaylistRequest(String name){
+        HTTPRequest request = new HTTPRequest(buildAPIRequestURL("users/" + userId  + "/playlists"));
+
+        request.setRequestMethod("POST");
+
+        request.putRequestProperty("Authorization", "Bearer " + access_token);
+
+        JsonObject object = new JsonObject();
+        object.addProperty("name", name);
+
+        request.setBody(object.toString());
+
+        return request;
+    }
+
     public HTTPRequest buildRequest(String url){
         HTTPRequest request = new HTTPRequest(url);
 
@@ -138,5 +157,9 @@ public class SpotifyHTTPRequestBuilder{
 
     public String getAccess_token() {
         return access_token;
+    }
+
+    public void setUserId(JsonElement json) {
+        this.userId = json.getAsJsonObject().get("id").getAsString();
     }
 }

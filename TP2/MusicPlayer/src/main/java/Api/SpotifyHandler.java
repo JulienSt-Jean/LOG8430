@@ -13,18 +13,19 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class SpotifyHandler implements ApiWrapper {
-    private String userId;
     private SpotifyHTTPRequestBuilder httpRequestBuilder = new SpotifyHTTPRequestBuilder();
     private SpotifyResponseParser parser = new SpotifyResponseParser();
 
-    public SpotifyHandler() {
-        //JsonElement response = this.executeRequestWithRetryOnExpiredToken(httpRequestBuilder.buildUserProfileRequest());
-        //setUserId(response);
-    }
-
     public static void main(String args[]) {
         SpotifyHandler handler = new SpotifyHandler();
-        ArrayList<Playlist> list = handler.getPlayLists();
+        Playlist list = handler.createPlaylist("test!");
+        System.out.println(list);
+    }
+
+    public SpotifyHandler() {
+        JsonElement response = this.executeRequestWithRetryOnExpiredToken(httpRequestBuilder.buildUserProfileRequest());
+
+        httpRequestBuilder.setUserId(response);
     }
 
     public ArrayList<Track> searchTrack(String searchEntry) {
@@ -37,7 +38,8 @@ public class SpotifyHandler implements ApiWrapper {
 
     }
 
-    public ArrayList<Playlist> getPlayLists() {
+    @Override
+    public ArrayList<Playlist> getPlaylists() {
         JsonElement playlistResponse = this.executeRequestWithRetryOnExpiredToken(httpRequestBuilder.buildGetPlaylistRequest());
 
         ArrayList<Playlist> playlists = parser.parsePlaylists(playlistResponse);
@@ -50,10 +52,14 @@ public class SpotifyHandler implements ApiWrapper {
         return playlists;
     }
 
+    public Playlist createPlaylist(String name) {
+        JsonElement playlistResponse = this.executeRequestWithRetryOnExpiredToken(httpRequestBuilder.buildCreatePlaylistRequest(name));
 
+        return parser.parsePlaylist(playlistResponse);
+    }
 
     private void generateAccessToken() {
-        HTTPRequest request = httpRequestBuilder.buildAccessTokenRequest();
+        HTTPRequest request = httpRequestBuilder.buildAccessTokenRequest(new String[]{"playlist-modify-public", "playlist-modify-private"});
 
         try {
             request.makeConnection();
@@ -121,11 +127,6 @@ public class SpotifyHandler implements ApiWrapper {
             default:
                 return ApiError.UNKNOWN;
         }
-    }
-
-    private void setUserId(JsonElement response) {
-        JsonObject jsonResponse = response.getAsJsonObject();
-        userId = jsonResponse.get("id").getAsString();
     }
 
     private enum ApiError {
