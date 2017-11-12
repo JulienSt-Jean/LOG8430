@@ -1,22 +1,25 @@
 package Controller;
 
 
-import Api.Exceptions.PlaylistException;
+import Model.Exceptions.PlaylistException;
 import Handler.ApiHandler;
 import Handler.PlaylistHandler;
 import Model.Playlist;
 import Model.Track;
 import Player.Player;
+import View.Browser;
 
 import java.util.ArrayList;
 
 public class Controller {
 
+    private Browser browser;
     private Player player;
     private PlaylistHandler playlistHandler;
     private ApiHandler apiHandler;
 
-    public Controller() {
+    public Controller(Browser browser) {
+        this.browser = browser;
         this.apiHandler = new ApiHandler();
         this.player = new Player(this.apiHandler);
         this.playlistHandler = new PlaylistHandler(this.player);
@@ -32,10 +35,27 @@ public class Controller {
         player.play(track);
     }
 
+    /**
+     * Create a new playlist and display its name in the menu panel
+     * @param title
+     * @throws PlaylistException
+     */
     public void createPlaylist(String title) throws PlaylistException{
+        playlistHandler.createPlaylist(title);
+        System.out.println("new playlist : "+title);
+        browser.getMenuFrame().addPlaylist(title);
 
-            playlistHandler.createPlaylist(title);
-            System.out.println("new playlist : "+title);
+    }
+
+    /**
+     * Fetch the playlist by its name and display the playlist in the main frame
+     * @param name
+     */
+    public void displayPlaylistInMain(String name){
+        Playlist playlist = getPlaylistHandler().getPlaylistByName(name);
+        if(!playlist.equals(null)){
+            browser.getMainFrame().displayPlaylist(playlist);
+        }
 
     }
 

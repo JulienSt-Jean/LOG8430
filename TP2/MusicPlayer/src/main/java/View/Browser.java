@@ -1,14 +1,9 @@
 package View;
 
-import Api.Exceptions.PlaylistException;
-import Player.Player;
 import javafx.concurrent.Worker;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -16,8 +11,6 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLFrameElement;
 import Controller.Controller;
@@ -25,7 +18,6 @@ import Controller.Controller;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Paths;
-import java.util.Optional;
 
 
 public class Browser extends Region {
@@ -60,7 +52,8 @@ public class Browser extends Region {
 
     public Browser() {
 
-        controller = new Controller();
+        this.controller = null;
+
         getStyleClass().add("browser");
 
         webEngine.getLoadWorker().stateProperty()
@@ -71,8 +64,8 @@ public class Browser extends Region {
                         mainDOM  = webEngine.getDocument();
                         this.findFrameDOMs();
 
-                        //Element button = playlistManagerDOM.getElementById("createPlaylist");
-                        //((EventTarget) button).addEventListener("click", createPlaylist, false);
+                        Element button = playlistManagerFrame.DOM.getElementById("createPlaylist");
+                        ((EventTarget) button).addEventListener("click", playlistManagerFrame.createPlaylist, false);
                     }
                 });
 
@@ -100,6 +93,8 @@ public class Browser extends Region {
         frame = (HTMLFrameElement) mainDOM.getElementById("frame_player");
         playerFrame = new PlayerFrame(frame.getContentDocument(), controller);
     }
+
+
 
     /*
     private void initiatePlaylists() {
@@ -159,6 +154,30 @@ public class Browser extends Region {
         }
     };
     */
+
+    public Document getMainDOM() {
+        return mainDOM;
+    }
+
+    public MainFrame getMainFrame() {
+        return mainFrame;
+    }
+
+    public MenuFrame getMenuFrame() {
+        return menuFrame;
+    }
+
+    public PlaylistManagerFrame getPlaylistManagerFrame() {
+        return playlistManagerFrame;
+    }
+
+    public PlayerFrame getPlayerFrame() {
+        return playerFrame;
+    }
+
+    public void setController(Controller controller){
+        this.controller = controller;
+    }
 
     private Node createSpacer() {
         Region spacer = new Region();

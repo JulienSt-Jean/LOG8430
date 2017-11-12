@@ -3,12 +3,10 @@ package Model;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class Playlist {
-
-    private String id;
-    private String name;
-
+public class Playlist implements Iterable<Track>{
+    private String name; //clé primaire
     private String trackListUrl;
     private ArrayList<Track> listTrack;
 
@@ -56,5 +54,10 @@ public class Playlist {
 
     public void setTrackListUrl(String trackListUrl) {
         this.trackListUrl = trackListUrl;
+    }
+
+    @Override
+    public Iterator<Track> iterator() {
+        return listTrack.iterator();
     }
 }

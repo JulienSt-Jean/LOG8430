@@ -14,13 +14,14 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("sample.fxml"));
-        this.controller = new Controller();
 
-        loader.setController(controller);
         primaryStage.setTitle("LOG8430 - TP2 : Music Player");
 
         // Create scene with web browser
         Browser browser = new Browser();
+        this.controller = new Controller(browser);
+        browser.setController(this.controller);
+        loader.setController(controller);
         primaryStage.setScene(new Scene(browser));
         primaryStage.show();
     }

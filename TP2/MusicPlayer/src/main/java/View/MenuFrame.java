@@ -1,8 +1,18 @@
 package View;
 
 import Controller.Controller;
+import Model.Exceptions.PlaylistException;
+import Model.Playlist;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextInputDialog;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventListener;
+import org.w3c.dom.events.EventTarget;
+
+import java.util.Optional;
 
 public class MenuFrame extends Frame {
 
@@ -17,7 +27,31 @@ public class MenuFrame extends Frame {
         button.setTextContent(title);
         button.setAttribute("id", title);
         p.appendChild(button);
-
         playlists.appendChild(p);
+        ((EventTarget) button).addEventListener("click", clickOnPlaylist, false);
     }
+
+
+
+    private void initiatePlaylists() {
+        // On récupère l'élément à l'Id "playlists" dans le DOM du left panel
+        Element playlists = this.DOM.getElementById("playlists");
+
+        for (Playlist playlist : controller.getPlaylistHandler().getPlaylists()) {
+            Element p = this.DOM.createElement("li");
+            p.setTextContent(playlist.getName());
+            playlists.appendChild(p);
+        }
+    }
+
+    EventListener clickOnPlaylist = new EventListener() {
+        public void handleEvent(Event ev) {
+
+            Element button =(Element)ev.getTarget();
+            String playlistName = button.getAttribute("id").toString();
+            controller.displayPlaylistInMain(playlistName);
+            System.out.println(playlistName);
+        }
+    };
+
 }

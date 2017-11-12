@@ -1,4 +1,4 @@
-package Api.Exceptions;
+package Model.Exceptions;
 
 import java.security.spec.ECFieldF2m;
 

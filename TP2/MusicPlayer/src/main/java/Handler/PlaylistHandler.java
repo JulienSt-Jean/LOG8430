@@ -1,9 +1,11 @@
 package Handler;
 
-import Api.Exceptions.PlaylistException;
+import Model.Exceptions.PlaylistException;
 import Model.Playlist;
+import Model.Track;
 import Player.Player;
 
+import javax.xml.bind.Element;
 import java.util.ArrayList;
 
 public class PlaylistHandler {
@@ -16,15 +18,21 @@ public class PlaylistHandler {
         System.out.println("PlaylistHandler created");
     }
 
-    public void createPlaylist(String title) throws PlaylistException{
+
+    /**
+     * Add a new Playlist to the existing playlists
+     * @param name
+     * @throws PlaylistException
+     */
+    public void createPlaylist(String name) throws PlaylistException{
         for(Playlist playlist : playlists){
-            if(playlist.getName().equals(title)){
+            if(playlist.getName().equals(name)){
                 throw new PlaylistException("La playlist existe deja");
 
             }
         }
         System.out.println("ajout de la playlist");
-        playlists.add(new Playlist(title));
+        playlists.add(new Playlist(name, new ArrayList<Track>()));
 
 
     }
@@ -42,6 +50,20 @@ public class PlaylistHandler {
         return playlists;
     }
 
+    public Playlist getPlaylistByName(String name){
+        if(name == null || name.equals("")){
+            return null;
+        }
+        else{
+            for(Playlist playlist: playlists){
+                if(name.equals(playlist.getName())){
+                    return playlist;
+                }
+            }
+            return null;
+        }
+
+    }
     public Player getPlayer() {
         return player;
     }
