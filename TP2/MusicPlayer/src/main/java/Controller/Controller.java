@@ -59,6 +59,14 @@ public class Controller {
 
     }
 
+    public void playMusic(){
+        System.out.println("music is playing");
+    }
+
+    public void pauseMusic(){
+        System.out.println("Music is paused");
+    }
+
     public void deletePlaylist(Playlist playlist){
         playlistHandler.deletePlaylist(playlist);
     }
@@ -84,9 +92,6 @@ public class Controller {
         return player;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
 
     public PlaylistHandler getPlaylistHandler() {
         return playlistHandler;
