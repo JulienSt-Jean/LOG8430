@@ -1,0 +1,66 @@
+body{
+    font-family: 'Roboto', sans-serif;
+
+
+}
+
+frame{
+
+}
+
+
+
+.menu, .playlistManager, .header{
+    background-color:  #002233;
+    color: #e6f7ff;
+}
+ul{
+    list-style-type: none;
+}
+
+.menu button, .playlistManager button{
+    font-family: 'Roboto', sans-serif;
+    background-color: #002233; /* Green */
+    border: none;
+    color: white;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+
+
+}
+
+#searchResult{
+    padding-top : 4em;
+}
+
+
+.playlistManager img{
+ width: 50%;
+ height: 50%;
+}
+
+
+
+.menu button:hover{
+background-color: #009999;
+}
+
+
+.player{
+    background-color: #00111a;
+}
+
+.player button{
+background-color: #00111a;
+border: none;
+}

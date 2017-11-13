@@ -2,16 +2,17 @@ package Model;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class Playlist {
+public class Playlist implements Iterable<Track>{
+    private ArrayList<Track> listTrack;
+
+    private ServiceProvider serviceProvider;
 
     private String id;
     private String name;
 
     private URL trackListUrl;
-    private ArrayList<Track> listTrack;
-
-    private ServiceProvider serviceProvider;
 
     //Constructor
     public Playlist(String name, ArrayList<Track> listTrack) {
@@ -73,5 +74,10 @@ public class Playlist {
 
     public String getId() {
         return id;
+    }
+
+    @Override
+    public Iterator<Track> iterator() {
+        return listTrack.iterator();
     }
 }
