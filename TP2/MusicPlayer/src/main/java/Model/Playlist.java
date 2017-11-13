@@ -10,6 +10,8 @@ public class Playlist {
     private String trackListUrl;
     private ArrayList<Track> listTrack;
 
+    private ServiceProvider serviceProvider;
+
     //Constructor
     public Playlist(String name, ArrayList<Track> listTrack) {
         this.name = name;
@@ -58,5 +60,13 @@ public class Playlist {
 
     public void setTrackListUrl(String trackListUrl) {
         this.trackListUrl = trackListUrl;
+    }
+
+    public void setServiceProvider(ServiceProvider serviceProvider) {
+        this.serviceProvider = serviceProvider;
+    }
+
+    public ServiceProvider getServiceProvider() {
+        return serviceProvider;
     }
 }

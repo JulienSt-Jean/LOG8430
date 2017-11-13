@@ -2,6 +2,7 @@ package Api;
 
 import Model.Metadata;
 import Model.Playlist;
+import Model.ServiceProvider;
 import Model.Track;
 import com.google.gson.*;
 
@@ -54,6 +55,8 @@ public class SpotifyResponseParser {
 
             track.setMetadata(jsonDeserializationContext.deserialize(jsonElement, Metadata.class));
 
+            track.setServiceProvider(ServiceProvider.SPOTIFY);
+
             return track;
         }
     }
@@ -85,6 +88,8 @@ public class SpotifyResponseParser {
             Playlist playlist = gson.fromJson(jsonElement, Playlist.class);
 
             playlist.setTrackListUrl(jsonElement.getAsJsonObject().get("tracks").getAsJsonObject().get("href").getAsString());
+
+            playlist.setServiceProvider(ServiceProvider.SPOTIFY);
 
             return playlist;
         }
