@@ -37,6 +37,15 @@ public class MenuFrame extends Frame {
         ((EventTarget) button).addEventListener("click", clickOnPlaylist, false);
     }
 
+    public void updatePlaylists(){
+        Element playlists = DOM.getElementById("playlists");
+        playlists.setTextContent("");
+        for(Playlist playlist : controller.getPlaylistHandler().getPlaylists()){
+            addPlaylist(playlist.getName());
+        }
+
+    }
+
 
 
     private void initiatePlaylists() {

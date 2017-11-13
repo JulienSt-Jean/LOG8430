@@ -59,6 +59,11 @@ public class Controller {
 
     }
 
+    public void removePlaylist(Playlist playlist) {
+        this.getPlaylistHandler().deletePlaylist(playlist);
+        this.browser.getMenuFrame().updatePlaylists();
+    }
+
     public void displaySearchDiv(){
         browser.getMainFrame().displaySearchDiv();
     }
