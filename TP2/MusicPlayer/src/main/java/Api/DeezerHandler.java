@@ -10,7 +10,6 @@ public class DeezerHandler implements ApiWrapper {
         return null;
     }
 
-    @Override
     public ArrayList<Playlist> getPlaylists() {
         return null;
     }

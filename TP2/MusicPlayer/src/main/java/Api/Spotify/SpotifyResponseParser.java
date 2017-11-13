@@ -1,4 +1,4 @@
-package Api;
+package Api.Spotify;
 
 import Model.Metadata;
 import Model.Playlist;

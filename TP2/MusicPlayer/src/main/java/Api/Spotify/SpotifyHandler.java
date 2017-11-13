@@ -1,6 +1,8 @@
-package Api;
+package Api.Spotify;
 
+import Api.ApiWrapper;
 import Api.Exceptions.WebApiException;
+import Api.HTTPRequest;
 import Model.Playlist;
 import Model.Track;
 import com.google.gson.JsonElement;

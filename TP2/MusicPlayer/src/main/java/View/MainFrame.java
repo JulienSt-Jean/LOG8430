@@ -3,6 +3,7 @@ package View;
 import Controller.Controller;
 import Model.Metadata;
 import Model.Playlist;
+import Model.ServiceProvider;
 import Model.Track;
 import jdk.internal.util.xml.impl.Input;
 import org.w3c.dom.Document;
@@ -67,10 +68,10 @@ public class MainFrame extends Frame {
         System.out.println(data);
         ArrayList<Track> results = controller.getApiHandler().searchTrack(data);
 
-        results.add(new Track(new Metadata("Do I wanna Know","Arctic Monkeys", "AM"), "1", "Spotify"));
-        results.add(new Track(new Metadata("Do I wanna Know","Arctic Monkeys", "AM"), "2", "Spotify"));
-        results.add(new Track(new Metadata("Do I wanna Know","Arctic Monkeys", "AM"), "2", "Spotify"));
-        results.add(new Track(new Metadata("Do I wanna Know","Arctic Monkeys", "AM"), "2", "Spotify"));
+        results.add(new Track(new Metadata("Do I wanna Know","Arctic Monkeys", "AM"), "1", ServiceProvider.SPOTIFY));
+        results.add(new Track(new Metadata("Do I wanna Know","Arctic Monkeys", "AM"), "2", ServiceProvider.SPOTIFY));
+        results.add(new Track(new Metadata("Do I wanna Know","Arctic Monkeys", "AM"), "2", ServiceProvider.SPOTIFY));
+        results.add(new Track(new Metadata("Do I wanna Know","Arctic Monkeys", "AM"), "2", ServiceProvider.SPOTIFY));
         Element searchResult = this.DOM.getElementById("searchResult");
         for(Track track : results){
             System.out.println(track.getId());

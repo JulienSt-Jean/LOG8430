@@ -1,5 +1,6 @@
-package Api;
+package Api.Spotify;
 
+import Api.HTTPRequest;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
