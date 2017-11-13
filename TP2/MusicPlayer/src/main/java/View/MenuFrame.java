@@ -18,6 +18,11 @@ public class MenuFrame extends Frame {
 
     public MenuFrame(Document doc, Controller c){
         super(doc, c);
+        Element searchButton = DOM.getElementById("browserButton");
+        ((EventTarget)searchButton).addEventListener("click", search, false);
+//        Element playlistButton = DOM.getElementById("browserButton");
+//        ((EventTarget)playlistButton).addEventListener("click", playlist, false);
+
     }
 
     public void addPlaylist(String title){
@@ -57,6 +62,17 @@ public class MenuFrame extends Frame {
             System.out.println(playlistName);
         }
     };
+
+    EventListener search = new EventListener() {
+        @Override
+        public void handleEvent(Event event) {
+            System.out.println("click on searchButton");
+            controller.displaySearchDiv();
+
+        }
+    };
+
+
 
     public void changeSelectedColor(){
 

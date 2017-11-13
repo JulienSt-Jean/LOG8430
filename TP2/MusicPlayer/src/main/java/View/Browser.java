@@ -64,8 +64,14 @@ public class Browser extends Region {
                         mainDOM  = webEngine.getDocument();
                         this.findFrameDOMs();
 
-                        Element button = playlistManagerFrame.DOM.getElementById("createPlaylist");
-                        ((EventTarget) button).addEventListener("click", playlistManagerFrame.createPlaylist, false);
+
+
+
+                    }
+                    if(Worker.State.SUCCEEDED == newValue){
+                        webEngine.setOnStatusChanged(webEvent -> {
+                            mainFrame.sendInputData(webEvent.getData());
+                        });
                     }
                 });
 

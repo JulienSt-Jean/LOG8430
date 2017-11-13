@@ -39,7 +39,9 @@ ul{
 
 }
 
-
+#searchResult{
+    padding-top : 4em;
+}
 
 
 .playlistManager img{

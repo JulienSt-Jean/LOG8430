@@ -4,13 +4,49 @@
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 
 </head>
 <body>
 
-<h1 id="playlistName"></h1>
+<div id="searchDiv" >
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <center>
+            <form class="form-inline" id="form">
+                <input id="input" class="form-control" type="text" placeholder="Search" aria-label="Search">
+                <button id="searchButton" type="submit" >Search</button>
+            </form>
+        </center>
+    </nav>
+    <div id="searchResult" class="list-group">
 
-<ul id="tracks"></ul>
+    </div>
 
+
+</div>
+<div id="playlistDiv">
+    <h1 id="playlistName"></h1>
+    <ul id="tracks"></ul>
+</div>
+
+<script language="javascript" type="text/javascript">
+
+
+    function processForm(e) {
+        if (e.preventDefault) e.preventDefault();
+
+        var input = document.getElementById('input');
+        window.status = this.input.value;
+        return false;
+    }
+
+    var form = document.getElementById('form');
+    if (form.attachEvent) {
+        form.attachEvent("submit", processForm);
+    } else {
+        form.addEventListener("submit", processForm);
+    }
+
+</script>
 </body>
 </html>

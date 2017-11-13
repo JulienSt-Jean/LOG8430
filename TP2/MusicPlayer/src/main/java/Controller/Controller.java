@@ -59,6 +59,10 @@ public class Controller {
 
     }
 
+    public void displaySearchDiv(){
+        browser.getMainFrame().displaySearchDiv();
+    }
+
     public void playMusic(){
         System.out.println("music is playing");
     }
