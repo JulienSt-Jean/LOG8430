@@ -137,8 +137,16 @@ public class SpotifyHTTPRequestBuilder{
         return request;
     }
 
-    public HTTPRequest buildGetPlaylistRequest() throws MalformedURLException {
+    public HTTPRequest buildGetPlaylistsRequest() throws MalformedURLException {
         HTTPRequest request = new HTTPRequest(buildAPIRequestURL("me/playlists"));
+
+        request.putRequestProperty("Authorization", "Bearer " + access_token);
+
+        return request;
+    }
+
+    public HTTPRequest buildGetPlaylistRequest(String playlistId) throws MalformedURLException {
+        HTTPRequest request = new HTTPRequest(buildAPIRequestURL("users/" + userId + "/playlists/" + playlistId));
 
         request.putRequestProperty("Authorization", "Bearer " + access_token);
 

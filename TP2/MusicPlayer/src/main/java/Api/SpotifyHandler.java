@@ -50,11 +50,10 @@ public class SpotifyHandler implements ApiWrapper {
         return parser.parseTrackList(response.getAsJsonObject().get("tracks"));
     }
 
-    @Override
     public List<Playlist> getPlaylists() {
         JsonElement playlistResponse = null;
         try {
-            playlistResponse = this.executeRequestWithRetryOnExpiredToken(httpRequestBuilder.buildGetPlaylistRequest());
+            playlistResponse = this.executeRequestWithRetryOnExpiredToken(httpRequestBuilder.buildGetPlaylistsRequest());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -69,25 +68,42 @@ public class SpotifyHandler implements ApiWrapper {
         return playlists;
     }
 
-    @Override
-    public void addTrackToPlaylist(URI trackURI, String playlistId) {
+    public Playlist getPlaylist(String playlistId) {
+        JsonElement playlistResponse = null;
+        try {
+            playlistResponse = this.executeRequestWithRetryOnExpiredToken(httpRequestBuilder.buildGetPlaylistRequest(playlistId));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        Playlist playlist = parser.parsePlaylist(playlistResponse);
+
+        JsonElement tracskResponse = this.executeRequestWithRetryOnExpiredToken(httpRequestBuilder.buildRequest(playlist.getTrackListUrl()));
+        playlist.setListTrack(parser.parseTrackList(tracskResponse));
+
+        return playlist;
+    }
+
+    public Playlist addTrackToPlaylist(URI trackURI, String playlistId) {
         try {
             this.executeRequestWithRetryOnExpiredToken(httpRequestBuilder.buildAddTrackToPlaylistRequest(trackURI, playlistId));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+
+        return getPlaylist(playlistId);
     }
 
-    @Override
-    public void removeTrackFromPlaylist(URI trackURI, String playlistId) {
+    public Playlist removeTrackFromPlaylist(URI trackURI, String playlistId) {
         try {
             this.executeRequestWithRetryOnExpiredToken(httpRequestBuilder.buildRemoveTrackFromPlaylistRequest(trackURI, playlistId));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+
+        return getPlaylist(playlistId);
     }
 
-    @Override
     public Playlist createPlaylist(String name) {
         JsonElement playlistResponse = null;
         try {
@@ -99,13 +115,14 @@ public class SpotifyHandler implements ApiWrapper {
         return parser.parsePlaylist(playlistResponse);
     }
 
-    @Override
-    public void deletePlaylist(String playlistId) {
+    public Playlist deletePlaylist(String playlistId) {
         try {
             this.executeRequestWithRetryOnExpiredToken(httpRequestBuilder.buildUnfollowPlaylistRequest(playlistId));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+
+        return getPlaylist(playlistId);
     }
 
     private void generateAccessToken() {
