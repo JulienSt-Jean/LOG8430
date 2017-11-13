@@ -1,5 +1,6 @@
 package Model;
 
+import java.net.URL;
 import java.util.ArrayList;
 
 public class Playlist {
@@ -7,7 +8,7 @@ public class Playlist {
     private String id;
     private String name;
 
-    private String trackListUrl;
+    private URL trackListUrl;
     private ArrayList<Track> listTrack;
 
     private ServiceProvider serviceProvider;
@@ -54,11 +55,11 @@ public class Playlist {
         }
     }
 
-    public String getTrackListUrl() {
+    public URL getTrackListUrl() {
         return trackListUrl;
     }
 
-    public void setTrackListUrl(String trackListUrl) {
+    public void setTrackListUrl(URL trackListUrl) {
         this.trackListUrl = trackListUrl;
     }
 
@@ -68,5 +69,9 @@ public class Playlist {
 
     public ServiceProvider getServiceProvider() {
         return serviceProvider;
+    }
+
+    public String getId() {
+        return id;
     }
 }

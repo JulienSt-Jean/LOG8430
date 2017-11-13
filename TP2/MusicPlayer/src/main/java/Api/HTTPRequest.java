@@ -1,16 +1,11 @@
 package Api;
 
-import Api.Exceptions.WebApiAuthenticationException;
 import Api.Exceptions.WebApiException;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,7 +13,7 @@ import java.util.Map;
  * Created by Philippe on 11/2/2017.
  */
 public class HTTPRequest {
-    private String strUrl;
+    private URL url;
     private Map<String, String> urlParameters = new HashMap<>();
     private String requestMethod = "GET";
     private Map<String, String> requestProperties = new HashMap<>();
@@ -27,8 +22,8 @@ public class HTTPRequest {
     private String body = "";
     private HttpURLConnection connection;
 
-    public HTTPRequest(String url) {
-        this.strUrl = url;
+    public HTTPRequest(URL url) {
+        this.url = url;
         this.putContentType("application/json");
     }
 
@@ -71,7 +66,7 @@ public class HTTPRequest {
     }
 
     public String buildUrl() throws UnsupportedEncodingException {
-        return strUrl + (urlParameters.isEmpty() ? "" : "?" + getParamsString(urlParameters));
+        return url + (urlParameters.isEmpty() ? "" : "?" + getParamsString(urlParameters));
     }
 
     public void makeConnection() throws IOException {

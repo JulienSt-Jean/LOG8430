@@ -2,13 +2,17 @@ package Model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.net.URI;
+import java.net.URL;
+
 public class Track {
 
     private Metadata metadata;
     private String id;
     private ServiceProvider serviceProvider;
     @SerializedName("preview_url")
-    private String previewUrl;
+    private URL previewUrl;
+    private URI uri;
 
     public Track(Metadata metadata, String id, ServiceProvider serviceProvider) {
         this.metadata = metadata;
@@ -36,7 +40,11 @@ public class Track {
         this.metadata = metadata;
     }
 
-    public String getPreviewUrl() {
+    public URL getPreviewUrl() {
         return previewUrl;
+    }
+
+    public URI getUri() {
+        return uri;
     }
 }

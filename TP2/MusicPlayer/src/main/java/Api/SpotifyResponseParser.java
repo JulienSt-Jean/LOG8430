@@ -7,6 +7,8 @@ import Model.Track;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -87,7 +89,11 @@ public class SpotifyResponseParser {
             Gson gson = new Gson();
             Playlist playlist = gson.fromJson(jsonElement, Playlist.class);
 
-            playlist.setTrackListUrl(jsonElement.getAsJsonObject().get("tracks").getAsJsonObject().get("href").getAsString());
+            try {
+                playlist.setTrackListUrl(new URL(jsonElement.getAsJsonObject().get("tracks").getAsJsonObject().get("href").getAsString()));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
 
             playlist.setServiceProvider(ServiceProvider.SPOTIFY);
 

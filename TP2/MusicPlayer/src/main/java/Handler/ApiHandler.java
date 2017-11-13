@@ -39,15 +39,6 @@ public class ApiHandler {
 
 
     public void readTrack(Track track){
-        if(track.getServiceProvider().equals("Spotify")){
-            spotifyHandler.readTrack(track.getId());
-        }
-        else if(track.getServiceProvider().equals("Deezer")){
-            deezerHandler.readTrack(track.getId());
-        }
-        else if(track.getServiceProvider().equals("BeatPort")){
-            beatportHandler.readTrack(track.getId());
-        }
     }
 
 

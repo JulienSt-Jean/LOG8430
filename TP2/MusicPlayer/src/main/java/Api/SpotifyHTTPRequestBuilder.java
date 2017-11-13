@@ -1,11 +1,14 @@
 package Api;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -37,7 +40,12 @@ public class SpotifyHTTPRequestBuilder{
     }
 
     public HTTPRequest buildAccessTokenRequest(String [] scopes){
-        HTTPRequest request = new HTTPRequest(ACCOUNT_URL + ACCOUNT_TOKEN_ENDPOINT);
+        HTTPRequest request = null;
+        try {
+            request = new HTTPRequest(new URL(ACCOUNT_URL + ACCOUNT_TOKEN_ENDPOINT));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
         request.putURLParameter("grant_type", "authorization_code");
         request.putURLParameter("code", auth_code);
         request.putURLParameter("redirect_uri", REDIRECT_URI);
@@ -52,7 +60,12 @@ public class SpotifyHTTPRequestBuilder{
     }
 
     public HTTPRequest buildRefreshAccessTokenRequest(){
-        HTTPRequest request = new HTTPRequest(ACCOUNT_URL + ACCOUNT_TOKEN_ENDPOINT);
+        HTTPRequest request = null;
+        try {
+            request = new HTTPRequest(new URL(ACCOUNT_URL + ACCOUNT_TOKEN_ENDPOINT));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
         request.putURLParameter("grant_type", "refresh_token");
         request.putURLParameter("refresh_token", refreshToken);
         request.putURLParameter("redirect_uri", REDIRECT_URI);
@@ -67,7 +80,12 @@ public class SpotifyHTTPRequestBuilder{
     }
 
     public String generateAuthUrl(String [] scopes) {
-        HTTPRequest request = new HTTPRequest(ACCOUNT_URL + ACCOUNT_AUTH_ENDPOINT);
+        HTTPRequest request = null;
+        try {
+            request = new HTTPRequest(new URL(ACCOUNT_URL + ACCOUNT_AUTH_ENDPOINT));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
         request.putURLParameter("client_id", CLIENT_ID);
         request.putURLParameter("response_type", "code");
         request.putURLParameter("redirect_uri", REDIRECT_URI);
@@ -87,20 +105,19 @@ public class SpotifyHTTPRequestBuilder{
         String token = null;
         try {
             token = new String(Files.readAllBytes(Paths.get("./tokens")));
+            JsonObject jsonResponse = new JsonParser().parse(token).getAsJsonObject();
+            access_token = jsonResponse.get("access_token").getAsString();
+            refreshToken = jsonResponse.get("refresh_token").getAsString();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        JsonObject jsonResponse = new JsonParser().parse(token).getAsJsonObject();
-        access_token = jsonResponse.get("access_token").getAsString();
-        refreshToken = jsonResponse.get("refresh_token").getAsString();
     }
 
     public String getRefreshToken() {
         return refreshToken;
     }
 
-    public HTTPRequest buildUserProfileRequest() {
+    public HTTPRequest buildUserProfileRequest() throws MalformedURLException {
         HTTPRequest request = new HTTPRequest(buildAPIRequestURL("me"));
 
         request.putRequestProperty("Authorization", "Bearer " + access_token);
@@ -108,7 +125,7 @@ public class SpotifyHTTPRequestBuilder{
         return request;
     }
 
-    public HTTPRequest buildSearchTrackRequest(String query, int limit){
+    public HTTPRequest buildSearchTrackRequest(String query, int limit) throws MalformedURLException {
         HTTPRequest request = new HTTPRequest(buildAPIRequestURL("search"));
 
         request.putURLParameter("q", query.replace(" ", "+"));
@@ -120,7 +137,7 @@ public class SpotifyHTTPRequestBuilder{
         return request;
     }
 
-    public HTTPRequest buildGetPlaylistRequest(){
+    public HTTPRequest buildGetPlaylistRequest() throws MalformedURLException {
         HTTPRequest request = new HTTPRequest(buildAPIRequestURL("me/playlists"));
 
         request.putRequestProperty("Authorization", "Bearer " + access_token);
@@ -128,7 +145,40 @@ public class SpotifyHTTPRequestBuilder{
         return request;
     }
 
-    public HTTPRequest buildCreatePlaylistRequest(String name){
+    public HTTPRequest buildAddTrackToPlaylistRequest(URI trackURI, String playlistId) throws MalformedURLException {
+        HTTPRequest request = new HTTPRequest(buildAPIRequestURL("users/" + userId + "/playlists/" + playlistId + "/tracks"));
+
+        request.setRequestMethod("POST");
+
+        request.putRequestProperty("Authorization", "Bearer " + access_token);
+
+        request.putURLParameter("uris", trackURI.toString());
+
+        return request;
+    }
+
+    public HTTPRequest buildRemoveTrackFromPlaylistRequest(URI trackURI, String playlistId) throws MalformedURLException {
+        HTTPRequest request = new HTTPRequest(buildAPIRequestURL("users/" + userId + "/playlists/" + playlistId + "/tracks"));
+
+        request.setRequestMethod("DELETE");
+
+        request.putRequestProperty("Authorization", "Bearer " + access_token);
+
+        JsonObject trackObject = new JsonObject();
+        trackObject.addProperty("uri", trackURI.toString());
+
+        JsonArray tracksArray = new JsonArray();
+        tracksArray.add(trackObject);
+
+        JsonObject tracksObject = new JsonObject();
+        tracksObject.add("tracks", tracksArray);
+
+        request.setBody(tracksObject.toString());
+
+        return request;
+    }
+
+    public HTTPRequest buildCreatePlaylistRequest(String name) throws MalformedURLException {
         HTTPRequest request = new HTTPRequest(buildAPIRequestURL("users/" + userId  + "/playlists"));
 
         request.setRequestMethod("POST");
@@ -143,7 +193,17 @@ public class SpotifyHTTPRequestBuilder{
         return request;
     }
 
-    public HTTPRequest buildRequest(String url){
+    public HTTPRequest buildUnfollowPlaylistRequest(String playlistId) throws MalformedURLException {
+        HTTPRequest request = new HTTPRequest(buildAPIRequestURL("users/" + userId  + "/playlists/" + playlistId + "/followers"));
+
+        request.putRequestProperty("Authorization", "Bearer " + access_token);
+
+        request.setRequestMethod("DELETE");
+
+        return request;
+    }
+
+    public HTTPRequest buildRequest(URL url){
         HTTPRequest request = new HTTPRequest(url);
 
         request.putRequestProperty("Authorization", "Bearer " + access_token);
@@ -151,8 +211,8 @@ public class SpotifyHTTPRequestBuilder{
         return request;
     }
 
-    private String buildAPIRequestURL(String endpoint){
-        return API_URL + API_VERSION + endpoint;
+    private URL buildAPIRequestURL(String endpoint) throws MalformedURLException {
+        return new URL(API_URL + API_VERSION + endpoint);
     }
 
     public String getAccess_token() {
