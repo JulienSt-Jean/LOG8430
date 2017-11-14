@@ -47,6 +47,19 @@ public class PlaylistHandler {
         player.addToQueue(playlist.getListTrack());
     }
 
+    public void removeTrackFromPlaylist(String trackId, String playlistId){
+        Playlist playlist = getPlaylistByName(playlistId);
+        this.playlists.remove(playlist);
+        for(Track track: playlist.getListTrack()){
+            if(track.getId().equals(trackId)){
+                playlist.removeTrack(track);
+                System.out.println("Track : "+trackId + " removed from playlist : "+playlist.getName());
+                this.playlists.add(playlist);
+                break;
+            }
+        }
+    }
+
     public ArrayList<Playlist> getPlaylists() {
         return playlists;
     }

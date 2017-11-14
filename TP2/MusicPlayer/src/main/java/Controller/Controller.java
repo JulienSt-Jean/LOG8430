@@ -64,6 +64,16 @@ public class Controller {
         this.browser.getMenuFrame().updatePlaylists();
     }
 
+    public void playPlaylist(Playlist playlist){
+        playlistHandler.playPlaylist(playlist);
+        this.browser.getPlayerFrame().play();
+    }
+
+    public void removeTrackFromPlaylist(String trackId, String playlistId){
+        getPlaylistHandler().removeTrackFromPlaylist(trackId, playlistId);
+        this.browser.getMainFrame().displayPlaylist(getPlaylistHandler().getPlaylistByName(playlistId));
+    }
+
     public void displaySearchDiv(){
         browser.getMainFrame().displaySearchDiv();
     }
@@ -84,9 +94,7 @@ public class Controller {
         playlist.addTrack(track);
     }
 
-    public void removeSongFromPlaylist(Track track, Playlist playlist){
-        playlist.removeTrack(track);
-    }
+
 
     public void listenTrack(Track track){
         player.play(track);

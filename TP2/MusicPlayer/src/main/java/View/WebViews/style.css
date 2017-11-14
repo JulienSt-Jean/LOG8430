@@ -18,13 +18,32 @@ ul{
     list-style-type: none;
 }
 
-.menu button, .playlistManager button{
+.playlist button{
+    border: none;
+    background-color: transparent;
+}
+.list-group button{
+    border: none;
+    background-color: transparent;
+
+
+}
+
+.list-group button img{
+    height: 20px;
+
+
+}
+
+
+
+.menu button, .playlistManager button, #searchButton{
     font-family: 'Roboto', sans-serif;
     background-color: #002233; /* Green */
     border: none;
     color: white;
-    padding-top: 1em;
-    padding-bottom: 1em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
     padding-left: 1em;
     padding-right: 1em;
     text-align: center;
@@ -51,8 +70,8 @@ ul{
 
 
 
-.menu button:hover{
-background-color: #009999;
+.menu button:hover, #searchButton:hover{
+    background-color: #009999;
 }
 
 

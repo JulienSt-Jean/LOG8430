@@ -44,6 +44,7 @@ public class PlayerFrame extends Frame {
 
         }
     };
+
     EventListener previousTrack = new EventListener() {
         public void handleEvent(Event ev) {
             controller.getPlayer().playNext();
@@ -54,4 +55,13 @@ public class PlayerFrame extends Frame {
             controller.getPlayer().playNext();
         }
     };
+
+
+    public void play(){
+
+        Element play_pause_img = DOM.getElementById("play_pause_img");
+        play_pause_img.setAttribute("src", "png/016-pause.png");
+
+
+    }
 }

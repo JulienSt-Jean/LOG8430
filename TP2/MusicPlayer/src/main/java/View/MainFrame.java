@@ -5,6 +5,7 @@ import Model.Metadata;
 import Model.Playlist;
 import Model.Track;
 import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.SelectionMode;
 import jdk.internal.util.xml.impl.Input;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -42,8 +43,9 @@ public class MainFrame extends Frame {
     }
 
 
-    /*
-     * Display playlist in the main Frame
+    /**
+     * Display the playlist in the main frame
+     * @param playlist
      */
     public void displayPlaylist(Playlist playlist){
 
@@ -71,14 +73,46 @@ public class MainFrame extends Frame {
         }
         else {
             for (Track track : playlist.getListTrack()) {
-                Element p = this.DOM.createElement("li");
+                Element p = this.DOM.createElement("a");
+                p.setAttribute("class","list-group-item list-group-item-action");
+
                 p.setTextContent(track.getMetadata().getName());
+                Element deleteButton = this.DOM.createElement("button");
+                deleteButton.setAttribute("id", track.getId());
+                ((EventTarget) deleteButton).addEventListener("click", deleteTrackFromPlaylist, false);
+
+
+                Element deleteImg = this.DOM.createElement("img");
+                deleteImg.setAttribute("src","png/013-cancel.png");
+                deleteImg.setAttribute("width","30%");
+                deleteImg.setAttribute("height","30%");
+                deleteImg.setAttribute("id", track.getId());
+                deleteButton.appendChild(deleteImg);
+                p.appendChild(deleteButton);
                 tracks.appendChild(p);
             }
         }
 
     }
 
+    /**
+     *
+     */
+    EventListener deleteTrackFromPlaylist = new EventListener() {
+        public void handleEvent(Event ev) {
+            System.out.println("button delete track from selected playlist pressed");
+            String id = ((Element)ev.getTarget()).getAttribute("id");
+            System.out.println("Track : "+id+" to be removed");
+            controller.removeTrackFromPlaylist(id, selectedPlaylist.getName());
+
+        }
+    };
+
+
+
+    /**
+     * Display the search Division and hide the division of playlist
+     */
     public void displaySearchDiv(){
         Element searchDiv = this.DOM.getElementById("searchDiv");
         searchDiv.removeAttribute("hidden");
@@ -88,16 +122,26 @@ public class MainFrame extends Frame {
     }
 
 
+    /**
+     * Get the result of the input in the search bar and send the search query to the api
+     * @param data
+     */
     public void sendInputData(String data){
         System.out.println(data);
         resultTrack.clear();
         resultTrack.addAll(controller.getApiHandler().searchTrack(data));
 
 
+        //Creation de resultats bidons pour les tests
         resultTrack.add(new Track(new Metadata("Do I wanna Know","Arctic Monkeys", "AM"), "1", "Spotify"));
         resultTrack.add(new Track(new Metadata("Cornerstone","Arctic Monkeys", "AM"), "2", "Spotify"));
         resultTrack.add(new Track(new Metadata("505","Arctic Monkeys", "AM"), "3", "Spotify"));
         resultTrack.add(new Track(new Metadata("Piledriver Waltz","Arctic Monkeys", "AM"), "4", "Spotify"));
+        resultTrack.add(new Track(new Metadata("vhkbjnf","Afvrg", "cderf"), "5", "Spotify"));
+        resultTrack.add(new Track(new Metadata("cdfv","Afvrfvgbg", "gvbrf"), "6", "Spotify"));
+        resultTrack.add(new Track(new Metadata("erftg","zedfrrfvgbg", "brf"), "7", "Spotify"));
+
+
         Node searchResult = this.DOM.getElementById("searchResult");
 
         //On reset les résultats de la recherche
@@ -109,8 +153,13 @@ public class MainFrame extends Frame {
 
     }
 
+    /**
+     * Create an element of the searsh result list
+     * @param track
+     * @return
+     */
     private Element createTrackHTML(Track track){
-        Element t = this.DOM.createElement("a");
+        Element t = this.DOM.createElement("row");
         t.setAttribute("class","list-group-item list-group-item-action");
 
         Element buttonAdd = this.DOM.createElement("button");
@@ -124,33 +173,37 @@ public class MainFrame extends Frame {
         buttonAdd.appendChild(plusImg);
 
 
-
-//        Element row = this.DOM.createElement("div");
-//        row.setAttribute("class","row");
-
         Element divTitle = this.DOM.createElement("div");
         Element divOther = this.DOM.createElement("div");
 
         Element divArtiste = this.DOM.createElement("div");
         Element divAlbum = this.DOM.createElement("div");
 
+        Element divButton = this.DOM.createElement("div");
+
         divTitle.setAttribute("class", "col-4");
-        divOther.setAttribute("class", "col-4");
-        divArtiste.setAttribute("class", "row");
-        divAlbum.setAttribute("class", "row");
+
+        divArtiste.setAttribute("class", "col-4");
+        divAlbum.setAttribute("class", "col-4");
+        divButton.setAttribute("class", "col-4");
+
 
         divTitle.setTextContent(track.getMetadata().getName());
         divAlbum.setTextContent(track.getMetadata().getAlbum());
         divArtiste.setTextContent(track.getMetadata().getArtists());
-        divOther.appendChild(divArtiste);
-        divOther.appendChild(divAlbum);
+        divButton.appendChild(buttonAdd);
 
         t.appendChild(divTitle);
-        t.appendChild(divOther);
-        t.appendChild(buttonAdd);
+        t.appendChild(divAlbum);
+        t.appendChild(divArtiste);
+        t.appendChild(divButton);
         return t;
 
     }
+
+    /**
+     * Is called when the + button is click on a search result track
+     */
     EventListener addTrackToPlaylist = new EventListener() {
         public void handleEvent(Event ev) {
 
@@ -162,14 +215,24 @@ public class MainFrame extends Frame {
 
         }
     };
+
+    /**
+     * Play the current playlist
+     * Is called when the play button is pressed  is the playlist div
+     */
     EventListener playPlaylist = new EventListener() {
         public void handleEvent(Event ev) {
 
             System.out.println("button play selected playlist pressed");
-            controller.getPlaylistHandler().playPlaylist(selectedPlaylist);
+            controller.playPlaylist(selectedPlaylist);
 
         }
     };
+
+    /**
+     * Delete the current playlist
+     * Is called when the delete button is pressed  is the playlist div
+     */
     EventListener removePlaylist = new EventListener() {
         public void handleEvent(Event ev) {
 
@@ -184,6 +247,10 @@ public class MainFrame extends Frame {
         }
     };
 
+    /**
+     * Display a popup in which we choose to which playlist add the song id.
+     * @param id
+     */
     private void choosePlaylist(String id){
         ArrayList<String> playlistName = new ArrayList<String>();
         for(Playlist p : controller.getPlaylistHandler().getPlaylists()){
