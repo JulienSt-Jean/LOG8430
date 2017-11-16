@@ -1,41 +1,35 @@
 body{
     font-family: 'Roboto', sans-serif;
-
-
 }
 
-frame{
-
+.header{
+    text-align: center;
+    background-color:  #007788;
+    color: #ffffff;
 }
 
+.header, .menu, .player, .playlistManager{
+    overflow : hidden;
+}
 
-
-.menu, .playlistManager, .header{
+.menu, .playlistManager{
     background-color:  #002233;
     color: #e6f7ff;
-}
-ul{
-    list-style-type: none;
 }
 
 .playlist button{
     border: none;
     background-color: transparent;
 }
+
 .list-group button{
     border: none;
     background-color: transparent;
-
-
 }
 
 .list-group button img{
     height: 20px;
-
-
 }
-
-
 
 .menu button, .playlistManager button, #searchButton{
     font-family: 'Roboto', sans-serif;
@@ -54,32 +48,22 @@ ul{
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
     cursor: pointer;
-
-
 }
-
-#searchResult{
-    padding-top : 4em;
-}
-
 
 .playlistManager img{
- width: 50%;
- height: 50%;
+     width: 50%;
+     height: 50%;
 }
-
-
 
 .menu button:hover, #searchButton:hover{
     background-color: #009999;
 }
-
 
 .player{
     background-color: #00111a;
 }
 
 .player button{
-background-color: #00111a;
-border: none;
+    background-color: #00111a;
+    border: none;
 }

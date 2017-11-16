@@ -28,8 +28,9 @@ public class PlaylistManagerFrame extends Frame {
         public void handleEvent(Event ev) {
 
             TextInputDialog dialog = new TextInputDialog("Ma playlist");
-            dialog.setTitle("Créer votre playlist !");
-            dialog.setContentText("Donner un nom à votre playlist");
+            dialog.setTitle("Créer une playlist !");
+            dialog.setHeaderText("");
+            dialog.setContentText("Donnez un nom à votre playlist");
 
             // Traditional way to get the response value.
             Optional<String> result = dialog.showAndWait();
