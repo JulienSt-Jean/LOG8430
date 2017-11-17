@@ -3,6 +3,7 @@ package View;
 import Controller.Controller;
 import Model.Metadata;
 import Model.Playlist;
+import Model.ServiceProvider;
 import Model.Track;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.SelectionMode;
@@ -95,21 +96,23 @@ public class MainFrame extends Frame {
      */
     public void sendInputData(String data){
         System.out.println(data);
+
         resultTrack.clear();
         resultTrack.addAll(controller.getApiHandler().searchTrack(data));
 
         //Creation de resultats bidons pour les tests
-        resultTrack.add(new Track(new Metadata("Do I wanna Know","Arctic Monkeys", "AM"), "1", "Spotify"));
-        resultTrack.add(new Track(new Metadata("Cornerstone","Arctic Monkeys", "AM"), "2", "Spotify"));
-        resultTrack.add(new Track(new Metadata("505","Arctic Monkeys", "AM"), "3", "Spotify"));
-        resultTrack.add(new Track(new Metadata("Piledriver Waltz","Arctic Monkeys", "AM"), "4", "Spotify"));
-        resultTrack.add(new Track(new Metadata("vhkbjnf","Afvrg", "cderf"), "5", "Spotify"));
-        resultTrack.add(new Track(new Metadata("cdfv","Afvrfvgbg", "gvbrf"), "6", "Spotify"));
-        resultTrack.add(new Track(new Metadata("erftg","zedfrrfvgbg", "brf"), "7", "Spotify"));
+        resultTrack.add(new Track(new Metadata("Do I wanna Know","Arctic Monkeys", "AM"), "1", ServiceProvider.SPOTIFY));
+        resultTrack.add(new Track(new Metadata("Cornerstone","Arctic Monkeys", "AM"), "2", ServiceProvider.SPOTIFY));
+        resultTrack.add(new Track(new Metadata("505","Arctic Monkeys", "AM"), "3", ServiceProvider.SPOTIFY));
+        resultTrack.add(new Track(new Metadata("Piledriver Waltz","Arctic Monkeys", "AM"), "4", ServiceProvider.SPOTIFY));
+        resultTrack.add(new Track(new Metadata("vhkbjnf","Afvrg", "cderf"), "5", ServiceProvider.SPOTIFY));
+        resultTrack.add(new Track(new Metadata("cdfv","Afvrfvgbg", "gvbrf"), "6", ServiceProvider.SPOTIFY));
+        resultTrack.add(new Track(new Metadata("erftg","zedfrrfvgbg", "brf"), "7", ServiceProvider.SPOTIFY));
 
         //On reset les résultats de la recherche
         tracks.setTextContent("");
         for(Track track : resultTrack){
+
             System.out.println(track.getId());
             tracks.appendChild(createTrackHTML(track, false));
         }

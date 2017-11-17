@@ -1,12 +1,16 @@
 package Model;
 
 import com.google.gson.*;
+import com.google.gson.annotations.SerializedName;
 
 import java.lang.reflect.Type;
 
 public class Metadata {
+    @SerializedName("name")
     private String name;
+    @SerializedName(value = "artists", alternate = {"artist_name"})
     private String artists;
+    @SerializedName(value = "album", alternate = {"album_name"})
     private String album;
 
     public Metadata(String name, String artists, String album) {

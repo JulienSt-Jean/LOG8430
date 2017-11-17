@@ -2,8 +2,9 @@ package Handler;
 
 import Api.*;
 
+import Api.Jamendo.JamendoHandler;
+import Api.Spotify.SpotifyHandler;
 import Model.Track;
-import org.json.JSONArray;
 
 import java.util.ArrayList;
 
@@ -11,13 +12,13 @@ import java.util.ArrayList;
 
 public class ApiHandler {
 
-    private BeatportHandler beatportHandler;
+    private JamendoHandler jamendoHandler;
     private DeezerHandler deezerHandler;
     private SpotifyHandler spotifyHandler;
 
 
     public ApiHandler() {
-        this.beatportHandler = new BeatportHandler();
+        this.jamendoHandler = new JamendoHandler();
         this.deezerHandler = new DeezerHandler();
         this.spotifyHandler = new SpotifyHandler();
         System.out.println("ApiHandler created");
@@ -26,7 +27,7 @@ public class ApiHandler {
     public ArrayList<Track> searchTrack(String searchEntry){
         ArrayList<Track> results = new ArrayList<Track>();
 
-        /*JSONArray beatportResults = beatportHandler.searchTrack(searchEntry);
+        /*JSONArray beatportResults = jamendoHandler.searchTrack(searchEntry);
         JSONArray deezerResults = deezerHandler.searchTrack(searchEntry);
         JSONArray spotifyResults = spotifyHandler.searchTrack(searchEntry);*/
 
@@ -39,15 +40,6 @@ public class ApiHandler {
 
 
     public void readTrack(Track track){
-        if(track.getServiceProvider().equals("Spotify")){
-            spotifyHandler.readTrack(track.getId());
-        }
-        else if(track.getServiceProvider().equals("Deezer")){
-            deezerHandler.readTrack(track.getId());
-        }
-        else if(track.getServiceProvider().equals("BeatPort")){
-            beatportHandler.readTrack(track.getId());
-        }
     }
 
 

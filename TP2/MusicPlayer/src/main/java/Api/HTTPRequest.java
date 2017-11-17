@@ -1,16 +1,11 @@
 package Api;
 
-import Api.Exceptions.WebApiAuthenticationException;
 import Api.Exceptions.WebApiException;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,22 +13,22 @@ import java.util.Map;
  * Created by Philippe on 11/2/2017.
  */
 public class HTTPRequest {
-    private String strUrl;
+    private URL url;
     private Map<String, String> urlParameters = new HashMap<>();
     private String requestMethod = "GET";
     private Map<String, String> requestProperties = new HashMap<>();
     private boolean doOutput = true;
     private boolean doInput = true;
+    private String body = "";
     private HttpURLConnection connection;
 
-    public HTTPRequest(String url) {
-        this.strUrl = url;
+    public HTTPRequest(URL url) {
+        this.url = url;
+        this.putContentType("application/json");
     }
 
     public void putURLParameter(String parameter, String value) {
         urlParameters.put(parameter, value);
-
-        this.putContentType("application/json");
     }
 
     public void setRequestMethod(String requestMethod) {
@@ -71,7 +66,7 @@ public class HTTPRequest {
     }
 
     public String buildUrl() throws UnsupportedEncodingException {
-        return strUrl + (urlParameters.isEmpty() ? "" : "?" + getParamsString(urlParameters));
+        return url + (urlParameters.isEmpty() ? "" : "?" + getParamsString(urlParameters));
     }
 
     public void makeConnection() throws IOException {
@@ -85,6 +80,12 @@ public class HTTPRequest {
 
         for (Map.Entry<String, String> entry : requestProperties.entrySet()) {
             connection.setRequestProperty(entry.getKey(), entry.getValue());
+        }
+
+        if (!body.isEmpty()) {
+            OutputStreamWriter wr = new OutputStreamWriter(connection.getOutputStream());
+            wr.write(body);
+            wr.close();
         }
     }
 
@@ -119,7 +120,7 @@ public class HTTPRequest {
     public String getResponse() throws WebApiException {
         try {
             System.out.println(connection.getResponseCode());
-            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+            if (connection.getResponseCode() < HttpURLConnection.HTTP_BAD_REQUEST) {
                 return fetchResponse();
             } else {
                 throw new WebApiException(fetchErrorResponse());
@@ -129,5 +130,13 @@ public class HTTPRequest {
         }
 
         return "";
+    }
+
+    public InputStream getInputStream() throws IOException {
+        return connection.getInputStream();
+    }
+
+    public void setBody(String body) {
+        this.body = body;
     }
 }

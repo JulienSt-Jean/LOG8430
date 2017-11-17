@@ -1,12 +1,18 @@
 package Model;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.net.URL;
+
 public class Track {
 
     private Metadata metadata;
     private String id;
-    private String serviceProvider;
+    private ServiceProvider serviceProvider;
+    @SerializedName(value = "preview_url", alternate = {"audio"})
+    private URL audioURL;
 
-    public Track(Metadata metadata, String id, String serviceProvider) {
+    public Track(Metadata metadata, String id, ServiceProvider serviceProvider) {
         this.metadata = metadata;
         this.id = id;
         this.serviceProvider = serviceProvider;
@@ -16,7 +22,11 @@ public class Track {
         return id;
     }
 
-    public String getServiceProvider() {
+    public void setServiceProvider(ServiceProvider serviceProvider) {
+        this.serviceProvider = serviceProvider;
+    }
+
+    public ServiceProvider getServiceProvider() {
         return serviceProvider;
     }
 
@@ -26,5 +36,9 @@ public class Track {
 
     public void setMetadata(Metadata metadata) {
         this.metadata = metadata;
+    }
+
+    public URL getAudioURL() {
+        return audioURL;
     }
 }

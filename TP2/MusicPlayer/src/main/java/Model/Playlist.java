@@ -1,23 +1,27 @@
 package Model;
 
-import com.google.gson.annotations.SerializedName;
-
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Playlist implements Iterable<Track>{
-    private String name; //clé primaire
-    private String trackListUrl;
     private ArrayList<Track> listTrack;
+
+    private ServiceProvider serviceProvider;
+
+    private String id;
+    private String name;
+
+    private URL trackListUrl;
 
     //Constructor
     public Playlist(String name, ArrayList<Track> listTrack) {
         this.name = name;
         this.listTrack = listTrack;
     }
+
     public Playlist(String name) {
         this.name = name;
-       
     }
 
     //Getters and Setters
@@ -39,21 +43,37 @@ public class Playlist implements Iterable<Track>{
 
 
     //Add a track to the playlist
-    public void addTrack(Track track){
-        if(!listTrack.contains(track)){
+    public void addTrack(Track track) {
+        if (!listTrack.contains(track)) {
             listTrack.add(track);
         }
     }
 
     //Remove a track from the playlist
-    public void removeTrack(Track track){
-        if(listTrack.contains(track)) {
+    public void removeTrack(Track track) {
+        if (listTrack.contains(track)) {
             listTrack.remove(track);
         }
     }
 
-    public void setTrackListUrl(String trackListUrl) {
+    public URL getTrackListUrl() {
+        return trackListUrl;
+    }
+
+    public void setTrackListUrl(URL trackListUrl) {
         this.trackListUrl = trackListUrl;
+    }
+
+    public void setServiceProvider(ServiceProvider serviceProvider) {
+        this.serviceProvider = serviceProvider;
+    }
+
+    public ServiceProvider getServiceProvider() {
+        return serviceProvider;
+    }
+
+    public String getId() {
+        return id;
     }
 
     @Override
