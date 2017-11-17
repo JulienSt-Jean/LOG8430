@@ -22,13 +22,19 @@ body{
     background-color: transparent;
 }
 
-.list-group button{
+#tracks button{
     border: none;
     background-color: transparent;
 }
 
-.list-group button img{
+#tracks button img{
     height: 20px;
+}
+
+
+.table{
+    table-layout: fixed;
+    width: 100%;
 }
 
 .menu button, .playlistManager button, #searchButton{

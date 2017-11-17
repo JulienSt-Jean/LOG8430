@@ -8,7 +8,7 @@
     </head>
     <body class="main">
 
-        <div id="searchDiv" >
+        <div id="searchDiv" style="margin-bottom: 1em" >
             <nav class="navbar navbar-expand-md navbar-dark bg-dark">
                 <center>
                     <form class="form-inline" id="form">
@@ -19,7 +19,7 @@
             </nav>
         </div>
 
-        <div class="playlist" id="playlistDiv" hidden >
+        <div class="playlist" id="playlistDiv">
             <nav class="navbar navbar-expand-md navbar-light bg-light">
                 <a class="navbar-brand" id="playlistName">Navbar</a>
                 <button id="playPlaylist"><img width="50%" height="50%" src="png/014-play-button-black.png"></button>
@@ -28,9 +28,21 @@
             </nav>
         </div>
 
-        <table frame="none" width="100%">
-            <tbody id="tracks" class="list-group">
+        <table  class="table table-hover">
+            <thead>
+                <tr>
+                    <th style="width: 3%"></th>
+                    <th style="width: 3%"></th>
+                    <th style="width:30%">Title</th>
+                    <th style="width:25%">Album</th>
+                    <th style="width:10%">Artist</th>
+                    <th style="width: 5%; padding-right:2em"></th>
+                </tr>
+            </thead>
+            <tbody id="tracks">
+
             </tbody>
+
         </table>
 
 

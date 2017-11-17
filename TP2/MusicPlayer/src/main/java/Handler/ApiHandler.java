@@ -34,6 +34,17 @@ public class ApiHandler {
 
 
     public void readTrack(Track track){
+        switch(track.getServiceProvider()){
+            case SPOTIFY:
+                System.out.println("lire la track :"+track.getId() + " avec spotify");
+                break;
+            case JAMENDO:
+                System.out.println("lire la track :"+track.getId() + " avec jamendo");
+                break;
+            case DEEZER:
+                System.out.println("lire la track :"+track.getId() + " avec deezer");
+                break;
+        }
     }
 
 

@@ -19,7 +19,7 @@ public class Player {
 
     //Plays a track
     public void play(Track track){
-
+        apiHandler.readTrack(track);
     }
 
     //Pause a track

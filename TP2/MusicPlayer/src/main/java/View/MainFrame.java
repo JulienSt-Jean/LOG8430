@@ -48,6 +48,8 @@ public class MainFrame extends Frame {
         playlistDiv = this.DOM.getElementById("playlistDiv");
         searchDiv = this.DOM.getElementById("searchDiv");
         tracks = this.DOM.getElementById("tracks");
+        initiateTable();
+        displaySearchDiv();
 
         // Bind des contrôles de la playlist courante
         Element playSelectedPlaylist = this.DOM.getElementById("playPlaylist");
@@ -71,14 +73,14 @@ public class MainFrame extends Frame {
         playlistName.setTextContent(playlist.getName());
 
         //On reset la liste des chanson
-        tracks.setTextContent("");
+        initiateTable();
 
         if(playlist.getListTrack().size() == 0)
             tracks.setTextContent(" Cette playlist ne contient pas encore de chanson");
         else {
             for (Track track : playlist.getListTrack()) {
-                Element newTrack = createTrackHTML(track, true);
-                tracks.appendChild(newTrack);
+
+                tracks.appendChild(createTrackHTML(track, true));
             }
         }
     }
@@ -89,7 +91,8 @@ public class MainFrame extends Frame {
     public void displaySearchDiv(){
         searchDiv.removeAttribute("hidden");
         playlistDiv.setAttribute("hidden", "");
-        tracks.setTextContent("");
+        initiateTable();
+
     }
 
     /**
@@ -97,22 +100,26 @@ public class MainFrame extends Frame {
      * @param data
      */
     public void sendInputData(String data){
-        System.out.println(data);
+//        System.out.println(data);
 
         resultTrack.clear();
         resultTrack.addAll(controller.getApiHandler().searchTrack(data));
-        System.out.println(resultTrack.toString());
+//        System.out.println(resultTrack.toString());
 
 
         //On reset les résultats de la recherche
-        tracks.setTextContent("");
+        initiateTable();
         for(Track track : resultTrack){
-
             System.out.println(track.getId());
             tracks.appendChild(createTrackHTML(track, false));
         }
     }
 
+    public void initiateTable(){
+
+        tracks.setTextContent("");
+
+    }
     /**
      * Create an element of the search result list
      * @param track
@@ -120,9 +127,7 @@ public class MainFrame extends Frame {
      * @return Element t
      */
     private Element createTrackHTML(Track track, boolean playlistView){
-        Element t = this.DOM.createElement("row");
-        t.setAttribute("class","list-group-item list-group-item-action");
-
+        Element t = this.DOM.createElement("tr");
         Element addButton;
         Element playButton = createPlayButton(track.getId());
         if (playlistView)
@@ -131,16 +136,30 @@ public class MainFrame extends Frame {
             addButton = createAddButton(track.getId());
 
 
-        Element divPlayButton = this.DOM.createElement("entry");
-        Element divAddButton = this.DOM.createElement("entry");
-        Element divTitle = this.DOM.createElement("entry");
-        Element divArtiste = this.DOM.createElement("entry");
-        Element divAlbum = this.DOM.createElement("entry");
+        Element divPlayButton = this.DOM.createElement("td");
+        Element divAddButton = this.DOM.createElement("td");
+        Element divTitle = this.DOM.createElement("td");
+        Element divArtiste = this.DOM.createElement("td");
+        Element divAlbum = this.DOM.createElement("td");
+        Element provider = this.DOM.createElement("td");
 
-        divTitle.setAttribute("class", "col-4");
-        divArtiste.setAttribute("class", "col-4");
-        divAlbum.setAttribute("class", "col-4");
+        Element providerImg = this.DOM.createElement("img");
 
+        switch(track.getServiceProvider()){
+            case SPOTIFY:
+                providerImg.setAttribute("src", "png/spotify.png");
+                break;
+            case JAMENDO:
+                providerImg.setAttribute("src", "png/jamendo.png");
+                break;
+            case DEEZER:
+                providerImg.setAttribute("src", "png/deezer.png");
+                break;
+
+        }
+
+        providerImg.setAttribute("style", "width: 20px;");
+        provider.appendChild(providerImg);
 
         divTitle.setTextContent(track.getMetadata().getName());
         divAlbum.setTextContent(track.getMetadata().getAlbum());
@@ -148,11 +167,13 @@ public class MainFrame extends Frame {
         divPlayButton.appendChild(playButton);
         divAddButton.appendChild(addButton);
 
+
         t.appendChild(divPlayButton);
         t.appendChild(divAddButton);
         t.appendChild(divTitle);
         t.appendChild(divAlbum);
         t.appendChild(divArtiste);
+        t.appendChild(provider);
         return t;
     }
 
@@ -284,7 +305,14 @@ public class MainFrame extends Frame {
 
             Element button = (Element) ev.getTarget();
 
-            System.out.println("play track :" + button.getAttribute("id"));
+
+            String id = button.getAttribute("id");
+            System.out.println("track :" + id +" to be played");
+            for(Track track: resultTrack){
+                if(track.getId().equals(id)){
+                    controller.playTrack(track);
+                }
+            }
 
         }
     };
