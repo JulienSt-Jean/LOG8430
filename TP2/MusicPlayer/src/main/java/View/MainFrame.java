@@ -5,6 +5,8 @@ import Model.Metadata;
 import Model.Playlist;
 import Model.ServiceProvider;
 import Model.Track;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.SelectionMode;
 import jdk.internal.util.xml.impl.Input;
@@ -100,14 +102,7 @@ public class MainFrame extends Frame {
         resultTrack.clear();
         resultTrack.addAll(controller.getApiHandler().searchTrack(data));
         System.out.println(resultTrack.toString());
-        //Creation de resultats bidons pour les tests
-//        resultTrack.add(new Track(new Metadata("Do I wanna Know","Arctic Monkeys", "AM"), "1", ServiceProvider.SPOTIFY));
-//        resultTrack.add(new Track(new Metadata("Cornerstone","Arctic Monkeys", "AM"), "2", ServiceProvider.SPOTIFY));
-//        resultTrack.add(new Track(new Metadata("505","Arctic Monkeys", "AM"), "3", ServiceProvider.SPOTIFY));
-//        resultTrack.add(new Track(new Metadata("Piledriver Waltz","Arctic Monkeys", "AM"), "4", ServiceProvider.SPOTIFY));
-//        resultTrack.add(new Track(new Metadata("vhkbjnf","Afvrg", "cderf"), "5", ServiceProvider.SPOTIFY));
-//        resultTrack.add(new Track(new Metadata("cdfv","Afvrfvgbg", "gvbrf"), "6", ServiceProvider.SPOTIFY));
-//        resultTrack.add(new Track(new Metadata("erftg","zedfrrfvgbg", "brf"), "7", ServiceProvider.SPOTIFY));
+
 
         //On reset les résultats de la recherche
         tracks.setTextContent("");
@@ -128,13 +123,16 @@ public class MainFrame extends Frame {
         Element t = this.DOM.createElement("row");
         t.setAttribute("class","list-group-item list-group-item-action");
 
-        Element button;
+        Element addButton;
+        Element playButton = createPlayButton(track.getId());
         if (playlistView)
-            button = createDeleteButton(track.getId());
+            addButton = createDeleteButton(track.getId());
         else
-            button = createAddButton(track.getId());
+            addButton = createAddButton(track.getId());
 
-        Element divButton = this.DOM.createElement("entry");
+
+        Element divPlayButton = this.DOM.createElement("entry");
+        Element divAddButton = this.DOM.createElement("entry");
         Element divTitle = this.DOM.createElement("entry");
         Element divArtiste = this.DOM.createElement("entry");
         Element divAlbum = this.DOM.createElement("entry");
@@ -142,14 +140,16 @@ public class MainFrame extends Frame {
         divTitle.setAttribute("class", "col-4");
         divArtiste.setAttribute("class", "col-4");
         divAlbum.setAttribute("class", "col-4");
-        divButton.setAttribute("class", "col-4");
+
 
         divTitle.setTextContent(track.getMetadata().getName());
         divAlbum.setTextContent(track.getMetadata().getAlbum());
         divArtiste.setTextContent(track.getMetadata().getArtists());
-        divButton.appendChild(button);
+        divPlayButton.appendChild(playButton);
+        divAddButton.appendChild(addButton);
 
-        t.appendChild(divButton);
+        t.appendChild(divPlayButton);
+        t.appendChild(divAddButton);
         t.appendChild(divTitle);
         t.appendChild(divAlbum);
         t.appendChild(divArtiste);
@@ -161,25 +161,34 @@ public class MainFrame extends Frame {
      * @param id
      */
     private void choosePlaylist(String id){
-        ArrayList<String> playlistName = new ArrayList<String>();
-        for(Playlist p : controller.getPlaylistHandler().getPlaylists())
-            playlistName.add(p.getName());
-
-        ChoiceDialog<String> dialog = new ChoiceDialog<>(playlistName.get(0), playlistName);
-        dialog.setTitle("Ajouter à une playlist");
-        dialog.setHeaderText("");
-        dialog.setContentText("Choisissez une playlist: ");
-
-        Optional<String> result = dialog.showAndWait();
-
-        //Resultat de la popup
-        if (result.isPresent()){
-            System.out.println("Your choice: " + result.get());
-            Playlist selectedPlaylist = this.controller.getPlaylistHandler().getPlaylistByName(result.get());
-            Track trackToAdd = getTrackById(id);
-
-            controller.addSongtoPlaylist(trackToAdd, selectedPlaylist);
+        if(controller.getPlaylistHandler().getPlaylists().size() == 0){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Avertissement");
+            alert.setHeaderText("Il n'existe pas encore de playlist");
+            Optional<ButtonType> r = alert.showAndWait();
         }
+        else{
+            ArrayList<String> playlistName = new ArrayList<String>();
+            for(Playlist p : controller.getPlaylistHandler().getPlaylists())
+                playlistName.add(p.getName());
+
+            ChoiceDialog<String> dialog = new ChoiceDialog<>(playlistName.get(0), playlistName);
+            dialog.setTitle("Ajouter à une playlist");
+            dialog.setHeaderText("");
+            dialog.setContentText("Choisissez une playlist: ");
+
+            Optional<String> result = dialog.showAndWait();
+
+            //Resultat de la popup
+            if (result.isPresent()){
+                System.out.println("Your choice: " + result.get());
+                Playlist selectedPlaylist = this.controller.getPlaylistHandler().getPlaylistByName(result.get());
+                Track trackToAdd = getTrackById(id);
+
+                controller.addSongtoPlaylist(trackToAdd, selectedPlaylist);
+            }
+        }
+
     }
 
     /**
@@ -207,8 +216,7 @@ public class MainFrame extends Frame {
 
         Element deleteImg = this.DOM.createElement("img");
         deleteImg.setAttribute("src","png/013-cancel.png");
-        deleteImg.setAttribute("width","30%");
-        deleteImg.setAttribute("height","30%");
+
         deleteImg.setAttribute("id", trackId);
         buttonDelete.appendChild(deleteImg);
 
@@ -233,6 +241,24 @@ public class MainFrame extends Frame {
         return buttonAdd;
     }
 
+    /**
+     * Crée un bouton de type "play"
+     * @param trackId Id de la track associée au bouton à créer
+     * @return Le bouton créé
+     */
+    public Element createPlayButton(String trackId){
+        Element buttonAdd = this.DOM.createElement("button");
+        buttonAdd.setAttribute("id", trackId);
+        ((EventTarget) buttonAdd).addEventListener("click", playTrack, false);
+
+        Element playImg = this.DOM.createElement("img");
+        playImg.setAttribute("src", "png/014-play-button-black.png");
+        playImg.setAttribute("id", trackId);
+        buttonAdd.appendChild(playImg);
+
+        return buttonAdd;
+    }
+
 
     // ===================
     // Event Listeners
@@ -249,6 +275,20 @@ public class MainFrame extends Frame {
             choosePlaylist(button.getAttribute("id"));
         }
     };
+
+    /**
+     * Is called when the play button is click on a search result track
+     */
+    private EventListener playTrack = new EventListener() {
+        public void handleEvent(Event ev) {
+
+            Element button = (Element) ev.getTarget();
+
+            System.out.println("play track :" + button.getAttribute("id"));
+
+        }
+    };
+
 
     /**
      * Delete the track corresponding to the target Element
