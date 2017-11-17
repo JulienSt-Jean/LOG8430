@@ -10,8 +10,10 @@ public class Player {
     private ApiHandler apiHandler;
     private Stack<Track> previous;
     private Stack<Track> next;
+    private Track currentTrack;
 
     public Player(ApiHandler apiHandler) {
+        this.currentTrack = null;
         this.apiHandler = apiHandler;
         this.previous = new Stack<Track>();
         this.next = new Stack<Track>();
@@ -19,6 +21,7 @@ public class Player {
 
     //Plays a track
     public void play(Track track){
+        currentTrack = track;
         apiHandler.readTrack(track);
     }
 
@@ -43,6 +46,7 @@ public class Player {
             System.out.println("No next song to play");
         }else{
             Track track = next.pop();
+            currentTrack = track;
             previous.push(track);
             play(track);
             System.out.println("Play next song");
@@ -56,6 +60,7 @@ public class Player {
         }
         else{
             Track track = previous.pop();
+            currentTrack = track;
             next.push(track);
             play(track);
             System.out.println("Play previous song");
@@ -63,5 +68,11 @@ public class Player {
 
     }
 
+    public Track getCurrentTrack() {
+        return currentTrack;
+    }
 
+    public void setCurrentTrack(Track currentTrack) {
+        this.currentTrack = currentTrack;
+    }
 }

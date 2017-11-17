@@ -20,6 +20,8 @@ import org.w3c.dom.events.EventTarget;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 
 /**
@@ -78,8 +80,10 @@ public class MainFrame extends Frame {
         if(playlist.getListTrack().size() == 0)
             tracks.setTextContent(" Cette playlist ne contient pas encore de chanson");
         else {
-            for (Track track : playlist.getListTrack()) {
-
+            ArrayList<Track> reverse = new ArrayList<>();
+            Track track;
+            for (int i = playlist.getListTrack().size() -1; i>=0 ; i--) {
+                track = playlist.getListTrack().get(i);
                 tracks.appendChild(createTrackHTML(track, true));
             }
         }

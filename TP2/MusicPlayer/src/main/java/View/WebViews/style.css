@@ -67,9 +67,18 @@ body{
 
 .player{
     background-color: #00111a;
+    color: white;
+}
+.player #title{
+    text-align: center;
+    font-weight: bold;
 }
 
+.player #album, .player #artist{
+    font-size: 80%
+}
 .player button{
     background-color: #00111a;
     border: none;
+    vertical-align: middle;
 }

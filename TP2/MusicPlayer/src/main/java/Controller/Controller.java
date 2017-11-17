@@ -32,7 +32,22 @@ public class Controller {
     }
 
     public void playTrack(Track track){
+        this.browser.getPlayerFrame().play();
+        this.browser.getPlayerFrame().setCurrentTrack(track);
+        this.browser.getPlayerFrame().displayCurrentTrack();
         player.play(track);
+    }
+
+    public void playNext(){
+        player.playNext();
+        this.browser.getPlayerFrame().setCurrentTrack(player.getCurrentTrack());
+        this.browser.getPlayerFrame().displayCurrentTrack();
+    }
+
+    public void playPrevious(){
+        player.playPrevious();
+        this.browser.getPlayerFrame().setCurrentTrack(player.getCurrentTrack());
+        this.browser.getPlayerFrame().displayCurrentTrack();
     }
 
     /**
@@ -66,6 +81,8 @@ public class Controller {
 
     public void playPlaylist(Playlist playlist){
         playlistHandler.playPlaylist(playlist);
+        this.browser.getPlayerFrame().setCurrentTrack(player.getCurrentTrack());
+        this.browser.getPlayerFrame().displayCurrentTrack();
         this.browser.getPlayerFrame().play();
     }
 

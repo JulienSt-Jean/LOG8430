@@ -45,6 +45,7 @@ public class PlaylistHandler {
         System.out.println("Play playlist :"+playlist.getName());
         player.clearQueue();
         player.addToQueue(playlist.getListTrack());
+        player.playNext();
     }
 
     public void removeTrackFromPlaylist(String trackId, String playlistId){
