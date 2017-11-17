@@ -5,23 +5,35 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css">
 
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">-->
 
 </head>
 <body class="menu">
 
-    <ul class="nav nav-pills flex-column">
-        <li class="nav-item">
-            <button id="browserButton">Browse Music</button>
-        </li>
-        <li class="nav-item">
-            <button id="playlistButton">Playlists</button>
+<table style="width:100%">
+    <tr>
+        <td style="width:100%">
+            <button id="browseButton"><img width="30px" style="padding-right:1em; vertical-align: middle;" src="png/search_white.png"/>Browse Music</button>
+        </td>
+    </tr>
 
-            <ul id="playlists">
-            </ul>
 
-        </li>
-    </ul>
+</table>
+<table style="width:100%; padding-top: 2em;">
+    <thead>
+    <tr>
+        <th style="width:10%"><img style=" vertical-align: middle" width="30px" src="png/009-list_white.png"/></th>
+        <th style="vertical-align: middle">
+            Playlists
+        </th>
+    </tr>
+    </thead>
+    <tbody style="padding-top:1em; " id="playlists">
+
+    </tbody>
+</table>
+
+
+
 </body>
 
 

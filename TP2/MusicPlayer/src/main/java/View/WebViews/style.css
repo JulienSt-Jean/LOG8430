@@ -38,8 +38,9 @@ body{
 }
 
 .menu button, .playlistManager button, #searchButton{
+    vertical-align: middle;
     font-family: 'Roboto', sans-serif;
-    background-color: #002233; /* Green */
+    background-color: transparent; /* Green */
     border: none;
     color: white;
     padding-top: 0.5em;
@@ -51,18 +52,38 @@ body{
     display: inline-block;
     font-size: 16px;
     margin: 4px 2px;
-    -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
     cursor: pointer;
+}
+
+ #searchButton:hover{
+    border-radius: 100px;
+    background-color: #009999;
+}
+.menu td:hover{
+    border-radius: 100px;
+    background-color: #009999;
+}
+.menu .bullet:hover{
+    background-color: #002233;
+}
+
+
+#playlists button{
+    align: center;
+    vertical-align: middle;
+    color: #cecece;
+}
+
+
+#playlists img{
+    vertical-align: middle;
+    width: 20px;
 }
 
 .playlistManager img{
      width: 50%;
      height: 50%;
-}
-
-.menu button:hover, #searchButton:hover{
-    background-color: #009999;
 }
 
 .player{
@@ -82,3 +103,4 @@ body{
     border: none;
     vertical-align: middle;
 }
+

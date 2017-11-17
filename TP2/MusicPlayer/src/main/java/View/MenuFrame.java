@@ -8,6 +8,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
@@ -18,23 +19,35 @@ public class MenuFrame extends Frame {
 
     public MenuFrame(Document doc, Controller c){
         super(doc, c);
-        Element searchButton = DOM.getElementById("browserButton");
+        Element searchButton = DOM.getElementById("browseButton");
         ((EventTarget)searchButton).addEventListener("click", search, false);
-//        Element playlistButton = DOM.getElementById("browserButton");
-//        ((EventTarget)playlistButton).addEventListener("click", playlist, false);
+
 
     }
 
     public void addPlaylist(String title){
         Element playlists = DOM.getElementById("playlists");
-        Element p = DOM.createElement("li");
+        Element row = DOM.createElement("tr");
+        Element imgP = DOM.createElement("td");
+        imgP.setAttribute("class","bullet");
+        Element p = DOM.createElement("td");
         Element button = DOM.createElement("button");
-        button.setTextContent(title);
+
+        Element playlistImg = DOM.createElement("img");
+
         button.setAttribute("id", title);
-//        p.setAttribute("style", "background-color: #002233");
-        p.appendChild(button);
-        playlists.appendChild(p);
+
         ((EventTarget) button).addEventListener("click", clickOnPlaylist, false);
+        button.setTextContent(title);
+
+
+        playlistImg.setAttribute("src", "png/playlist.png");
+        imgP.appendChild(playlistImg);
+        p.appendChild(button);
+        row.appendChild(imgP);
+        row.appendChild(p);
+        playlists.appendChild(row);
+
     }
 
     public void updatePlaylists(){
@@ -47,26 +60,32 @@ public class MenuFrame extends Frame {
     }
 
 
-
-    private void initiatePlaylists() {
-        // On récupère l'élément à l'Id "playlists" dans le DOM du left panel
-        Element playlists = this.DOM.getElementById("playlists");
-
-        for (Playlist playlist : controller.getPlaylistHandler().getPlaylists()) {
-            Element p = this.DOM.createElement("li");
-
-            p.setTextContent(playlist.getName());
-            playlists.appendChild(p);
-        }
-    }
+//
+//    private void initiatePlaylists() {
+//        // On récupère l'élément à l'Id "playlists" dans le DOM du left panel
+//        Element playlists = this.DOM.getElementById("playlists");
+//
+//        for (Playlist playlist : controller.getPlaylistHandler().getPlaylists()) {
+//            Element p = this.DOM.createElement("tr");
+//
+//            p.setTextContent(playlist.getName());
+//            playlists.appendChild(p);
+//        }
+//    }
 
     EventListener clickOnPlaylist = new EventListener() {
         public void handleEvent(Event ev) {
 
             Element button =(Element) ev.getTarget();
-            Element li = (Element) button.getParentNode();
-//            li.setAttribute("style", "background-color: #009999;");
-            String playlistName = button.getAttribute("id").toString();
+
+            String playlistName;
+            if(!button.hasChildNodes()){
+                playlistName = ((Element)button.getParentNode()).getAttribute("id").toString();
+            }
+            else{
+                playlistName = button.getAttribute("id").toString();
+            }
+
             controller.displayPlaylistInMain(playlistName);
             System.out.println(playlistName);
         }

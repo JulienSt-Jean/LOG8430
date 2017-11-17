@@ -74,17 +74,19 @@ public class MainFrame extends Frame {
         Element playlistName = this.DOM.getElementById("playlistName");
         playlistName.setTextContent(playlist.getName());
 
-        //On reset la liste des chanson
-        initiateTable();
 
-        if(playlist.getListTrack().size() == 0)
-            tracks.setTextContent(" Cette playlist ne contient pas encore de chanson");
-        else {
+        initiateTable();
+        if(playlist.getListTrack().size() != 0) {
+
+
+            //On reset la liste des chanson
+
             ArrayList<Track> reverse = new ArrayList<>();
             Track track;
-            for (int i = playlist.getListTrack().size() -1; i>=0 ; i--) {
+            for (int i = playlist.getListTrack().size() - 1; i >= 0; i--) {
                 track = playlist.getListTrack().get(i);
                 tracks.appendChild(createTrackHTML(track, true));
+
             }
         }
     }
