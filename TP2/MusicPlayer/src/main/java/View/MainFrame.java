@@ -99,15 +99,15 @@ public class MainFrame extends Frame {
 
         resultTrack.clear();
         resultTrack.addAll(controller.getApiHandler().searchTrack(data));
-
+        System.out.println(resultTrack.toString());
         //Creation de resultats bidons pour les tests
-        resultTrack.add(new Track(new Metadata("Do I wanna Know","Arctic Monkeys", "AM"), "1", ServiceProvider.SPOTIFY));
-        resultTrack.add(new Track(new Metadata("Cornerstone","Arctic Monkeys", "AM"), "2", ServiceProvider.SPOTIFY));
-        resultTrack.add(new Track(new Metadata("505","Arctic Monkeys", "AM"), "3", ServiceProvider.SPOTIFY));
-        resultTrack.add(new Track(new Metadata("Piledriver Waltz","Arctic Monkeys", "AM"), "4", ServiceProvider.SPOTIFY));
-        resultTrack.add(new Track(new Metadata("vhkbjnf","Afvrg", "cderf"), "5", ServiceProvider.SPOTIFY));
-        resultTrack.add(new Track(new Metadata("cdfv","Afvrfvgbg", "gvbrf"), "6", ServiceProvider.SPOTIFY));
-        resultTrack.add(new Track(new Metadata("erftg","zedfrrfvgbg", "brf"), "7", ServiceProvider.SPOTIFY));
+//        resultTrack.add(new Track(new Metadata("Do I wanna Know","Arctic Monkeys", "AM"), "1", ServiceProvider.SPOTIFY));
+//        resultTrack.add(new Track(new Metadata("Cornerstone","Arctic Monkeys", "AM"), "2", ServiceProvider.SPOTIFY));
+//        resultTrack.add(new Track(new Metadata("505","Arctic Monkeys", "AM"), "3", ServiceProvider.SPOTIFY));
+//        resultTrack.add(new Track(new Metadata("Piledriver Waltz","Arctic Monkeys", "AM"), "4", ServiceProvider.SPOTIFY));
+//        resultTrack.add(new Track(new Metadata("vhkbjnf","Afvrg", "cderf"), "5", ServiceProvider.SPOTIFY));
+//        resultTrack.add(new Track(new Metadata("cdfv","Afvrfvgbg", "gvbrf"), "6", ServiceProvider.SPOTIFY));
+//        resultTrack.add(new Track(new Metadata("erftg","zedfrrfvgbg", "brf"), "7", ServiceProvider.SPOTIFY));
 
         //On reset les résultats de la recherche
         tracks.setTextContent("");
