@@ -1,20 +1,29 @@
 package Player;
 
-import Handler.ApiHandler;
 import Model.Track;
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.FactoryRegistry;
+import javazoom.jl.player.advanced.AdvancedPlayer;
+import javazoom.jl.player.advanced.PlaybackEvent;
+import javazoom.jl.player.advanced.PlaybackListener;
 
+import javax.sound.sampled.Line;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Stack;
 
 public class Player {
-    private ApiHandler apiHandler;
     private Stack<Track> previous;
     private Stack<Track> next;
     private Track currentTrack;
 
-    public Player(ApiHandler apiHandler) {
+    private AdvancedPlayer streamPlayer;
+    private InfoListener listener;
+
+    public Player() {
         this.currentTrack = null;
-        this.apiHandler = apiHandler;
         this.previous = new Stack<Track>();
         this.next = new Stack<Track>();
     }
@@ -22,12 +31,35 @@ public class Player {
     //Plays a track
     public void play(Track track){
         currentTrack = track;
-        apiHandler.readTrack(track);
+
+        if (streamPlayer != null)
+            pause();
+        try {
+            //TODO : éviter Null ptr except...
+            this.streamPlayer = new AdvancedPlayer(new URL(track.getAudioURL().toString()).openStream(), FactoryRegistry.systemRegistry().createAudioDevice());
+            listener = new InfoListener();
+            this.streamPlayer.setPlayBackListener(listener);
+            (new Thread() {
+                public void run() {
+                    try {
+                        streamPlayer.play();
+                    } catch (Exception var2x) {
+                        throw new RuntimeException(var2x.getMessage());
+                    }
+                }
+            }).start();
+        }catch (MalformedURLException e){
+            e.printStackTrace();
+        }catch (JavaLayerException e){
+            e.printStackTrace();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     //Pause a track
-    public void pause(Track track){
-
+    public void pause(){
+        this.streamPlayer.stop();
     }
 
     public void addToQueue(ArrayList<Track> tracks){
@@ -74,5 +106,19 @@ public class Player {
 
     public void setCurrentTrack(Track currentTrack) {
         this.currentTrack = currentTrack;
+    }
+
+
+    public class InfoListener extends PlaybackListener {
+        public InfoListener() {
+        }
+
+        public void playbackStarted(PlaybackEvent var1) {
+            System.out.println("Play started from frame " + var1.getFrame());
+        }
+
+        public void playbackFinished(PlaybackEvent var1) {
+            System.out.println("Play completed at frame " + var1.getFrame());
+        }
     }
 }

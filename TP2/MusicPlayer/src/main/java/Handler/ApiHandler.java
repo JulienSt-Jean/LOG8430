@@ -5,7 +5,6 @@ import Api.*;
 import Api.Jamendo.JamendoHandler;
 import Api.Spotify.SpotifyHandler;
 import Model.Track;
-
 import java.util.ArrayList;
 
 
@@ -15,7 +14,6 @@ public class ApiHandler {
     private JamendoHandler jamendoHandler;
     private DeezerHandler deezerHandler;
     private SpotifyHandler spotifyHandler;
-
 
     public ApiHandler() {
         this.jamendoHandler = new JamendoHandler();
@@ -31,21 +29,4 @@ public class ApiHandler {
 
         return results;
     }
-
-
-    public void readTrack(Track track){
-        switch(track.getServiceProvider()){
-            case SPOTIFY:
-                System.out.println("lire la track :"+track.getId() + " avec spotify");
-                break;
-            case JAMENDO:
-                System.out.println("lire la track :"+track.getId() + " avec jamendo");
-                break;
-            case DEEZER:
-                System.out.println("lire la track :"+track.getId() + " avec deezer");
-                break;
-        }
-    }
-
-
 }

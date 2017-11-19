@@ -21,7 +21,7 @@ public class Controller {
     public Controller(Browser browser) {
         this.browser = browser;
         this.apiHandler = new ApiHandler();
-        this.player = new Player(this.apiHandler);
+        this.player = new Player();
         this.playlistHandler = new PlaylistHandler(this.player);
         System.out.println("Controller created");
     }
