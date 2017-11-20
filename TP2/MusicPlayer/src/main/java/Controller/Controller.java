@@ -51,13 +51,11 @@ public class Controller {
     public void playNext(){
         player.playNext();
         // TODO : Vérifier si ok et get track
-        this.browser.getPlayerFrame().displayTrackInfo(player.getCurrentTrack());
     }
 
     public void playPrevious(){
         player.playPrevious();
         // TODO : Vérifier si ok et get track
-        this.browser.getPlayerFrame().displayTrackInfo(player.getCurrentTrack());
     }
 
     public void play_pauseClicked(){
@@ -116,7 +114,7 @@ public class Controller {
     }
 
     public void playCurrentPlaylist(){
-        playlistHandler.playPlaylist(currentPlaylist);
+        this.player.playPlaylist(currentPlaylist);
     }
 
     public void removeTrackFromCurrentPlaylist(String trackId){
