@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    </head>
+    <body class="main">
+
+        <div id="searchDiv" style="margin-bottom: 1em" >
+            <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+                <center>
+                    <form class="form-inline" id="form">
+                        <input id="input" class="form-control" type="text" placeholder="Search" aria-label="Search">
+                        <button id="searchButton" type="submit" >Search</button>
+                    </form>
+                </center>
+            </nav>
+        </div>
+
+        <div class="playlist" id="playlistDiv">
+            <nav class="navbar navbar-expand-md navbar-light bg-light">
+                <a class="navbar-brand" id="playlistName">Navbar</a>
+                <button id="playPlaylist"><img width="50%" height="50%" src="png/014-play-button-black.png"></button>
+                <button id="removePlaylist"><img width="50%" height="50%" src="png/013-cancel.png"></button>
+
+            </nav>
+        </div>
+
+        <table  class="table table-hover">
+            <thead>
+                <tr>
+                    <th style="width: 3%"></th>
+                    <th style="width: 3%"></th>
+                    <th style="width:30%">Title</th>
+                    <th style="width:25%">Album</th>
+                    <th style="width:10%">Artist</th>
+                    <th style="width: 5%; padding-right:2em"></th>
+                </tr>
+            </thead>
+            <tbody id="tracks">
+
+            </tbody>
+
+        </table>
+
+
+
+        <script language="javascript" type="text/javascript">
+
+
+            function processForm(e) {
+                if (e.preventDefault) e.preventDefault();
+
+                var input = document.getElementById('input');
+                window.status = this.input.value;
+                return false;
+            }
+
+            var form = document.getElementById('form');
+            if (form.attachEvent) {
+                form.attachEvent("submit", processForm);
+            } else {
+                form.addEventListener("submit", processForm);
+            }
+
+        </script>
+    </body>
+</html>

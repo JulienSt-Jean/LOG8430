@@ -1,0 +1,106 @@
+body{
+    font-family: 'Roboto', sans-serif;
+}
+
+.header{
+    text-align: center;
+    background-color:  #007788;
+    color: #ffffff;
+}
+
+.header, .menu, .player, .playlistManager{
+    overflow : hidden;
+}
+
+.menu, .playlistManager{
+    background-color:  #002233;
+    color: #e6f7ff;
+}
+
+.playlist button{
+    border: none;
+    background-color: transparent;
+}
+
+#tracks button{
+    border: none;
+    background-color: transparent;
+}
+
+#tracks button img{
+    height: 20px;
+}
+
+
+.table{
+    table-layout: fixed;
+    width: 100%;
+}
+
+.menu button, .playlistManager button, #searchButton{
+    vertical-align: middle;
+    font-family: 'Roboto', sans-serif;
+    background-color: transparent; /* Green */
+    border: none;
+    color: white;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    padding-left: 1em;
+    padding-right: 1em;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+ #searchButton:hover{
+    border-radius: 100px;
+    background-color: #009999;
+}
+.menu td:hover{
+    border-radius: 100px;
+    background-color: #009999;
+}
+.menu .bullet:hover{
+    background-color: #002233;
+}
+
+
+#playlists button{
+    align: center;
+    vertical-align: middle;
+    color: #cecece;
+}
+
+
+#playlists img{
+    vertical-align: middle;
+    width: 20px;
+}
+
+.playlistManager img{
+     width: 50%;
+     height: 50%;
+}
+
+.player{
+    background-color: #00111a;
+    color: white;
+}
+.player #title{
+    text-align: center;
+    font-weight: bold;
+}
+
+.player #album, .player #artist{
+    font-size: 80%
+}
+.player button{
+    background-color: #00111a;
+    border: none;
+    vertical-align: middle;
+}
+
