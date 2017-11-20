@@ -7,9 +7,10 @@ import java.net.URL;
 public class Track {
 
     private Metadata metadata;
+    @SerializedName(value = "id", alternate = {"trackId"})
     private String id;
     private ServiceProvider serviceProvider;
-    @SerializedName(value = "preview_url", alternate = {"audio"})
+    @SerializedName(value = "preview_url", alternate = {"audio","previewUrl"})
     private URL audioURL;
 
     public Track(Metadata metadata, String id, ServiceProvider serviceProvider) {
