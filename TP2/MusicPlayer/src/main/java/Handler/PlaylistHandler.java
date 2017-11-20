@@ -61,6 +61,13 @@ public class PlaylistHandler {
         }
     }
 
+    public void addTrackToPlaylist(Track track, String playlistName){
+        Playlist playlist = getPlaylistByName(playlistName);
+        if (playlist != null){
+            playlist.addTrack(track);
+        }
+    }
+
     public ArrayList<Playlist> getPlaylists() {
         return playlists;
     }

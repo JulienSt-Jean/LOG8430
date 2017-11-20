@@ -10,6 +10,8 @@ import Player.Player;
 import View.Browser;
 
 import java.util.ArrayList;
+import java.util.Optional;
+import java.util.Stack;
 
 public class Controller {
 
@@ -18,36 +20,66 @@ public class Controller {
     private PlaylistHandler playlistHandler;
     private ApiHandler apiHandler;
 
+    private Playlist currentPlaylist;
+
+    /**
+     * Constructor
+     * @param browser The View (web engine)
+     */
     public Controller(Browser browser) {
         this.browser = browser;
         this.apiHandler = new ApiHandler();
-        this.player = new Player();
+        this.player = new Player(this);
         this.playlistHandler = new PlaylistHandler(this.player);
         System.out.println("Controller created");
     }
 
-
-    public ArrayList<Track> searchTrack(String searchEntry){
-        return apiHandler.searchTrack(searchEntry);
+    public void searchTrack(String searchEntry){
+        ArrayList<Track> tracks = apiHandler.searchTrack(searchEntry);
+        if (!tracks.isEmpty())
+            browser.getMainFrame().displaySearchResults(tracks);
     }
 
     public void playTrack(Track track){
-        this.browser.getPlayerFrame().play();
-        this.browser.getPlayerFrame().setCurrentTrack(track);
-        this.browser.getPlayerFrame().displayCurrentTrack();
-        player.play(track);
+        if (player.getCurrentTrack() != track) {
+            this.player.play(track);
+            this.browser.getPlayerFrame().displayPause();
+            this.browser.getPlayerFrame().displayTrackInfo(track);
+        }
     }
 
     public void playNext(){
         player.playNext();
-        this.browser.getPlayerFrame().setCurrentTrack(player.getCurrentTrack());
-        this.browser.getPlayerFrame().displayCurrentTrack();
+        // TODO : Vérifier si ok et get track
+        this.browser.getPlayerFrame().displayTrackInfo(player.getCurrentTrack());
     }
 
     public void playPrevious(){
         player.playPrevious();
-        this.browser.getPlayerFrame().setCurrentTrack(player.getCurrentTrack());
-        this.browser.getPlayerFrame().displayCurrentTrack();
+        // TODO : Vérifier si ok et get track
+        this.browser.getPlayerFrame().displayTrackInfo(player.getCurrentTrack());
+    }
+
+    public void play_pauseClicked(){
+        this.player.play_pause();
+    }
+
+    public void isPlaying(){
+        this.browser.getPlayerFrame().displayPause();
+    }
+
+    public void isPaused(){
+        this.browser.getPlayerFrame().displayPlay();
+    }
+
+    public void isStopped(){
+        this.browser.getPlayerFrame().displayPlay();
+        this.browser.getPlayerFrame().hideTrackInfo();
+    }
+
+    public void isPlayingNewSong(){
+        this.browser.getPlayerFrame().displayPause();
+        this.browser.getPlayerFrame().displayTrackInfo(player.getCurrentTrack());
     }
 
     /**
@@ -55,91 +87,63 @@ public class Controller {
      * @param title
      * @throws PlaylistException
      */
-    public void createPlaylist(String title) throws PlaylistException{
-        playlistHandler.createPlaylist(title);
-        System.out.println("new playlist : "+title);
-        browser.getMenuFrame().addPlaylist(title);
-
+    public void createPlaylist(String title){
+        try {
+            playlistHandler.createPlaylist(title);
+            browser.getMenuFrame().addPlaylist(title);
+        } catch (PlaylistException e) {
+            browser.getPlaylistManagerFrame().showCreationWarning();
+        }
     }
 
     /**
      * Fetch the playlist by its name and display the playlist in the main frame
      * @param name
      */
-    public void displayPlaylistInMain(String name){
+    public void selectPlaylist(String name){
         Playlist playlist = getPlaylistHandler().getPlaylistByName(name);
-        if(!playlist.equals(null)){
-            browser.getMainFrame().displayPlaylist(playlist);
+        if(playlist != null) {
+            this.currentPlaylist = playlist;
+            this.browser.getMainFrame().displayPlaylist(playlist);
         }
-
     }
 
-    public void removePlaylist(Playlist playlist) {
-        this.getPlaylistHandler().deletePlaylist(playlist);
+    public void removeCurrentPlaylist() {
+        this.getPlaylistHandler().deletePlaylist(currentPlaylist);
+        currentPlaylist = null;
         this.browser.getMenuFrame().updatePlaylists();
+        this.browser.getMainFrame().displaySearchField();
     }
 
-    public void playPlaylist(Playlist playlist){
-        playlistHandler.playPlaylist(playlist);
-        this.browser.getPlayerFrame().setCurrentTrack(player.getCurrentTrack());
-        this.browser.getPlayerFrame().displayCurrentTrack();
-        this.browser.getPlayerFrame().play();
+    public void playCurrentPlaylist(){
+        playlistHandler.playPlaylist(currentPlaylist);
     }
 
-    public void removeTrackFromPlaylist(String trackId, String playlistId){
-        getPlaylistHandler().removeTrackFromPlaylist(trackId, playlistId);
-        this.browser.getMainFrame().displayPlaylist(getPlaylistHandler().getPlaylistByName(playlistId));
+    public void removeTrackFromCurrentPlaylist(String trackId){
+        playlistHandler.removeTrackFromPlaylist(trackId, currentPlaylist.getName());
+        this.browser.getMainFrame().displayPlaylist(currentPlaylist);
     }
 
-    public void displaySearchDiv(){
-        browser.getMainFrame().displaySearchDiv();
+    public void addTrack(Track track){
+        if (playlistHandler.getPlaylists().size() == 0)
+            browser.getMainFrame().showAddTrackWarning();
+        else{
+            ArrayList<String> playlistNames = new ArrayList<String>();
+            for(Playlist p : playlistHandler.getPlaylists())
+                playlistNames.add(p.getName());
+
+            Optional<String> playlistName = browser.getMainFrame().choosePlaylist(playlistNames);
+            if (playlistName.isPresent())
+                playlistHandler.addTrackToPlaylist(track, playlistName.get());
+        }
     }
 
-    public void playMusic(){
-        System.out.println("music is playing");
+    public void browseClicked(){
+        browser.getMainFrame().displaySearchField();
     }
-
-    public void pauseMusic(){
-        System.out.println("Music is paused");
-    }
-
-    public void deletePlaylist(Playlist playlist){
-        playlistHandler.deletePlaylist(playlist);
-    }
-
-    public void addSongtoPlaylist(Track track, Playlist playlist){
-        playlist.addTrack(track);
-    }
-
-
-
-    public void listenTrack(Track track){
-        player.play(track);
-    }
-
-    public void listenPlaylist(Playlist playlist){
-        playlistHandler.playPlaylist(playlist);
-    }
-
-
-    public Player getPlayer() {
-        return player;
-    }
-
 
     public PlaylistHandler getPlaylistHandler() {
         return playlistHandler;
     }
 
-    public void setPlaylistHandler(PlaylistHandler playlistHandler) {
-        this.playlistHandler = playlistHandler;
-    }
-
-    public ApiHandler getApiHandler() {
-        return apiHandler;
-    }
-
-    public void setApiHandler(ApiHandler apiHandler) {
-        this.apiHandler = apiHandler;
-    }
 }
