@@ -1,6 +1,7 @@
 package Player;
 
 import Controller.Controller;
+import Model.Metadata;
 import Model.Playlist;
 import Model.Track;
 import javazoom.jl.decoder.JavaLayerException;
@@ -36,12 +37,21 @@ public class Player {
 
     //Plays a track
     public void play(Track track){
+
+
         if (this.streamPlayer != null)
             this.streamPlayer.stop();
         currentTrack = track;
 
+        Metadata meta = track.getMetadata();
+        System.out.println(meta.getName());
+        System.out.println(meta.getArtists());
+        System.out.println(meta.getAlbum());
+        System.out.println(track.getAudioURL());
+        System.out.println(track.getServiceProvider());
+
         try {
-            this.streamPlayer = new AdvancedPlayer(new URL(track.getAudioURL().toString()).openStream(), FactoryRegistry.systemRegistry().createAudioDevice());
+            this.streamPlayer = new AdvancedPlayer(track.getAudioURL().openStream(), FactoryRegistry.systemRegistry().createAudioDevice());
             listener = new InfoListener();
             this.streamPlayer.setPlayBackListener(listener);
             (new Thread() {

@@ -15,6 +15,7 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class SpotifyHandler implements ApiWrapper {
@@ -49,7 +50,16 @@ public class SpotifyHandler implements ApiWrapper {
             e.printStackTrace();
         }
 
-        return parser.parseTrackList(response.getAsJsonObject().get("tracks"));
+        List<Track> notCleanList = parser.parseTrackList(response.getAsJsonObject().get("tracks"));
+        List<Track> cleanList = new LinkedList<Track>();
+
+        for (Track track: notCleanList) {
+            if(track.getAudioURL() != null){
+                cleanList.add(track);
+            }
+        }
+
+        return cleanList;
     }
 
     public List<Playlist> getPlaylists() {
