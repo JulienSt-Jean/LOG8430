@@ -1,0 +1,4 @@
+Pour executer l'application en mode service, il faut d'abord autoriser RMI à s'executer en local sur la machine:
+Dans intellij -> Run -> Edit configurations -> VM options : -Djava.security.manager -Djava.security.policy=src/policy
+
+Puis commen lancer la classe Controller.Main
