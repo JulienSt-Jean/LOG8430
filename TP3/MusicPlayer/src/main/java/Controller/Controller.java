@@ -2,6 +2,7 @@ package Controller;
 
 
 import ClientStub.JamendoStub;
+import ClientStub.PlaylistHandlerStub;
 import Model.Exceptions.PlaylistException;
 import Handler.PlaylistHandler;
 import Model.Playlist;
@@ -24,6 +25,8 @@ public class Controller {
     private SpotifyStub spotifyStub;
     private JamendoStub jamendoStub;
 
+    private PlaylistHandlerStub playlistHandlerStub;
+
     /**
      * Constructor
      *
@@ -36,6 +39,8 @@ public class Controller {
 
         this.spotifyStub = new SpotifyStub();
         this.jamendoStub = new JamendoStub();
+
+        this.playlistHandlerStub = new PlaylistHandlerStub();
 
         System.out.println("Controller created");
     }
