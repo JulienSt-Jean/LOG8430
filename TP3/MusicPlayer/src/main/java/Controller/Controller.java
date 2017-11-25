@@ -26,6 +26,7 @@ public class Controller {
 
     /**
      * Constructor
+     *
      * @param browser The View (web engine)
      */
     public Controller(Browser browser) {
@@ -39,18 +40,16 @@ public class Controller {
         System.out.println("Controller created");
     }
 
-    public void searchTrack(String searchEntry){
+    public void searchTrack(String searchEntry) {
         ArrayList<Track> tracks = new ArrayList<>();
         tracks.addAll(spotifyStub.searchTrack(searchEntry));
         tracks.addAll(jamendoStub.searchTrack(searchEntry));
         if (!tracks.isEmpty())
             browser.getMainFrame().displaySearchResults(tracks);
-        else{
 
-        }
     }
 
-    public void playTrack(Track track){
+    public void playTrack(Track track) {
         if (player.getCurrentTrack() != track) {
             this.player.play(track);
             this.browser.getPlayerFrame().displayPause();
@@ -58,46 +57,45 @@ public class Controller {
         }
     }
 
-    public void playNext(){
+    public void playNext() {
         player.playNext();
 
-        this.browser.getPlayerFrame().displayTrackInfo(player.getCurrentTrack());
     }
 
-    public void playPrevious(){
+    public void playPrevious() {
         player.playPrevious();
 
-        this.browser.getPlayerFrame().displayTrackInfo(player.getCurrentTrack());
     }
 
-    public void play_pauseClicked(){
+    public void play_pauseClicked() {
         this.player.play_pause();
     }
 
-    public void isPlaying(){
+    public void isPlaying() {
         this.browser.getPlayerFrame().displayPause();
     }
 
-    public void isPaused(){
+    public void isPaused() {
         this.browser.getPlayerFrame().displayPlay();
     }
 
-    public void isStopped(){
+    public void isStopped() {
         this.browser.getPlayerFrame().displayPlay();
         this.browser.getPlayerFrame().hideTrackInfo();
     }
 
-    public void isPlayingNewSong(){
+    public void isPlayingNewSong() {
         this.browser.getPlayerFrame().displayPause();
         this.browser.getPlayerFrame().displayTrackInfo(player.getCurrentTrack());
     }
 
     /**
      * Create a new playlist and display its name in the menu panel
+     *
      * @param title
      * @throws PlaylistException
      */
-    public void createPlaylist(String title){
+    public void createPlaylist(String title) {
         try {
             playlistHandler.createPlaylist(title);
             browser.getMenuFrame().addPlaylist(title);
@@ -108,11 +106,12 @@ public class Controller {
 
     /**
      * Fetch the playlist by its name and display the playlist in the main frame
+     *
      * @param name
      */
-    public void selectPlaylist(String name){
+    public void selectPlaylist(String name) {
         Playlist playlist = getPlaylistHandler().getPlaylistByName(name);
-        if(playlist != null) {
+        if (playlist != null) {
             this.currentPlaylist = playlist;
             this.browser.getMainFrame().displayPlaylist(playlist);
         }
@@ -125,21 +124,21 @@ public class Controller {
         this.browser.getMainFrame().displaySearchField();
     }
 
-    public void playCurrentPlaylist(){
-        playlistHandler.playPlaylist(currentPlaylist);
+    public void playCurrentPlaylist() {
+        this.player.playPlaylist(currentPlaylist);
     }
 
-    public void removeTrackFromCurrentPlaylist(String trackId){
+    public void removeTrackFromCurrentPlaylist(String trackId) {
         playlistHandler.removeTrackFromPlaylist(trackId, currentPlaylist.getName());
         this.browser.getMainFrame().displayPlaylist(currentPlaylist);
     }
 
-    public void addTrack(Track track){
+    public void addTrack(Track track) {
         if (playlistHandler.getPlaylists().size() == 0)
             browser.getMainFrame().showAddTrackWarning();
-        else{
+        else {
             ArrayList<String> playlistNames = new ArrayList<String>();
-            for(Playlist p : playlistHandler.getPlaylists())
+            for (Playlist p : playlistHandler.getPlaylists())
                 playlistNames.add(p.getName());
 
             Optional<String> playlistName = browser.getMainFrame().choosePlaylist(playlistNames);
@@ -148,12 +147,13 @@ public class Controller {
         }
     }
 
-    public void browseClicked(){
+    public void browseClicked() {
         browser.getMainFrame().displaySearchField();
     }
 
     public PlaylistHandler getPlaylistHandler() {
         return playlistHandler;
     }
+
 
 }

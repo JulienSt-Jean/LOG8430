@@ -1,36 +1,37 @@
 package Player;
 
 import Controller.Controller;
+import Model.Playlist;
 import Model.Track;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.FactoryRegistry;
 import javazoom.jl.player.advanced.AdvancedPlayer;
 import javazoom.jl.player.advanced.PlaybackEvent;
 import javazoom.jl.player.advanced.PlaybackListener;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collections;
+import java.util.ListIterator;
 import java.util.Stack;
 import java.util.ArrayList;
 
 public class Player {
     private Controller controller;
 
-    private Stack<Track> previous;
-    private Stack<Track> next;
+    private Playlist currentPlaylist;
     private Track currentTrack;
 
     private AdvancedPlayer streamPlayer;
     private InfoListener listener;
 
-    boolean playNextTriggered;
+    boolean previous_nextTriggered;
 
     public Player(Controller c) {
         controller = c;
-        this.currentTrack = null;
-        this.previous = new Stack<Track>();
-        this.next = new Stack<Track>();
-        playNextTriggered = false;
+        this.currentPlaylist = null;
+        previous_nextTriggered = false;
     }
 
     //Plays a track
@@ -45,14 +46,14 @@ public class Player {
             this.streamPlayer.setPlayBackListener(listener);
             (new Thread() {
                 public void run() {
-                try {
-                    streamPlayer.play();
-                } catch (Exception var2x) {
-                    throw new RuntimeException(var2x.getMessage());
-                }
+                    try {
+                        streamPlayer.play();
+                    } catch (Exception var2x) {
+                        throw new RuntimeException(var2x.getMessage());
+                    }
                 }
             }).start();
-            playNextTriggered = false;
+            previous_nextTriggered = false;
             controller.isPlayingNewSong();
         }catch (JavaLayerException | IOException e){
             e.printStackTrace();
@@ -62,53 +63,84 @@ public class Player {
 
     //Play or pause a track
     public void play_pause(){
+        previous_nextTriggered = true;
         if (streamPlayer != null) {
             this.streamPlayer.stop();
             controller.isStopped();
         }
         else {
             this.play(currentTrack);
-            controller.isPlaying();;
+            controller.isPlaying();
         }
-    }
-
-    public void addToQueue(ArrayList<Track> tracks){
-        for(Track t : tracks){
-            next.push(t);
-        }
-    }
-
-    public void clearQueue(){
-        previous.clear();
-        next.clear();
+        previous_nextTriggered = false;
     }
 
     public void playNext(){
-        if(next.isEmpty()){
-            System.out.println("No next song to play");
-            controller.isStopped();
-        }else{
-            playNextTriggered = true;
-            Track track = next.pop();
-            previous.push(track);
-            play(track);
-            System.out.println("Play next song");
+        if(currentPlaylist == null){
+            System.out.println("No playlist to play");
+        }
+        else if(currentTrack == null){
+            currentTrack = currentPlaylist.getListTrack().get(0);
+            previous_nextTriggered = true;
+            play(currentTrack);
+            System.out.println("Start playlist with :" +currentTrack.getMetadata().toString());
             controller.isPlayingNewSong();
         }
+        else{
+            int index = currentPlaylist.getListTrack().indexOf(currentTrack);
+            ListIterator<Track> iterator = currentPlaylist.getListTrack().listIterator(index);
+            previous_nextTriggered = true;
+            iterator.next();
+            if(iterator.hasNext()){
+
+                currentTrack = iterator.next();
+                play(currentTrack);
+                System.out.println("next track : "+currentTrack.getMetadata().toString());
+                controller.isPlayingNewSong();
+            }
+            else {
+                streamPlayer.stop();
+                controller.isStopped();
+                currentTrack = null;
+                currentPlaylist = null;
+                System.out.println("No next track to play");
+            }
+        }
+        previous_nextTriggered = false;
     }
 
     public void playPrevious(){
-        if(previous.isEmpty()){
-            System.out.println("No previous song to play");
+        if(currentPlaylist == null){
+            System.out.println("No playlist to play");
         }
         else{
-            Track track = previous.pop();
-            currentTrack = track;
-            next.push(track);
-            play(track);
-            System.out.println("Play previous song");
+            int index = currentPlaylist.getListTrack().indexOf(currentTrack);
+            ListIterator<Track> iterator = currentPlaylist.getListTrack().listIterator(index);
+            previous_nextTriggered = true;
+            if(iterator.hasPrevious()){
+                currentTrack = iterator.previous();
+                play(currentTrack);
+                System.out.println("previous track : " +currentTrack.getMetadata().toString());
+                controller.isPlayingNewSong();
+            }
+            else{
+                streamPlayer.stop();
+                controller.isStopped();
+                currentTrack = null;
+                currentPlaylist = null;
+                System.out.println("No previous track to play");
+            }
+            previous_nextTriggered = false;
         }
 
+    }
+
+    public void playPlaylist(Playlist playlist){
+        System.out.println("Play playlist :"+playlist.getName());
+        currentPlaylist = null;
+        currentTrack = null;
+        currentPlaylist = playlist;
+        playNext();
     }
 
     public Track getCurrentTrack(){
@@ -127,7 +159,7 @@ public class Player {
             System.out.println("Play completed at frame " + ev.getFrame());
             streamPlayer = null;
             listener = null;
-            if (!playNextTriggered)
+            if (!previous_nextTriggered)
                 playNext();
         }
     }

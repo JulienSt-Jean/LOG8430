@@ -43,4 +43,13 @@ public class Metadata implements Serializable{
     public void setAlbum(String album) {
         this.album = album;
     }
+
+    @Override
+    public String toString() {
+        return "Metadata{" +
+                "name='" + name + '\'' +
+                ", artists='" + artists + '\'' +
+                ", album='" + album + '\'' +
+                '}';
+    }
 }

@@ -10,11 +10,9 @@ import java.util.ArrayList;
 
 public class PlaylistHandler {
     private ArrayList<Playlist> playlists;
-    private Player player;
 
     public PlaylistHandler(Player player) {
         this.playlists = new ArrayList<Playlist>();
-        this.player = player;
         System.out.println("PlaylistHandler created");
     }
 
@@ -41,12 +39,7 @@ public class PlaylistHandler {
         playlists.remove(playlist);
     }
 
-    public void playPlaylist(Playlist playlist){
-        System.out.println("Play playlist :"+playlist.getName());
-        player.clearQueue();
-        player.addToQueue(playlist.getListTrack());
-        player.playNext();
-    }
+
 
     public void removeTrackFromPlaylist(String trackId, String playlistId){
         Playlist playlist = getPlaylistByName(playlistId);
@@ -86,7 +79,5 @@ public class PlaylistHandler {
         }
 
     }
-    public Player getPlayer() {
-        return player;
-    }
+
 }

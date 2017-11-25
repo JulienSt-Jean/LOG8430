@@ -62,9 +62,8 @@ public class MainFrame extends Frame {
         playlistName.setTextContent(playlist.getName());
 
         if(playlist.getListTrack().size() != 0) {
-            ArrayList<Track> tracksToAdd = playlist.getListTrack();
-            Collections.reverse(tracksToAdd);
-            displayTracks(tracksToAdd, true);
+
+            displayTracks(playlist.getListTrack(), true);
         }
     }
 
