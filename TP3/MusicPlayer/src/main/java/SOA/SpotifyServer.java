@@ -47,4 +47,6 @@ public class SpotifyServer implements ApiServerInterface, Runnable{
         results.addAll(spotifyHandler.searchTrack(trackName));
         return results;
     }
+
+
 }

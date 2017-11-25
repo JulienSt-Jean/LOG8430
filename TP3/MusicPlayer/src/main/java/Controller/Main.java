@@ -1,6 +1,8 @@
 package Controller;
 
 import Api.Spotify.SpotifyHandler;
+import ClientStub.JamendoStub;
+import Player.Player;
 import SOA.JamendoServer;
 import SOA.SpotifyServer;
 import View.Browser;
@@ -15,6 +17,9 @@ import java.rmi.registry.LocateRegistry;
 public class Main extends Application {
 
     private Controller controller;
+
+    private Thread spotifyThread;
+    private Thread jamendoThread;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -34,11 +39,22 @@ public class Main extends Application {
 
     }
 
+    @Override
+    public void stop() throws InterruptedException {
+        System.out.println("Stage is closing");
+        spotifyThread.join();
+        jamendoThread.join();
+        this.controller.isStopped();
+        System.exit(0);
+    }
 
 
-    public static void main(String[] args) {
+
+    public static void main(String[] args){
 
         launch(args);
+
+
     }
 
     public void launchServices() {
@@ -52,8 +68,8 @@ public class Main extends Application {
         JamendoServer jamendoServer = new JamendoServer();
 
 
-        Thread spotifyThread =  new Thread(spotifyServer);
-        Thread jamendoThread = new Thread(jamendoServer);
+        spotifyThread =  new Thread(spotifyServer);
+        jamendoThread = new Thread(jamendoServer);
 
         spotifyThread.start();
         jamendoThread.start();

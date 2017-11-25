@@ -80,6 +80,7 @@ public class Controller {
     }
 
     public void isStopped() {
+        this.player.stop();
         this.browser.getPlayerFrame().displayPlay();
         this.browser.getPlayerFrame().hideTrackInfo();
     }

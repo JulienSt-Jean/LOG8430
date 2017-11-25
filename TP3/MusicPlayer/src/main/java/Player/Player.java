@@ -143,6 +143,13 @@ public class Player {
         playNext();
     }
 
+    public void stop(){
+        if (this.streamPlayer != null) {
+            this.streamPlayer.stop();
+        }
+
+    }
+
     public Track getCurrentTrack(){
         return currentTrack;
     }
