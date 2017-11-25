@@ -8,10 +8,10 @@ import Model.Playlist;
 import Model.Track;
 import Player.Player;
 import View.Browser;
+import ClientStub.SpotifyStub;
 
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.Stack;
 
 public class Controller {
 
@@ -22,6 +22,8 @@ public class Controller {
 
     private Playlist currentPlaylist;
 
+    private SpotifyStub spotifyStub;
+
     /**
      * Constructor
      * @param browser The View (web engine)
@@ -31,13 +33,19 @@ public class Controller {
         this.apiHandler = new ApiHandler();
         this.player = new Player(this);
         this.playlistHandler = new PlaylistHandler(this.player);
+
+        this.spotifyStub = new SpotifyStub();
+
         System.out.println("Controller created");
     }
 
     public void searchTrack(String searchEntry){
-        ArrayList<Track> tracks = apiHandler.searchTrack(searchEntry);
+        ArrayList<Track> tracks = spotifyStub.searchTrack(searchEntry);
         if (!tracks.isEmpty())
             browser.getMainFrame().displaySearchResults(tracks);
+        else{
+
+        }
     }
 
     public void playTrack(Track track){

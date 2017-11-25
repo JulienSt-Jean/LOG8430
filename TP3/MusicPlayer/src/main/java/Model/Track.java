@@ -2,9 +2,10 @@ package Model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.net.URL;
 
-public class Track {
+public class Track implements Serializable{
 
     private Metadata metadata;
     private String id;

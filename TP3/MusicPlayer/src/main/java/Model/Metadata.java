@@ -3,9 +3,10 @@ package Model;
 import com.google.gson.*;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 
-public class Metadata {
+public class Metadata implements Serializable{
     @SerializedName("name")
     private String name;
     @SerializedName(value = "artists", alternate = {"artist_name"})

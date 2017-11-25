@@ -1,10 +1,15 @@
 package Controller;
 
+import Api.Spotify.SpotifyHandler;
+import SOA.SpotifyServer;
 import View.Browser;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
 
 public class Main extends Application {
 
@@ -12,7 +17,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
+        launchServices();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("sample.fxml"));
 
         primaryStage.setTitle("LOG8430 - TP2 : Music Player");
@@ -24,11 +29,28 @@ public class Main extends Application {
         loader.setController(controller);
         primaryStage.setScene(new Scene(browser));
         primaryStage.show();
+        System.out.println("Client interface is launched");
+
     }
 
 
 
     public static void main(String[] args) {
+
         launch(args);
+    }
+
+    public void launchServices() {
+        try {
+            LocateRegistry.createRegistry(8081);
+            LocateRegistry.createRegistry(8080);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        SpotifyServer spotifyServer = new SpotifyServer();
+        Thread spotifyThread =  new Thread( spotifyServer);
+        spotifyThread.start();
+
+        System.out.println();
     }
 }
