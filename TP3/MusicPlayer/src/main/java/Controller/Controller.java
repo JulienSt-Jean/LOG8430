@@ -1,8 +1,8 @@
 package Controller;
 
 
+import ClientStub.JamendoStub;
 import Model.Exceptions.PlaylistException;
-import Handler.ApiHandler;
 import Handler.PlaylistHandler;
 import Model.Playlist;
 import Model.Track;
@@ -18,11 +18,11 @@ public class Controller {
     private Browser browser;
     private Player player;
     private PlaylistHandler playlistHandler;
-    private ApiHandler apiHandler;
 
     private Playlist currentPlaylist;
 
     private SpotifyStub spotifyStub;
+    private JamendoStub jamendoStub;
 
     /**
      * Constructor
@@ -30,17 +30,19 @@ public class Controller {
      */
     public Controller(Browser browser) {
         this.browser = browser;
-        this.apiHandler = new ApiHandler();
         this.player = new Player(this);
         this.playlistHandler = new PlaylistHandler(this.player);
 
         this.spotifyStub = new SpotifyStub();
+        this.jamendoStub = new JamendoStub();
 
         System.out.println("Controller created");
     }
 
     public void searchTrack(String searchEntry){
-        ArrayList<Track> tracks = spotifyStub.searchTrack(searchEntry);
+        ArrayList<Track> tracks = new ArrayList<>();
+        tracks.addAll(spotifyStub.searchTrack(searchEntry));
+        tracks.addAll(jamendoStub.searchTrack(searchEntry));
         if (!tracks.isEmpty())
             browser.getMainFrame().displaySearchResults(tracks);
         else{
@@ -58,13 +60,13 @@ public class Controller {
 
     public void playNext(){
         player.playNext();
-        // TODO : Vérifier si ok et get track
+
         this.browser.getPlayerFrame().displayTrackInfo(player.getCurrentTrack());
     }
 
     public void playPrevious(){
         player.playPrevious();
-        // TODO : Vérifier si ok et get track
+
         this.browser.getPlayerFrame().displayTrackInfo(player.getCurrentTrack());
     }
 

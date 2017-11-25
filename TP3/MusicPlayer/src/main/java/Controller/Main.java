@@ -1,6 +1,7 @@
 package Controller;
 
 import Api.Spotify.SpotifyHandler;
+import SOA.JamendoServer;
 import SOA.SpotifyServer;
 import View.Browser;
 import javafx.application.Application;
@@ -42,14 +43,20 @@ public class Main extends Application {
 
     public void launchServices() {
         try {
-            LocateRegistry.createRegistry(8081);
             LocateRegistry.createRegistry(8080);
+            LocateRegistry.createRegistry(8081);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
         SpotifyServer spotifyServer = new SpotifyServer();
-        Thread spotifyThread =  new Thread( spotifyServer);
+        JamendoServer jamendoServer = new JamendoServer();
+
+
+        Thread spotifyThread =  new Thread(spotifyServer);
+        Thread jamendoThread = new Thread(jamendoServer);
+
         spotifyThread.start();
+        jamendoThread.start();
 
         System.out.println();
     }

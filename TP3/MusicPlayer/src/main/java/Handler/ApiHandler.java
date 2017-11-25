@@ -19,7 +19,6 @@ public class ApiHandler {
         this.jamendoHandler = new JamendoHandler();
         this.deezerHandler = new DeezerHandler();
         this.spotifyHandler = new SpotifyHandler();
-        System.out.println("ApiHandler created");
     }
 
     public ArrayList<Track> searchTrack(String searchEntry){
