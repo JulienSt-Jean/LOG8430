@@ -1,6 +1,7 @@
 package Controller;
 
 
+import ClientStub.ITunesStub;
 import ClientStub.JamendoStub;
 import ClientStub.PlaylistHandlerStub;
 import Model.Exceptions.PlaylistException;
@@ -8,6 +9,7 @@ import Handler.PlaylistHandler;
 import Model.Playlist;
 import Model.Track;
 import Player.Player;
+import SOA.ITunesServer;
 import View.Browser;
 import ClientStub.SpotifyStub;
 
@@ -22,6 +24,7 @@ public class Controller {
 
     private SpotifyStub spotifyStub;
     private JamendoStub jamendoStub;
+    private ITunesStub iTunesStub;
 
     private PlaylistHandlerStub playlistHandlerStub;
 
@@ -35,6 +38,7 @@ public class Controller {
         this.player = new Player(this);
         this.spotifyStub = new SpotifyStub();
         this.jamendoStub = new JamendoStub();
+        this.iTunesStub = new ITunesStub();
 
         this.playlistHandlerStub = new PlaylistHandlerStub();
 
@@ -45,6 +49,7 @@ public class Controller {
         ArrayList<Track> tracks = new ArrayList<>();
         tracks.addAll(spotifyStub.searchTrack(searchEntry));
         tracks.addAll(jamendoStub.searchTrack(searchEntry));
+        tracks.addAll(iTunesStub.searchTrack(searchEntry));
         if (!tracks.isEmpty())
             browser.getMainFrame().displaySearchResults(tracks);
 

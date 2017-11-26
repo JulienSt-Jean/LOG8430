@@ -7,11 +7,11 @@ import java.io.Serializable;
 import java.lang.reflect.Type;
 
 public class Metadata implements Serializable{
-    @SerializedName("name")
+    @SerializedName(value = "name", alternate = {"trackName"})
     private String name;
-    @SerializedName(value = "artists", alternate = {"artist_name"})
+    @SerializedName(value = "artists", alternate = {"artist_name","artistName"})
     private String artists;
-    @SerializedName(value = "album", alternate = {"album_name"})
+    @SerializedName(value = "album", alternate = {"album_name","collectionName"})
     private String album;
 
     public Metadata(String name, String artists, String album) {

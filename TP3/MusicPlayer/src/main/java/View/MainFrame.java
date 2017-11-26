@@ -136,7 +136,7 @@ public class MainFrame extends Frame {
             case JAMENDO:
                 providerImg.setAttribute("src", "png/jamendo.png");
                 break;
-            case DEEZER:
+            case ITUNES:
                 providerImg.setAttribute("src", "png/deezer.png");
                 break;
         }

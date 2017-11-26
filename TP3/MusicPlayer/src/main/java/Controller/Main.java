@@ -4,6 +4,7 @@ import Api.Spotify.SpotifyHandler;
 import ClientStub.JamendoStub;
 import Handler.ApiHandler;
 import Player.Player;
+import SOA.ITunesServer;
 import SOA.JamendoServer;
 import SOA.PlaylistHandlerServer;
 import SOA.SpotifyServer;
@@ -23,6 +24,7 @@ public class Main extends Application {
     private Thread spotifyThread;
     private Thread jamendoThread;
     private Thread playlistHandlerThread;
+    private Thread iTunesThread;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -47,6 +49,7 @@ public class Main extends Application {
         System.out.println("Stage is closing");
         spotifyThread.join();
         jamendoThread.join();
+        iTunesThread.join();
         playlistHandlerThread.join();
         this.controller.isStopped();
         System.exit(0);
@@ -65,6 +68,7 @@ public class Main extends Application {
         try {
             LocateRegistry.createRegistry(8080);
             LocateRegistry.createRegistry(8081);
+            LocateRegistry.createRegistry(8082);
             LocateRegistry.createRegistry(8083);
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -73,6 +77,7 @@ public class Main extends Application {
         //Creation des nouveaux services
         SpotifyServer spotifyServer = new SpotifyServer();
         JamendoServer jamendoServer = new JamendoServer();
+        ITunesServer iTunesServer = new ITunesServer();
 
         PlaylistHandlerServer playlistHandlerServer = new PlaylistHandlerServer();
 
@@ -80,11 +85,13 @@ public class Main extends Application {
         //Lancement des services dans de nouveaux threads
         spotifyThread =  new Thread(spotifyServer);
         jamendoThread = new Thread(jamendoServer);
+        iTunesThread = new Thread(iTunesServer);
 
         playlistHandlerThread = new Thread(playlistHandlerServer);
 
         spotifyThread.start();
         jamendoThread.start();
+        iTunesThread.start();
 
         playlistHandlerThread.start();
 

@@ -119,7 +119,6 @@ public class HTTPRequest {
 
     public String getResponse() throws WebApiException {
         try {
-            System.out.println(connection.getResponseCode());
             if (connection.getResponseCode() < HttpURLConnection.HTTP_BAD_REQUEST) {
                 return fetchResponse();
             } else {

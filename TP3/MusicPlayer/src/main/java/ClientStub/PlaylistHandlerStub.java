@@ -25,7 +25,7 @@ public class PlaylistHandlerStub {
         try {
             Registry registry = LocateRegistry.getRegistry("127.0.1.1", 8083);
             stub = (PlaylistHandlerServerInterface) registry.lookup("PlaylistHandlerServer");
-            System.out.println("Jamendo stub is created");
+            System.out.println("PlaylistHandler stub is created");
         } catch (NotBoundException e) {
             System.out.println("Erreur: Le nom '" + e.getMessage() + "' n'est pas défini dans le registre.");
         } catch (AccessException e) {
