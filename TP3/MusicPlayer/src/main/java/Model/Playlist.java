@@ -1,10 +1,11 @@
 package Model;
 
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Playlist implements Iterable<Track>{
+public class Playlist implements Iterable<Track>, Serializable{
     private ArrayList<Track> listTrack;
 
     private ServiceProvider serviceProvider;
@@ -79,5 +80,16 @@ public class Playlist implements Iterable<Track>{
     @Override
     public Iterator<Track> iterator() {
         return listTrack.iterator();
+    }
+
+    @Override
+    public String toString() {
+        return "Playlist{" +
+                "listTrack=" + listTrack +
+                ", serviceProvider=" + serviceProvider +
+                ", id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", trackListUrl=" + trackListUrl +
+                '}';
     }
 }

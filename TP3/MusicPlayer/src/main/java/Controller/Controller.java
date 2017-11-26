@@ -18,8 +18,6 @@ public class Controller {
 
     private Browser browser;
     private Player player;
-    private PlaylistHandler playlistHandler;
-
     private Playlist currentPlaylist;
 
     private SpotifyStub spotifyStub;
@@ -35,8 +33,6 @@ public class Controller {
     public Controller(Browser browser) {
         this.browser = browser;
         this.player = new Player(this);
-        this.playlistHandler = new PlaylistHandler(this.player);
-
         this.spotifyStub = new SpotifyStub();
         this.jamendoStub = new JamendoStub();
 
@@ -103,7 +99,7 @@ public class Controller {
      */
     public void createPlaylist(String title) {
         try {
-            playlistHandler.createPlaylist(title);
+            playlistHandlerStub.createPlaylist(title);
             browser.getMenuFrame().addPlaylist(title);
         } catch (PlaylistException e) {
             browser.getPlaylistManagerFrame().showCreationWarning();
@@ -116,7 +112,7 @@ public class Controller {
      * @param name
      */
     public void selectPlaylist(String name) {
-        Playlist playlist = getPlaylistHandler().getPlaylistByName(name);
+        Playlist playlist = playlistHandlerStub.getPlaylistByName(name);
         if (playlist != null) {
             this.currentPlaylist = playlist;
             this.browser.getMainFrame().displayPlaylist(playlist);
@@ -124,9 +120,10 @@ public class Controller {
     }
 
     public void removeCurrentPlaylist() {
-        this.getPlaylistHandler().deletePlaylist(currentPlaylist);
+        System.out.println(currentPlaylist.getName());
+        this.playlistHandlerStub.deletePlaylist(currentPlaylist);
         currentPlaylist = null;
-        this.browser.getMenuFrame().updatePlaylists();
+        this.browser.getMenuFrame().updatePlaylists(getPlaylists());
         this.browser.getMainFrame().displaySearchField();
     }
 
@@ -135,21 +132,22 @@ public class Controller {
     }
 
     public void removeTrackFromCurrentPlaylist(String trackId) {
-        playlistHandler.removeTrackFromPlaylist(trackId, currentPlaylist.getName());
+        playlistHandlerStub.removeTrackFromPlaylist(trackId, currentPlaylist.getName());
+        currentPlaylist = playlistHandlerStub.getPlaylistByName(currentPlaylist.getName());
         this.browser.getMainFrame().displayPlaylist(currentPlaylist);
     }
 
     public void addTrack(Track track) {
-        if (playlistHandler.getPlaylists().size() == 0)
+        if (playlistHandlerStub.getPlaylists().size() == 0)
             browser.getMainFrame().showAddTrackWarning();
         else {
             ArrayList<String> playlistNames = new ArrayList<String>();
-            for (Playlist p : playlistHandler.getPlaylists())
+            for (Playlist p : playlistHandlerStub.getPlaylists())
                 playlistNames.add(p.getName());
 
             Optional<String> playlistName = browser.getMainFrame().choosePlaylist(playlistNames);
             if (playlistName.isPresent())
-                playlistHandler.addTrackToPlaylist(track, playlistName.get());
+                playlistHandlerStub.addTrackToPlaylist(track, playlistName.get());
         }
     }
 
@@ -157,9 +155,12 @@ public class Controller {
         browser.getMainFrame().displaySearchField();
     }
 
-    public PlaylistHandler getPlaylistHandler() {
-        return playlistHandler;
+    public ArrayList<Playlist> getPlaylists(){
+        return playlistHandlerStub.getPlaylists();
     }
 
 
+    public PlaylistHandlerStub getPlaylistHandlerStub() {
+        return playlistHandlerStub;
+    }
 }

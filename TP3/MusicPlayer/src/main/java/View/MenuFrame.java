@@ -2,11 +2,14 @@ package View;
 
 import Controller.Controller;
 import Model.Playlist;
+import Player.Player;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
+
+import java.util.ArrayList;
 
 public class MenuFrame extends Frame {
 
@@ -38,10 +41,10 @@ public class MenuFrame extends Frame {
         playlists.appendChild(row);
     }
 
-    public void updatePlaylists(){
-        Element playlists = DOM.getElementById("playlists");
-        playlists.setTextContent("");
-        for(Playlist playlist : controller.getPlaylistHandler().getPlaylists()){
+    public void updatePlaylists(ArrayList<Playlist> playlists){
+        Element p = DOM.getElementById("playlists");
+        p.setTextContent("");
+        for(Playlist playlist : playlists){
             addPlaylist(playlist.getName());
         }
 

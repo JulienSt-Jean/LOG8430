@@ -61,7 +61,7 @@ public class PlaylistHandlerServer implements PlaylistHandlerServerInterface, Ru
     }
     @Override
     public void deletePlaylist(Playlist playlist) throws RemoteException{
-        playlists.remove(playlist);
+        playlists.remove(getPlaylistByName(playlist.getName()));
     }
 
 
