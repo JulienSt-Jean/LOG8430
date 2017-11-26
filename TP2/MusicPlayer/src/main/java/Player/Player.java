@@ -3,20 +3,30 @@ package Player;
 import Controller.Controller;
 import Model.Metadata;
 import Model.Playlist;
+import Model.ServiceProvider;
 import Model.Track;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.FactoryRegistry;
 import javazoom.jl.player.advanced.AdvancedPlayer;
 import javazoom.jl.player.advanced.PlaybackEvent;
 import javazoom.jl.player.advanced.PlaybackListener;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+import net.sourceforge.jaad.aac.AACException;
+import net.sourceforge.jaad.aac.Decoder;
+import net.sourceforge.jaad.aac.SampleBuffer;
+import net.sourceforge.jaad.mp4.MP4Container;
+import net.sourceforge.jaad.mp4.api.AudioTrack;
+import net.sourceforge.jaad.mp4.api.Frame;
+import net.sourceforge.jaad.mp4.api.Movie;
 
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.SourceDataLine;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Collections;
+import java.util.List;
 import java.util.ListIterator;
-import java.util.Stack;
-import java.util.ArrayList;
+
+
 
 public class Player {
     private Controller controller;
@@ -43,15 +53,17 @@ public class Player {
             this.streamPlayer.stop();
         currentTrack = track;
 
-        Metadata meta = track.getMetadata();
-        System.out.println(meta.getName());
-        System.out.println(meta.getArtists());
-        System.out.println(meta.getAlbum());
-        System.out.println(track.getAudioURL());
-        System.out.println(track.getServiceProvider());
-
         try {
-            this.streamPlayer = new AdvancedPlayer(track.getAudioURL().openStream(), FactoryRegistry.systemRegistry().createAudioDevice());
+
+            if(track.getServiceProvider() == ServiceProvider.ITUNES) {
+
+                getItuneAudioBuffer(track.getAudioURL().toString());
+
+            }
+            else {
+                this.streamPlayer = new AdvancedPlayer(new URL(track.getAudioURL().toString()).openStream(), FactoryRegistry.systemRegistry().createAudioDevice());
+            }
+
             listener = new InfoListener();
             this.streamPlayer.setPlayBackListener(listener);
             (new Thread() {
@@ -65,7 +77,8 @@ public class Player {
             }).start();
             previous_nextTriggered = false;
             controller.isPlayingNewSong();
-        }catch (JavaLayerException | IOException e){
+        }
+        catch (JavaLayerException | IOException e){
             e.printStackTrace();
             controller.isStopped();
         }
@@ -173,4 +186,55 @@ public class Player {
                 playNext();
         }
     }
+
+    private void getItuneAudioBuffer(String url) {
+        SourceDataLine line = null;
+        byte[] b;
+        try {
+            //create container
+
+            final MP4Container cont = new MP4Container(new URL(url).openStream());
+            final Movie movie = cont.getMovie();
+            //find AAC track
+            final List<net.sourceforge.jaad.mp4.api.Track> tracks = movie.getTracks(AudioTrack.AudioCodec.AAC);
+            if(tracks.isEmpty()) throw new Exception("movie does not contain any AAC track");
+            final AudioTrack track = (AudioTrack) tracks.get(0);
+
+            //create audio format
+            final AudioFormat aufmt = new AudioFormat(track.getSampleRate(), track.getSampleSize(), track.getChannelCount(), true, true);
+            line = AudioSystem.getSourceDataLine(aufmt);
+            line.open();
+            line.start();
+
+            //create AAC decoder
+            final Decoder dec = new Decoder(track.getDecoderSpecificInfo());
+
+            //decode
+            Frame frame;
+            final SampleBuffer buf = new SampleBuffer();
+            while(track.hasMoreFrames()) {
+                frame = track.readNextFrame();
+                try {
+                    dec.decodeFrame(frame.getData(), buf);
+                    b = buf.getData();
+                    line.write(b, 0, b.length);
+                }
+                catch(AACException e) {
+                    e.printStackTrace();
+                    //since the frames are separate, decoding can continue if one fails
+                }
+
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();;
+        }
+        finally {
+            if (line != null) {
+                line.stop();
+                line.close();
+            }
+        }
+    }
+
 }
