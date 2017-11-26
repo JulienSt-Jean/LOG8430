@@ -94,6 +94,10 @@ public class Controller {
         }
     }
 
+    public void stopAllMusicPlaying(){
+        player.stop();
+    }
+
     /**
      * Fetch the playlist by its name and display the playlist in the main frame
      * @param name

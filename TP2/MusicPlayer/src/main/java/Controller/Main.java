@@ -26,6 +26,11 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    @Override
+    public void stop() throws java.lang.Exception{
+        controller.stopAllMusicPlaying();
+    }
+
 
 
     public static void main(String[] args) {
