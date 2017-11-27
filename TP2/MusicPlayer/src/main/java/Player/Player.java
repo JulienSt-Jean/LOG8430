@@ -1,7 +1,6 @@
 package Player;
 
 import Controller.Controller;
-import Model.Metadata;
 import Model.Playlist;
 import Model.ServiceProvider;
 import Model.Track;
@@ -20,7 +19,6 @@ import net.sourceforge.jaad.mp4.api.Movie;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Line;
 import javax.sound.sampled.SourceDataLine;
 import java.io.IOException;
 import java.net.URL;
@@ -57,6 +55,7 @@ public class Player {
 
         if (this.streamPlayer != null)
             this.streamPlayer.stop();
+
         currentTrack = track;
 
         try {
@@ -71,7 +70,6 @@ public class Player {
                         } catch (Exception e) {
                             e.printStackTrace();
                             throw new RuntimeException(e.getMessage());
-
                         }
                     }
                 }).start();
@@ -100,7 +98,6 @@ public class Player {
             controller.isPlayingNewSong();
         }
         catch (JavaLayerException | IOException e){
-            e.printStackTrace();
             controller.isStopped();
         }
     }
@@ -108,7 +105,7 @@ public class Player {
     //Play or pause a track
     public void play_pause(){
         previous_nextTriggered = true;
-        if (aacPlayer != null || streamPlayer != null) {
+        if ((aacPlayer != null && !aacPlayer.hasBeenStop)|| streamPlayer != null ) {
 
             if (aacPlayer != null){
                 aacPlayer.stop();
@@ -189,7 +186,8 @@ public class Player {
                 controller.isPlayingNewSong();
             }
             else{
-                streamPlayer.stop();
+                if(streamPlayer != null )
+                    streamPlayer.stop();
                 controller.isStopped();
                 currentTrack = null;
                 currentPlaylist = null;
@@ -214,6 +212,7 @@ public class Player {
 
 
     public void stop()  {
+        currentPlaylist = null;
         if (aacPlayer != null) {
             aacPlayer.stop();
         }

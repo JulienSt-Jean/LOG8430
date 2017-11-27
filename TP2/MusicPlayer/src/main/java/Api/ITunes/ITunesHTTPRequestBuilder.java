@@ -5,9 +5,9 @@ import Api.HTTPRequest;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class ITunesHTTPRequestBuilder {
+public interface ITunesHTTPRequestBuilder {
 
-    public static HTTPRequest buildbuildSearchTrackRequest(String searchEntry){
+    public static HTTPRequest buildbuildSearchTrackRequest(String searchEntry) throws MalformedURLException {
         HTTPRequest request = new HTTPRequest( buildAPIRequestURL());
         request.putURLParameter("term", searchEntry);
         request.putURLParameter("media","music");
@@ -15,13 +15,8 @@ public class ITunesHTTPRequestBuilder {
         return request;
     }
 
-    private static URL buildAPIRequestURL(){
-        try{
-            return new URL("https://itunes.apple.com/search");
-        }
-        catch (Exception e){
-            return  null;
-        }
+    public static URL buildAPIRequestURL() throws MalformedURLException {
+        return new URL("https://itunes.apple.com/search");
     }
 
 }

@@ -22,14 +22,6 @@ public class SpotifyHandler implements ApiWrapper {
     private SpotifyHTTPRequestBuilder httpRequestBuilder = new SpotifyHTTPRequestBuilder();
     private SpotifyResponseParser parser = new SpotifyResponseParser();
 
-    public static void main(String args[]) {
-        SpotifyHandler handler = new SpotifyHandler();
-        List<Playlist> list = handler.getPlaylists();
-        handler.deletePlaylist(list.get(0).getId());
-        list = handler.getPlaylists();
-        System.out.println(list);
-    }
-
     public SpotifyHandler() {
         JsonElement response = null;
         try {
@@ -60,81 +52,6 @@ public class SpotifyHandler implements ApiWrapper {
         }
 
         return cleanList;
-    }
-
-    public List<Playlist> getPlaylists() {
-        JsonElement playlistResponse = null;
-        try {
-            playlistResponse = this.executeRequestWithRetryOnExpiredToken(httpRequestBuilder.buildGetPlaylistsRequest());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
-        ArrayList<Playlist> playlists = parser.parsePlaylists(playlistResponse);
-
-        for (Playlist playlist : playlists) {
-            JsonElement tracskResponse = this.executeRequestWithRetryOnExpiredToken(httpRequestBuilder.buildRequest(playlist.getTrackListUrl()));
-            playlist.setListTrack(parser.parseTrackList(tracskResponse));
-        }
-
-        return playlists;
-    }
-
-    public Playlist getPlaylist(String playlistId) {
-        JsonElement playlistResponse = null;
-        try {
-            playlistResponse = this.executeRequestWithRetryOnExpiredToken(httpRequestBuilder.buildGetPlaylistRequest(playlistId));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
-        Playlist playlist = parser.parsePlaylist(playlistResponse);
-
-        JsonElement tracskResponse = this.executeRequestWithRetryOnExpiredToken(httpRequestBuilder.buildRequest(playlist.getTrackListUrl()));
-        playlist.setListTrack(parser.parseTrackList(tracskResponse));
-
-        return playlist;
-    }
-
-    public Playlist addTrackToPlaylist(URI trackURI, String playlistId) {
-        try {
-            this.executeRequestWithRetryOnExpiredToken(httpRequestBuilder.buildAddTrackToPlaylistRequest(trackURI, playlistId));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
-        return getPlaylist(playlistId);
-    }
-
-    public Playlist removeTrackFromPlaylist(URI trackURI, String playlistId) {
-        try {
-            this.executeRequestWithRetryOnExpiredToken(httpRequestBuilder.buildRemoveTrackFromPlaylistRequest(trackURI, playlistId));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
-        return getPlaylist(playlistId);
-    }
-
-    public Playlist createPlaylist(String name) {
-        JsonElement playlistResponse = null;
-        try {
-            playlistResponse = this.executeRequestWithRetryOnExpiredToken(httpRequestBuilder.buildCreatePlaylistRequest(name));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
-        return parser.parsePlaylist(playlistResponse);
-    }
-
-    public Playlist deletePlaylist(String playlistId) {
-        try {
-            this.executeRequestWithRetryOnExpiredToken(httpRequestBuilder.buildUnfollowPlaylistRequest(playlistId));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
-        return getPlaylist(playlistId);
     }
 
     private void generateAccessToken() {
