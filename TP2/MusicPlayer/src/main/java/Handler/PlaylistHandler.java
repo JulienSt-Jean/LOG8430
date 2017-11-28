@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class PlaylistHandler {
     private ArrayList<Playlist> playlists;
 
-    public PlaylistHandler(Player player) {
+    public PlaylistHandler() {
         this.playlists = new ArrayList<Playlist>();
         System.out.println("PlaylistHandler created");
     }
@@ -52,6 +52,7 @@ public class PlaylistHandler {
                 break;
             }
         }
+        this.playlists.add(playlist);
     }
 
     public void addTrackToPlaylist(Track track, String playlistName){

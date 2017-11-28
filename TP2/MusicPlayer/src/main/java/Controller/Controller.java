@@ -30,7 +30,7 @@ public class Controller {
         this.browser = browser;
         this.apiHandler = new ApiHandler();
         this.player = new Player(this);
-        this.playlistHandler = new PlaylistHandler(this.player);
+        this.playlistHandler = new PlaylistHandler();
         System.out.println("Controller created");
     }
 

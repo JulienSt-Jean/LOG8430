@@ -16,6 +16,7 @@ public class Playlist implements Iterable<Track>{
 
     public Playlist(String name) {
         this.name = name;
+        this.listTrack = new ArrayList<Track>();
     }
 
     //Getters and Setters

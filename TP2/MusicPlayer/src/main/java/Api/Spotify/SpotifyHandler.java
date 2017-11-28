@@ -54,21 +54,7 @@ public class SpotifyHandler implements ApiWrapper {
         return cleanList;
     }
 
-    private void generateAccessToken() {
-        HTTPRequest request = httpRequestBuilder.buildAccessTokenRequest(new String[]{"playlist-modify-public", "playlist-modify-private"});
-
-        try {
-            request.makeConnection();
-            Files.write(Paths.get("./tokens"), request.getResponse().getBytes());
-            httpRequestBuilder.loadToken();
-        } catch (WebApiException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void refreshAccessToken() {
+    public void refreshAccessToken() {
         HTTPRequest request = httpRequestBuilder.buildRefreshAccessTokenRequest();
 
         JsonObject jsonResponse = null;

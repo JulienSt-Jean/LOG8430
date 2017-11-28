@@ -23,24 +23,12 @@ public class Metadata {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getArtists() {
         return artists;
     }
 
-    public void setArtists(String artists) {
-        this.artists = artists;
-    }
-
     public String getAlbum() {
         return album;
-    }
-
-    public void setAlbum(String album) {
-        this.album = album;
     }
 
     @Override

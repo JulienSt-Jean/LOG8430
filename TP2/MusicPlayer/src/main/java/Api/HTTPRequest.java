@@ -18,7 +18,6 @@ public class HTTPRequest {
     private String requestMethod = "GET";
     private Map<String, String> requestProperties = new HashMap<>();
     private boolean doOutput = true;
-    private boolean doInput = true;
     private String body = "";
     private HttpURLConnection connection;
 
@@ -36,14 +35,6 @@ public class HTTPRequest {
     }
 
     public void putContentType(String contentType) { putRequestProperty("Content-Type", contentType); }
-
-    public void setDoOutput(boolean doOutput) {
-        this.doOutput = doOutput;
-    }
-
-    public void setDoInput(boolean doInput) {
-        this.doInput = doInput;
-    }
 
     public void putRequestProperty(String property, String value) {
         requestProperties.put(property, value);
@@ -89,10 +80,6 @@ public class HTTPRequest {
         }
     }
 
-    public int getResponseCode() throws IOException {
-        return connection.getResponseCode();
-    }
-
     public String fetchResponse() throws IOException {
         return fetchResponse(connection.getInputStream());
     }
@@ -129,13 +116,5 @@ public class HTTPRequest {
         }
 
         return "";
-    }
-
-    public InputStream getInputStream() throws IOException {
-        return connection.getInputStream();
-    }
-
-    public void setBody(String body) {
-        this.body = body;
     }
 }

@@ -200,7 +200,6 @@ public class Player {
 
     public void playPlaylist(Playlist playlist){
         System.out.println("Play playlist :"+playlist.getName());
-        currentPlaylist = null;
         currentTrack = null;
         currentPlaylist = playlist;
         playNext();
@@ -272,6 +271,8 @@ public class Player {
         public void CreateAudioBufferAndPlaySongFromAacInMp4(String url){
 
             byte[] b;
+
+
             try {
                 //create container
 
@@ -284,6 +285,9 @@ public class Player {
 
                 //create audio format
                 final AudioFormat aufmt = new AudioFormat(track.getSampleRate(), track.getSampleSize(), track.getChannelCount(), true, true);
+                if(line != null){
+                    line.stop();
+                }
                 line = AudioSystem.getSourceDataLine(aufmt);
 
                 line.open();

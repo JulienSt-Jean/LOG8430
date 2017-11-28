@@ -89,7 +89,7 @@ class PlayerTest {
         player.play(aSpotifySong);
         TimeUnit.MILLISECONDS.sleep(25);
         player.play(aJamendoSong);
-        TimeUnit.MILLISECONDS.sleep(25);
+        TimeUnit.MILLISECONDS.sleep(100);
         player.stop();
     }
 
@@ -104,7 +104,7 @@ class PlayerTest {
         player.play_pause();
         player.play_pause();
         player.play_pause();
-        TimeUnit.MILLISECONDS.sleep(25);
+        TimeUnit.MILLISECONDS.sleep(100);
         player.stop();
     }
 
@@ -159,11 +159,12 @@ class PlayerTest {
     }
 
     @Test
-    void stop() {
+    void stop() throws InterruptedException {
         player.stop();
         player.play(aItuneSong);
         player.stop();
         player.play(aSpotifySong);
+        TimeUnit.MILLISECONDS.sleep(50);
         player.stop();
     }
 
