@@ -1,7 +1,7 @@
 package Services.ITunesService;
 
 import Services.ITunesService.ITunes.ITunesHandler;
-import Shared.ApiServerInterface;
+import Shared.ServiceInterface.ApiServerInterface;
 import Shared.Model.Track;
 
 import java.net.Inet4Address;

@@ -4,7 +4,7 @@ package Client.ClientStub;
 import Shared.Model.Exceptions.PlaylistException;
 import Shared.Model.Playlist;
 import Shared.Model.Track;
-import Shared.PlaylistHandlerServerInterface;
+import Shared.ServiceInterface.PlaylistHandlerServerInterface;
 
 import java.rmi.AccessException;
 import java.rmi.NotBoundException;

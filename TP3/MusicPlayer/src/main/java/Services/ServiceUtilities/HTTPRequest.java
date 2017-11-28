@@ -1,4 +1,4 @@
-package Services;
+package Services.ServiceUtilities;
 
 import Services.Exceptions.WebApiException;
 

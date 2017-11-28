@@ -1,4 +1,4 @@
-package Services;
+package Services.ServiceUtilities;
 
 import Shared.Model.Playlist;
 import Shared.Model.Track;

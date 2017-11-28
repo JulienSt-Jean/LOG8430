@@ -3,7 +3,7 @@ package Services.PlaylistHandlerService;
 import Shared.Model.Exceptions.PlaylistException;
 import Shared.Model.Playlist;
 import Shared.Model.Track;
-import Shared.PlaylistHandlerServerInterface;
+import Shared.ServiceInterface.PlaylistHandlerServerInterface;
 
 import java.net.Inet4Address;
 import java.rmi.ConnectException;

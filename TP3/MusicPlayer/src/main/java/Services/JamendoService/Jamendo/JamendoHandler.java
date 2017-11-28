@@ -1,8 +1,8 @@
 package Services.JamendoService.Jamendo;
 
-import Services.ApiWrapper;
+import Services.ServiceUtilities.ApiWrapper;
 import Services.Exceptions.WebApiException;
-import Services.HTTPRequest;
+import Services.ServiceUtilities.HTTPRequest;
 import Shared.Model.Track;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;

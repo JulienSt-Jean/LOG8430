@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><diagram program="umlet" version="13.3">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLHierarchy</id>
+    <coordinates>
+      <x>110</x>
+      <y>150</y>
+      <w>430</w>
+      <h>530</h>
+    </coordinates>
+    <panel_attributes>type=Package
+java
+	Client
+		View
+		Controler
+		Player
+		ClientStub
+	Shared
+		Model
+		ServiceInterface
+	Services
+		ITunesService
+		SpotifyService
+		JamendoService
+		PlaylistHandlerService
+		ServiceUtilities
+		Exceptions
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

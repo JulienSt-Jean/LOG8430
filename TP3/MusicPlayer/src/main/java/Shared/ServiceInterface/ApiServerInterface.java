@@ -1,4 +1,4 @@
-package Shared;
+package Shared.ServiceInterface;
 
 import Shared.Model.Track;
 

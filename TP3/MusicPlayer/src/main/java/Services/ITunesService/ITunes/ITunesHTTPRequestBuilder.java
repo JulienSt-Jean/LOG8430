@@ -1,6 +1,6 @@
 package Services.ITunesService.ITunes;
 
-import Services.HTTPRequest;
+import Services.ServiceUtilities.HTTPRequest;
 
 import java.net.URL;
 

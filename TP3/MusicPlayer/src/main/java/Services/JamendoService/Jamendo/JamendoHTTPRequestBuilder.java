@@ -1,6 +1,6 @@
 package Services.JamendoService.Jamendo;
 
-import Services.HTTPRequest;
+import Services.ServiceUtilities.HTTPRequest;
 
 import java.net.MalformedURLException;
 import java.net.URL;

@@ -1,7 +1,7 @@
 package Services.JamendoService;
 
 import Services.JamendoService.Jamendo.JamendoHandler;
-import Shared.ApiServerInterface;
+import Shared.ServiceInterface.ApiServerInterface;
 import Shared.Model.Track;
 
 import java.net.Inet4Address;

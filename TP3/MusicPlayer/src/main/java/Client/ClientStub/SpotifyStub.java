@@ -1,7 +1,7 @@
 package Client.ClientStub;
 
 import Shared.Model.Track;
-import Shared.ApiServerInterface;
+import Shared.ServiceInterface.ApiServerInterface;
 
 import java.rmi.AccessException;
 import java.rmi.NotBoundException;
