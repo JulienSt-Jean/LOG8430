@@ -1,4 +1,7 @@
 Pour executer l'application en mode service, il faut d'abord autoriser RMI à s'executer en local sur la machine:
 Dans intellij -> Run -> Edit configurations -> VM options : -Djava.security.manager -Djava.security.policy=src/policy
 
-Puis, pour lancer l'application : Run la classe Controller.Main
+Puis, pour lancer l'application : Run la classe Client.Controller.Main
+
+Pour lancer le jar :
+java -jar -Djava.security.manager -Djava.security.policy=policy JavaFXApp.jar
