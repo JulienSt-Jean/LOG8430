@@ -17,6 +17,7 @@ import java.util.Base64;
 
 /**
  * Created by Philippe on 11/4/2017.
+ * Construit des requêtes HTTP pour l'API Spotify
  */
 public class SpotifyHTTPRequestBuilder{
     private final String CLIENT_ID = "09485d17989d4058a4c112f80196c12c";
@@ -36,11 +37,17 @@ public class SpotifyHTTPRequestBuilder{
 
     private String userId;
 
+    /**
+     * Constructeur
+     */
     public SpotifyHTTPRequestBuilder(){
         loadToken();
     }
 
-
+    /**
+     * Construit une requête pour l'obtention d'un token de connexion
+     * @return requête HTTP
+     */
     public HTTPRequest buildRefreshAccessTokenRequest(){
         HTTPRequest request = null;
         try {
@@ -61,7 +68,9 @@ public class SpotifyHTTPRequestBuilder{
         return request;
     }
 
-
+    /**
+     * Récupère un token de connexion à l'API
+     */
     public void loadToken(){
         String token = null;
         try {
@@ -86,6 +95,13 @@ public class SpotifyHTTPRequestBuilder{
         return request;
     }
 
+    /**
+     * Construit une requête de recherche de musique
+     * @param query mot clé de la recherche
+     * @param limit nombre maximal de résultat à retourner
+     * @return requête HTTP
+     * @throws MalformedURLException
+     */
     public HTTPRequest buildSearchTrackRequest(String query, int limit) throws MalformedURLException {
         HTTPRequest request = new HTTPRequest(buildAPIRequestURL("search"));
 

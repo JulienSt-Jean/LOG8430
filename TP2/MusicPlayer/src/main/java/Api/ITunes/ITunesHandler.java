@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Interface avec l'API ITunes
+ */
 public class ITunesHandler implements ApiWrapper {
 
     private ITunesResponseParser parser = new ITunesResponseParser();

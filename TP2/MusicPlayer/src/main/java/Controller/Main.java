@@ -6,6 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * Point de départ de l'application JavaFX, instancie la VUE et le Contrôleur.
+ */
 public class Main extends Application {
 
     private Controller controller;

@@ -31,8 +31,8 @@ public class MainFrame extends Frame {
 
     /**
      * Constructeur
-     * @param doc Référence sur le DOM du frame
-     * @param c Référence sur le Controlleur de l'application
+     * @param doc DOM du frame HTML
+     * @param c référence sur le Contrôleur de l'application
      */
     public MainFrame(Document doc, Controller c){
         super(doc, c);
@@ -90,27 +90,39 @@ public class MainFrame extends Frame {
         controller.searchTrack(data);
     }
 
+    /**
+     * Affiche les résultats d'une recherche
+     * @param trackToAdd liste de pistes
+     */
     public void displaySearchResults(ArrayList<Track> trackToAdd){
         resultTrack.clear();
         resultTrack.addAll(trackToAdd);
         displayTracks(trackToAdd, false);
     }
 
+    /**
+     * Affiche une liste de pistes
+     * @param trackToAdd liste de pistes à afficher
+     * @param playlistView true si l'on affiche le contenu d'une playlist, false si résultat de recherche
+     */
     private void displayTracks(ArrayList<Track> trackToAdd, boolean playlistView){
         initiateTable();
         for(Track track : trackToAdd)
             tracks.appendChild(createTrackHTML(track, playlistView));
     }
 
+    /**
+     * Clear de la zone d'affichage des pistes
+     */
     private void initiateTable(){
         tracks.setTextContent("");
     }
 
     /**
-     * Create an element of the search result list
-     * @param track
-     * @param playlistView True if we are displaying tracks in a playlist
-     * @return Element t
+     * Créé un élément HTML correspondant à l'affichage d'une piste
+     * @param track piste à afficher
+     * @param playlistView true si l'on affiche le contenu d'une playlist
+     * @return Element HTMTL correspondant à une piste
      */
     private Element createTrackHTML(Track track, boolean playlistView){
         Element t = this.DOM.createElement("tr");
@@ -162,6 +174,7 @@ public class MainFrame extends Frame {
 
     /**
      * Display a popup in which we choose to which playlist add the song id.
+     * @return the name of the chosen playlist
      */
     public Optional<String> choosePlaylist(ArrayList<String> playlistNames){
         ChoiceDialog<String> dialog = new ChoiceDialog<>(playlistNames.get(0), playlistNames);
@@ -172,6 +185,9 @@ public class MainFrame extends Frame {
         return dialog.showAndWait();
     }
 
+    /**
+     * Affiche un message d'erreur lors si aucune playlist n'a été créée
+     */
     public void showAddTrackWarning(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Avertissement");
@@ -180,9 +196,9 @@ public class MainFrame extends Frame {
     }
 
     /**
-     * Trouver une track à partir d'un id
+     * Trouver une piste à partir d'un id
      * @param id
-     * @return
+     * @return piste correspondant à l'id
      */
     private Track getTrackById(String id){
         for(Track t : resultTrack)

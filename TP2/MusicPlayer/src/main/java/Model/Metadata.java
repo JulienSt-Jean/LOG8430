@@ -5,6 +5,12 @@ import com.google.gson.annotations.SerializedName;
 
 import java.lang.reflect.Type;
 
+/**
+ * Métadonnées d'une piste
+ * - nom
+ * - artiste
+ * - album
+ */
 public class Metadata {
     @SerializedName(value = "name", alternate = {"trackName"})
     private String name;
@@ -13,6 +19,12 @@ public class Metadata {
     @SerializedName(value = "album", alternate = {"album_name","collectionName"})
     private String album;
 
+    /**
+     * Constructeur
+     * @param name
+     * @param artists
+     * @param album
+     */
     public Metadata(String name, String artists, String album) {
         this.name = name;
         this.artists = artists;

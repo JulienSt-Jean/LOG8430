@@ -8,14 +8,26 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 
+/**
+ * Vue du Menu de l'application, pour choisir d'afficher une playlist ou l'onglet de recherche
+ */
 public class MenuFrame extends Frame {
 
+    /**
+     * Constructeur
+     * @param doc DOM du frame HTML
+     * @param c référence sur le Contrôleur de l'application
+     */
     public MenuFrame(Document doc, Controller c){
         super(doc, c);
         Element searchButton = DOM.getElementById("browseButton");
         ((EventTarget)searchButton).addEventListener("click", browse, false);
     }
 
+    /**
+     * Ajout d'une playlist dans le menu
+     * @param title titre de la playlist
+     */
     public void addPlaylist(String title){
         Element playlists = DOM.getElementById("playlists");
         Element row = DOM.createElement("tr");
@@ -38,15 +50,20 @@ public class MenuFrame extends Frame {
         playlists.appendChild(row);
     }
 
+    /**
+     * Met à jour la liste de playlists présentes dans le menu
+     */
     public void updatePlaylists(){
         Element playlists = DOM.getElementById("playlists");
         playlists.setTextContent("");
         for(Playlist playlist : controller.getPlaylistHandler().getPlaylists()){
             addPlaylist(playlist.getName());
         }
-
     }
 
+    /**
+     * Action à effectuer lors du clic sur une playlist
+     */
     EventListener clickOnPlaylist = new EventListener() {
         public void handleEvent(Event ev) {
             Element button =(Element) ev.getTarget();
@@ -61,6 +78,9 @@ public class MenuFrame extends Frame {
         }
     };
 
+    /**
+     * Action à effectuer lors du clic sur l'onglet browse
+     */
     EventListener browse = new EventListener() {
         @Override
         public void handleEvent(Event event) {

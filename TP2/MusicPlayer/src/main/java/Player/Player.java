@@ -26,6 +26,9 @@ import java.util.List;
 import java.util.ListIterator;
 
 
+/**
+ * Se charge de la lecture (streaming) d'une piste et de la navigation à travers une playlist
+ */
 public class Player {
     private Controller controller;
 
@@ -39,6 +42,10 @@ public class Player {
 
     boolean previous_nextTriggered;
 
+    /**
+     * Constructeur
+     * @param c référence sur le Contrôleur de l'application
+     */
     public Player(Controller c) {
         controller = c;
         this.currentPlaylist = null;
@@ -46,7 +53,10 @@ public class Player {
         aacPlayer = null;
     }
 
-    //Plays a track
+    /**
+     * Commence la lecture d'une piste
+     * @param track piste à jouer
+     */
     public void play(Track track){
 
         if (aacPlayer != null){
@@ -59,6 +69,7 @@ public class Player {
         currentTrack = track;
 
         try {
+            // Si la piste est fournie par ITunes il faut gérer la lecture d'un fichier au format mp4
             if(track.getServiceProvider() == ServiceProvider.ITUNES) {
 
 
@@ -76,6 +87,8 @@ public class Player {
 
 
             }
+
+            // Si la piste est fournie par les autres API il faut gérer la lecture d'un fichier au format mp3
             else {
                 this.streamPlayer = new AdvancedPlayer(new URL(track.getAudioURL().toString()).openStream(), FactoryRegistry.systemRegistry().createAudioDevice());
 
@@ -102,7 +115,9 @@ public class Player {
         }
     }
 
-    //Play or pause a track
+    /**
+     * Lance ou arrête la lecture d'une piste (clic sur le bouton play/pause)
+     */
     public void play_pause(){
         previous_nextTriggered = true;
         if ((aacPlayer != null && !aacPlayer.hasBeenStop)|| streamPlayer != null ) {
@@ -124,10 +139,17 @@ public class Player {
         previous_nextTriggered = false;
     }
 
+    /**
+     * Joue la piste suivante de la playlist (clic sur bouton "next")
+     */
     public void playNext(){
         playNext(false);
     }
 
+    /**
+     * Joue la piste suivante de la playlist
+     * @param isLastTrackDonePlaying true si le "next" est automatique (à la fin d'un morceau)
+     */
     public void playNext(boolean isLastTrackDonePlaying){
         if(currentPlaylist == null){
             System.out.println("No playlist to play");
@@ -171,6 +193,9 @@ public class Player {
         previous_nextTriggered = false;
     }
 
+    /**
+     * Joue la piste précédente de la playlist (clic sur bouton "previous")
+     */
     public void playPrevious(){
         if(currentPlaylist == null){
             System.out.println("No playlist to play");
@@ -198,6 +223,10 @@ public class Player {
 
     }
 
+    /**
+     * Lance la lecture d'une playlist
+     * @param playlist playlist à lire
+     */
     public void playPlaylist(Playlist playlist){
         System.out.println("Play playlist :"+playlist.getName());
         currentTrack = null;
@@ -205,11 +234,18 @@ public class Player {
         playNext();
     }
 
+    /**
+     * Retourne la piste en lecture
+     * @return piste courante
+     */
     public Track getCurrentTrack(){
         return currentTrack;
     }
 
 
+    /**
+     * Arrête la lecture
+     */
     public void stop()  {
         currentPlaylist = null;
         if (aacPlayer != null) {
@@ -220,6 +256,9 @@ public class Player {
         }
     }
 
+    /**
+     * Ecoute les événement déclenchés par le lancement ou l'arrêt de la lecture d'une piste
+     */
     public class InfoListener extends PlaybackListener {
         public InfoListener() {
         }
@@ -250,12 +289,19 @@ public class Player {
         }
     }
 
+    /**
+     * Player spécifique pour gérer les fichiers AAC (mp4) fournis par ITunes
+     */
     private class AacInMp4Player {
 
         private SourceDataLine line = null;
         public  InfoListener callBack = null;
         private boolean hasBeenStop = false;
 
+        /**
+         * Constructeur
+         * @param callBacks Listener pour capturer les événements liés à la lecture
+         */
         public AacInMp4Player(InfoListener callBacks){
             callBack = callBacks;
         }
@@ -268,6 +314,10 @@ public class Player {
 
         }
 
+        /**
+         * Lance la lecture d'une piste
+         * @param url URL de la piste à lire
+         */
         public void CreateAudioBufferAndPlaySongFromAacInMp4(String url){
 
             byte[] b;

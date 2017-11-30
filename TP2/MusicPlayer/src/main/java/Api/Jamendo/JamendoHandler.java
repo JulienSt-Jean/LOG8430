@@ -22,6 +22,9 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Interface avec l'API Jamendo
+ */
 public class JamendoHandler implements ApiWrapper {
     private JamendoHTTPRequestBuilder httpRequestBuilder = new JamendoHTTPRequestBuilder();
     private JamendoResponseParser parser = new JamendoResponseParser();

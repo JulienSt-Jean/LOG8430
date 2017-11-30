@@ -8,9 +8,15 @@ import Player.Player;
 import javax.xml.bind.Element;
 import java.util.ArrayList;
 
+/**
+ * Manipule les playlists crées par l'utilisateur
+ */
 public class PlaylistHandler {
     private ArrayList<Playlist> playlists;
 
+    /**
+     * Constructeur
+     */
     public PlaylistHandler() {
         this.playlists = new ArrayList<Playlist>();
         System.out.println("PlaylistHandler created");
@@ -35,12 +41,19 @@ public class PlaylistHandler {
 
     }
 
+    /**
+     * Suppression d'une playlist
+     * @param playlist
+     */
     public void deletePlaylist(Playlist playlist){
         playlists.remove(playlist);
     }
 
-
-
+    /**
+     * Supprime une piste d'une playlist
+     * @param trackId identifiant de la piste
+     * @param playlistId nom de la playlist
+     */
     public void removeTrackFromPlaylist(String trackId, String playlistId){
         Playlist playlist = getPlaylistByName(playlistId);
         this.playlists.remove(playlist);
@@ -55,6 +68,11 @@ public class PlaylistHandler {
         this.playlists.add(playlist);
     }
 
+    /**
+     * Ajoute une piste à une playlist
+     * @param track piste à ajouter
+     * @param playlistName nom de la playlist
+     */
     public void addTrackToPlaylist(Track track, String playlistName){
         Playlist playlist = getPlaylistByName(playlistName);
         if (playlist != null){
@@ -62,10 +80,16 @@ public class PlaylistHandler {
         }
     }
 
+    // Getter
     public ArrayList<Playlist> getPlaylists() {
         return playlists;
     }
 
+    /**
+     * Retrouve une playlist par son nom
+     * @param name
+     * @return la playlist trouvée
+     */
     public Playlist getPlaylistByName(String name){
         if(name == null || name.equals("")){
             return null;

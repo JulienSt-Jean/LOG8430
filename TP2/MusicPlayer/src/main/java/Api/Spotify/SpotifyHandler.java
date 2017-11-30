@@ -18,10 +18,16 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Interface avec l'API Spotify
+ */
 public class SpotifyHandler implements ApiWrapper {
     private SpotifyHTTPRequestBuilder httpRequestBuilder = new SpotifyHTTPRequestBuilder();
     private SpotifyResponseParser parser = new SpotifyResponseParser();
 
+    /**
+     * Constructeur
+     */
     public SpotifyHandler() {
         JsonElement response = null;
         try {
@@ -54,6 +60,9 @@ public class SpotifyHandler implements ApiWrapper {
         return cleanList;
     }
 
+    /**
+     * Met à jour le token de connexion à l'API
+     */
     public void refreshAccessToken() {
         HTTPRequest request = httpRequestBuilder.buildRefreshAccessTokenRequest();
 
@@ -77,6 +86,11 @@ public class SpotifyHandler implements ApiWrapper {
         }
     }
 
+    /**
+     * Execute une requête HTTP
+     * @param request
+     * @return
+     */
     private JsonElement executeRequestWithRetryOnExpiredToken(HTTPRequest request) {
         while (true) {
             try {
@@ -100,6 +114,11 @@ public class SpotifyHandler implements ApiWrapper {
         return new JsonParser().parse("");
     }
 
+    /**
+     * Vérifie si le token a expiré
+     * @param response
+     * @return
+     */
     private ApiError testErrorResponse(String response) {
         JsonObject jsonResponse = new JsonParser().parse(response).getAsJsonObject();
 
