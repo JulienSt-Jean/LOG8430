@@ -20,7 +20,7 @@ public class ITunesProxy implements ApiServerInterface{
     private ApiServerInterface loadServerStub(){
         ApiServerInterface stub = null;
         try {
-            Registry registry = LocateRegistry.getRegistry("127.0.1.1", 8082);
+            Registry registry = LocateRegistry.getRegistry( 8082);
             stub = (ApiServerInterface) registry.lookup("ITunesServer");
             System.out.println("ITunes stub is created");
         } catch (NotBoundException e) {

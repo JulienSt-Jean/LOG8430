@@ -23,7 +23,7 @@ public class PlaylistHandlerProxy implements PlaylistHandlerServerInterface{
     private PlaylistHandlerServerInterface loadServerStub(){
         PlaylistHandlerServerInterface stub = null;
         try {
-            Registry registry = LocateRegistry.getRegistry("127.0.1.1", 8083);
+            Registry registry = LocateRegistry.getRegistry(8083);
             stub = (PlaylistHandlerServerInterface) registry.lookup("PlaylistHandlerServer");
             System.out.println("PlaylistHandler stub is created");
         } catch (NotBoundException e) {

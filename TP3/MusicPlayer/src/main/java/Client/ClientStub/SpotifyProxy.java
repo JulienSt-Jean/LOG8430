@@ -20,7 +20,7 @@ public class SpotifyProxy implements ApiServerInterface{
     private ApiServerInterface loadServerStub(){
         ApiServerInterface stub = null;
         try {
-            Registry registry = LocateRegistry.getRegistry("127.0.1.1", 8080);
+            Registry registry = LocateRegistry.getRegistry(8080);
             stub = (ApiServerInterface) registry.lookup("SpotifyServer");
             System.out.println("Spotify stub is created");
         } catch (NotBoundException e) {

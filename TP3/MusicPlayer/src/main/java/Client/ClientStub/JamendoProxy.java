@@ -19,7 +19,7 @@ public class JamendoProxy implements ApiServerInterface{
     private ApiServerInterface loadServerStub(){
         ApiServerInterface stub = null;
         try {
-            Registry registry = LocateRegistry.getRegistry("127.0.1.1", 8081);
+            Registry registry = LocateRegistry.getRegistry(8081);
             stub = (ApiServerInterface) registry.lookup("JamendoServer");
             System.out.println("Jamendo stub is created");
         } catch (NotBoundException e) {
