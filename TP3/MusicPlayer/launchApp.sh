@@ -1,0 +1,1 @@
+java -jar -Djava.security.manager -Djava.security.policy=policy out/artifacts/MusicPlayer/MusicPlayer.jar
