@@ -1,7 +1,10 @@
 Pour executer l'application en mode service, il faut d'abord autoriser RMI à s'executer en local sur la machine:
-Dans intellij -> Run -> Edit configurations -> VM options : -Djava.security.manager -Djava.security.policy=src/policy
+Dans intellij -> Run -> Edit configurations -> VM options : -Djava.security.manager -Djava.security.policy=policy
 
 Puis, pour lancer l'application : Run la classe Client.Controller.Main
 
-Pour lancer le jar :
-java -jar -Djava.security.manager -Djava.security.policy=policy JavaFXApp.jar
+
+Pour lancer le jar MusicPlayer.jar, mettre les mêmes options que précédemment dans run -> Edit configurations -> VM options
+
+Explications :
+Le fichier policy donne la permission à Java de s'exécuter sur les ports utilisés par les serveurs RMI (8080, 8081, 8082, 8083).
