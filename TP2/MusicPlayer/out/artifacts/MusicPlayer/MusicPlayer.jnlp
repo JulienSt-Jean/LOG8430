@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="MusicPlayer.jnlp">
+  <information>
+    <title>MusicPlayerTP2</title>
+    <vendor>Unknown</vendor>
+    <description>MusicPlayer</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="MusicPlayer.jar" size="60405" download="eager" />
+    <jar href="gson-2.8.2.jar" size="232932" download="eager" />
+    <jar href="jaad-0.8.4.jar" size="669013" download="eager" />
+    <jar href="java-json.jar" size="84697" download="eager" />
+    <jar href="jfxrt.jar" size="9879417" download="eager" />
+    <jar href="jl1.0.1.jar" size="105363" download="eager" />
+    <jar href="junit-jupiter-api-5.1.0-M1.jar" size="84488" download="eager" />
+    <jar href="junit-platform-commons-1.1.0-M1.jar" size="75919" download="eager" />
+    <jar href="opentest4j-1.0.0.jar" size="6588" download="eager" />
+  </resources>
+  <jfx:javafx-desc  width="600" height="400" main-class="Controller.Main"  name="MusicPlayer" />
+  <update check="background"/>
+</jnlp>
