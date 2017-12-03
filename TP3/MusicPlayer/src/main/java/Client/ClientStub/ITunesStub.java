@@ -17,7 +17,7 @@ public class ITunesStub {
 
     }
 
-    public ApiServerInterface loadServerStub(){
+    private ApiServerInterface loadServerStub(){
         ApiServerInterface stub = null;
         try {
             Registry registry = LocateRegistry.getRegistry("127.0.1.1", 8082);

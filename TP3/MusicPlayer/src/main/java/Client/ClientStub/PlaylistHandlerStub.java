@@ -20,7 +20,7 @@ public class PlaylistHandlerStub {
         this.playlistHandlerStub = loadServerStub();
     }
 
-    public PlaylistHandlerServerInterface loadServerStub(){
+    private PlaylistHandlerServerInterface loadServerStub(){
         PlaylistHandlerServerInterface stub = null;
         try {
             Registry registry = LocateRegistry.getRegistry("127.0.1.1", 8083);
