@@ -1,15 +1,15 @@
 package Client.Controller;
 
 
-import Client.ClientStub.ITunesStub;
-import Client.ClientStub.JamendoStub;
-import Client.ClientStub.PlaylistHandlerStub;
+import Client.ClientStub.ITunesProxy;
+import Client.ClientStub.JamendoProxy;
+import Client.ClientStub.PlaylistHandlerProxy;
 import Shared.Model.Exceptions.PlaylistException;
 import Shared.Model.Playlist;
 import Shared.Model.Track;
 import Client.Player.Player;
 import Client.View.Browser;
-import Client.ClientStub.SpotifyStub;
+import Client.ClientStub.SpotifyProxy;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -20,11 +20,11 @@ public class Controller {
     private Player player;
     private Playlist currentPlaylist;
 
-    private SpotifyStub spotifyStub;
-    private JamendoStub jamendoStub;
-    private ITunesStub iTunesStub;
+    private SpotifyProxy spotifyProxy;
+    private JamendoProxy jamendoProxy;
+    private ITunesProxy iTunesProxy;
 
-    private PlaylistHandlerStub playlistHandlerStub;
+    private PlaylistHandlerProxy playlistHandlerStub;
 
     /**
      * Constructor
@@ -34,20 +34,20 @@ public class Controller {
     public Controller(Browser browser) {
         this.browser = browser;
         this.player = new Player(this);
-        this.spotifyStub = new SpotifyStub();
-        this.jamendoStub = new JamendoStub();
-        this.iTunesStub = new ITunesStub();
+        this.spotifyProxy= new SpotifyProxy();
+        this.jamendoProxy = new JamendoProxy();
+        this.iTunesProxy = new ITunesProxy();
 
-        this.playlistHandlerStub = new PlaylistHandlerStub();
+        this.playlistHandlerStub = new PlaylistHandlerProxy();
 
         System.out.println("Client.Controller created");
     }
 
     public void searchTrack(String searchEntry) {
         ArrayList<Track> tracks = new ArrayList<>();
-        tracks.addAll(spotifyStub.searchTrack(searchEntry));
-        tracks.addAll(jamendoStub.searchTrack(searchEntry));
-        tracks.addAll(iTunesStub.searchTrack(searchEntry));
+        tracks.addAll(spotifyProxy.searchTrack(searchEntry));
+        tracks.addAll(jamendoProxy.searchTrack(searchEntry));
+        tracks.addAll(iTunesProxy.searchTrack(searchEntry));
         if (!tracks.isEmpty())
             browser.getMainFrame().displaySearchResults(tracks);
 
@@ -163,7 +163,7 @@ public class Controller {
     }
 
 
-    public PlaylistHandlerStub getPlaylistHandlerStub() {
+    public PlaylistHandlerProxy getPlaylistHandlerStub() {
         return playlistHandlerStub;
     }
 }

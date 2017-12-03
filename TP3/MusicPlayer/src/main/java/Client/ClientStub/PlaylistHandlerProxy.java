@@ -13,14 +13,14 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
-public class PlaylistHandlerStub {
+public class PlaylistHandlerProxy {
     private PlaylistHandlerServerInterface playlistHandlerStub;
 
-    public PlaylistHandlerStub() {
+    public PlaylistHandlerProxy() {
         this.playlistHandlerStub = loadServerStub();
     }
 
-    public PlaylistHandlerServerInterface loadServerStub(){
+    private PlaylistHandlerServerInterface loadServerStub(){
         PlaylistHandlerServerInterface stub = null;
         try {
             Registry registry = LocateRegistry.getRegistry("127.0.1.1", 8083);
