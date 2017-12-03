@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="MusicPlayer.jnlp">
+  <information>
+    <title>Music Player</title>
+    <vendor>Unknown</vendor>
+    <description>MusicPlayer</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="MusicPlayer.jar" size="89791" download="eager" />
+    <jar href="gson-2.8.2.jar" size="232932" download="eager" />
+    <jar href="jaad-0.8.4.jar" size="669013" download="eager" />
+    <jar href="jfxrt.jar" size="21250494" download="eager" />
+    <jar href="jl1.0.1.jar" size="105363" download="eager" />
+  </resources>
+  <jfx:javafx-desc  width="600" height="400" main-class="Client.Controller.Main"  name="MusicPlayer" />
+  <update check="background"/>
+</jnlp>
