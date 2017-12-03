@@ -10,10 +10,10 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
-public class SpotifyStub {
+public class SpotifyProxy {
 
     private ApiServerInterface spotifyStub;
-    public SpotifyStub() {
+    public SpotifyProxy() {
         this.spotifyStub = loadServerStub();
 
     }

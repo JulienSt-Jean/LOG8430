@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="MusicPlayer.jar" size="89791" download="eager" />
+    <jar href="MusicPlayer.jar" size="89808" download="eager" />
     <jar href="gson-2.8.2.jar" size="232932" download="eager" />
     <jar href="jaad-0.8.4.jar" size="669013" download="eager" />
     <jar href="jfxrt.jar" size="21250494" download="eager" />

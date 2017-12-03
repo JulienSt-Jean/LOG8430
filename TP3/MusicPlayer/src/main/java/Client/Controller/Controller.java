@@ -1,15 +1,15 @@
 package Client.Controller;
 
 
-import Client.ClientStub.ITunesStub;
-import Client.ClientStub.JamendoStub;
-import Client.ClientStub.PlaylistHandlerStub;
+import Client.ClientStub.ITunesProxy;
+import Client.ClientStub.JamendoProxy;
+import Client.ClientStub.PlaylistHandlerProxy;
 import Shared.Model.Exceptions.PlaylistException;
 import Shared.Model.Playlist;
 import Shared.Model.Track;
 import Client.Player.Player;
 import Client.View.Browser;
-import Client.ClientStub.SpotifyStub;
+import Client.ClientStub.SpotifyProxy;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -20,11 +20,11 @@ public class Controller {
     private Player player;
     private Playlist currentPlaylist;
 
-    private SpotifyStub spotifyStub;
-    private JamendoStub jamendoStub;
-    private ITunesStub iTunesStub;
+    private SpotifyProxy spotifyStub;
+    private JamendoProxy jamendoStub;
+    private ITunesProxy iTunesStub;
 
-    private PlaylistHandlerStub playlistHandlerStub;
+    private PlaylistHandlerProxy playlistHandlerStub;
 
     /**
      * Constructor
@@ -34,11 +34,11 @@ public class Controller {
     public Controller(Browser browser) {
         this.browser = browser;
         this.player = new Player(this);
-        this.spotifyStub = new SpotifyStub();
-        this.jamendoStub = new JamendoStub();
-        this.iTunesStub = new ITunesStub();
+        this.spotifyStub = new SpotifyProxy();
+        this.jamendoStub = new JamendoProxy();
+        this.iTunesStub = new ITunesProxy();
 
-        this.playlistHandlerStub = new PlaylistHandlerStub();
+        this.playlistHandlerStub = new PlaylistHandlerProxy();
 
         System.out.println("Client.Controller created");
     }
@@ -163,7 +163,7 @@ public class Controller {
     }
 
 
-    public PlaylistHandlerStub getPlaylistHandlerStub() {
+    public PlaylistHandlerProxy getPlaylistHandlerStub() {
         return playlistHandlerStub;
     }
 }

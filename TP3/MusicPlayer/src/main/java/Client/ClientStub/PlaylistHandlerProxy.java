@@ -13,10 +13,10 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
-public class PlaylistHandlerStub {
+public class PlaylistHandlerProxy {
     private PlaylistHandlerServerInterface playlistHandlerStub;
 
-    public PlaylistHandlerStub() {
+    public PlaylistHandlerProxy() {
         this.playlistHandlerStub = loadServerStub();
     }
 
