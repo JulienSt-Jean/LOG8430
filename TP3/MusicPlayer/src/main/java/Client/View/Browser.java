@@ -77,7 +77,8 @@ public class Browser extends Region {
         // load the web page
         URL url = null;
         try {
-            url = Paths.get("./src/main/java/Client/View/WebViews/index.html").toUri().toURL();
+            System.out.println(System.getProperty("user.dir"));
+            url = Paths.get(System.getProperty("user.dir")+"/src/main/java/Client/View/WebViews/index.html").toUri().toURL();
             webEngine.load(url.toExternalForm());
         } catch (MalformedURLException e) {
             e.printStackTrace();
