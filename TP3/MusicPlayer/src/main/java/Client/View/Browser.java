@@ -9,9 +9,10 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import Client.Controller.Controller;
 import org.w3c.dom.Document;
 import org.w3c.dom.html.HTMLFrameElement;
-import Client.Controller.Controller;
+
 
 import java.net.MalformedURLException;
 import java.net.URL;

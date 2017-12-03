@@ -27,7 +27,7 @@ public class Main extends Application {
         launchServices();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("sample.fxml"));
 
-        primaryStage.setTitle("LOG8430 - TP2 : Music Client.Player");
+        primaryStage.setTitle("LOG8430 - TP3 : MusicPlayer");
 
         // Create scene with web browser
         Browser browser = new Browser();
