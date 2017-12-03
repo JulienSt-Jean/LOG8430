@@ -20,9 +20,9 @@ public class Controller {
     private Player player;
     private Playlist currentPlaylist;
 
-    private SpotifyProxy spotifyStub;
-    private JamendoProxy jamendoStub;
-    private ITunesProxy iTunesStub;
+    private SpotifyProxy spotifyProxy;
+    private JamendoProxy jamendoProxy;
+    private ITunesProxy iTunesProxy;
 
     private PlaylistHandlerProxy playlistHandlerStub;
 
@@ -34,9 +34,9 @@ public class Controller {
     public Controller(Browser browser) {
         this.browser = browser;
         this.player = new Player(this);
-        this.spotifyStub = new SpotifyProxy();
-        this.jamendoStub = new JamendoProxy();
-        this.iTunesStub = new ITunesProxy();
+        this.spotifyProxy= new SpotifyProxy();
+        this.jamendoProxy = new JamendoProxy();
+        this.iTunesProxy = new ITunesProxy();
 
         this.playlistHandlerStub = new PlaylistHandlerProxy();
 
@@ -45,9 +45,9 @@ public class Controller {
 
     public void searchTrack(String searchEntry) {
         ArrayList<Track> tracks = new ArrayList<>();
-        tracks.addAll(spotifyStub.searchTrack(searchEntry));
-        tracks.addAll(jamendoStub.searchTrack(searchEntry));
-        tracks.addAll(iTunesStub.searchTrack(searchEntry));
+        tracks.addAll(spotifyProxy.searchTrack(searchEntry));
+        tracks.addAll(jamendoProxy.searchTrack(searchEntry));
+        tracks.addAll(iTunesProxy.searchTrack(searchEntry));
         if (!tracks.isEmpty())
             browser.getMainFrame().displaySearchResults(tracks);
 
