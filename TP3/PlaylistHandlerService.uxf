@@ -3,8 +3,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>384</x>
-      <y>48</y>
+      <x>150</x>
+      <y>126</y>
       <w>150</w>
       <h>90</h>
     </coordinates>
@@ -22,8 +22,8 @@ Package::Shared.ServiceInterface
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>474</x>
-      <y>222</y>
+      <x>240</x>
+      <y>300</y>
       <w>144</w>
       <h>42</h>
     </coordinates>
@@ -36,8 +36,8 @@ Package::PlaylistHandlerService
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>468</x>
-      <y>132</y>
+      <x>234</x>
+      <y>210</y>
       <w>84</w>
       <h>102</h>
     </coordinates>
@@ -47,8 +47,8 @@ Package::PlaylistHandlerService
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>552</x>
-      <y>96</y>
+      <x>318</x>
+      <y>174</y>
       <w>126</w>
       <h>42</h>
     </coordinates>
@@ -61,8 +61,8 @@ Runnable
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>546</x>
-      <y>132</y>
+      <x>312</x>
+      <y>210</y>
       <w>84</w>
       <h>102</h>
     </coordinates>
@@ -72,8 +72,8 @@ Runnable
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>246</x>
-      <y>0</y>
+      <x>12</x>
+      <y>78</y>
       <w>576</w>
       <h>276</h>
     </coordinates>
@@ -84,8 +84,8 @@ Runnable
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>498</x>
-      <y>300</y>
+      <x>264</x>
+      <y>378</y>
       <w>102</w>
       <h>36</h>
     </coordinates>
@@ -96,12 +96,12 @@ Package:Shared.Model</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>540</x>
-      <y>258</y>
+      <x>306</x>
+      <y>336</y>
       <w>18</w>
       <h>54</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
   </element>
 </diagram>

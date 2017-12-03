@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<diagram program="umlet" version="14.2">
+<?xml version="1.0" encoding="UTF-8"?><diagram program="umlet" version="13.3">
   <zoom_level>11</zoom_level>
   <element>
     <id>UMLClass</id>
@@ -76,7 +75,7 @@ run()</panel_attributes>
       <w>231</w>
       <h>77</h>
     </coordinates>
-    <panel_attributes>SpotifyServer
+    <panel_attributes>SpotifyHandler
 Package::Spotify
 --
 + searchTrack(string input)</panel_attributes>
