@@ -37,7 +37,6 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(browser));
         primaryStage.show();
         System.out.println("Client interface is launched");
-
     }
 
     @Override

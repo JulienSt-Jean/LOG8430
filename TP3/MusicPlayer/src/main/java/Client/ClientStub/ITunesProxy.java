@@ -10,7 +10,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
-public class ITunesProxy {
+public class ITunesProxy implements ApiServerInterface{
     private ApiServerInterface iTunesStub;
     public ITunesProxy() {
         this.iTunesStub = loadServerStub();

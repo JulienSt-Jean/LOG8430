@@ -10,7 +10,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
-public class JamendoProxy {
+public class JamendoProxy implements ApiServerInterface{
     private ApiServerInterface jamendoStub;
     public JamendoProxy() {
         this.jamendoStub = loadServerStub();

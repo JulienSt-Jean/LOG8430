@@ -13,7 +13,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
-public class PlaylistHandlerProxy {
+public class PlaylistHandlerProxy implements PlaylistHandlerServerInterface{
     private PlaylistHandlerServerInterface playlistHandlerStub;
 
     public PlaylistHandlerProxy() {
