@@ -1,28 +1,29 @@
-<?xml version="1.0" encoding="UTF-8"?><diagram program="umlet" version="13.3">
-  <zoom_level>6</zoom_level>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>11</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>318</x>
-      <y>96</y>
-      <w>150</w>
-      <h>66</h>
+      <x>253</x>
+      <y>22</y>
+      <w>275</w>
+      <h>121</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 ApiServerInterface
 Package::Shared.ServiceInterface
 {Extends Remote}
 --
-+ searchTrack(string input)</panel_attributes>
+searchTrack(string input)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>414</x>
-      <y>228</y>
-      <w>126</w>
-      <h>48</h>
+      <x>429</x>
+      <y>264</y>
+      <w>231</w>
+      <h>88</h>
     </coordinates>
     <panel_attributes>SpotifyServer
 Package::SpotifyService
@@ -34,10 +35,10 @@ Package::SpotifyService
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>402</x>
-      <y>156</y>
-      <w>84</w>
-      <h>84</h>
+      <x>407</x>
+      <y>132</y>
+      <w>154</w>
+      <h>154</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;60.0;120.0;60.0;120.0;120.0</additional_attributes>
@@ -45,47 +46,35 @@ Package::SpotifyService
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>486</x>
-      <y>108</y>
-      <w>126</w>
-      <h>42</h>
+      <x>561</x>
+      <y>44</y>
+      <w>231</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 Runnable
 --
-+ run()</panel_attributes>
+run()</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>480</x>
-      <y>144</y>
-      <w>84</w>
-      <h>96</h>
+      <x>550</x>
+      <y>110</y>
+      <w>154</w>
+      <h>176</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>120.0;10.0;120.0;80.0;10.0;80.0;10.0;140.0</additional_attributes>
   </element>
   <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>474</x>
-      <y>270</y>
-      <w>30</w>
-      <h>48</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-
-use</panel_attributes>
-    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>420</x>
-      <y>306</y>
-      <w>126</w>
-      <h>42</h>
+      <x>440</x>
+      <y>407</y>
+      <w>231</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>SpotifyServer
 Package::Spotify
@@ -96,10 +85,10 @@ Package::Spotify
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>198</x>
-      <y>396</y>
-      <w>108</w>
-      <h>30</h>
+      <x>242</x>
+      <y>572</y>
+      <w>198</w>
+      <h>55</h>
     </coordinates>
     <panel_attributes>SpotifyRequestBuilder
 Package::Spotify</panel_attributes>
@@ -108,33 +97,22 @@ Package::Spotify</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>348</x>
-      <y>396</y>
-      <w>108</w>
-      <h>30</h>
+      <x>451</x>
+      <y>572</y>
+      <w>198</w>
+      <h>55</h>
     </coordinates>
     <panel_attributes>SpotifyResponseParser
 Package::Spotify</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>246</x>
-      <y>342</y>
-      <w>240</w>
-      <h>66</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;90.0;380.0;10.0</additional_attributes>
-  </element>
-  <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>498</x>
-      <y>396</y>
-      <w>108</w>
-      <h>30</h>
+      <x>660</x>
+      <y>572</y>
+      <w>198</w>
+      <h>55</h>
     </coordinates>
     <panel_attributes>HTTPRequest
 Package::ServiceUtilities</panel_attributes>
@@ -143,58 +121,97 @@ Package::ServiceUtilities</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>630</x>
-      <y>396</y>
-      <w>108</w>
-      <h>30</h>
+      <x>748</x>
+      <y>407</y>
+      <w>198</w>
+      <h>88</h>
     </coordinates>
-    <panel_attributes>ApiWrapper
-Package::ServiceUtilities</panel_attributes>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+ApiWrapper
+Package::ServiceUtilities
+--
+searchTrack</panel_attributes>
     <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>396</x>
-      <y>342</y>
-      <w>96</w>
-      <h>66</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;90.0;140.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>474</x>
-      <y>342</y>
-      <w>90</w>
-      <h>66</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>130.0;90.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>480</x>
-      <y>342</y>
-      <w>216</w>
-      <h>66</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>340.0;90.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>180</x>
-      <y>84</y>
-      <w>576</w>
-      <h>360</h>
+      <x>0</x>
+      <y>0</y>
+      <w>1056</w>
+      <h>660</h>
     </coordinates>
     <panel_attributes>SpotifyService
 </panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>539</x>
+      <y>341</y>
+      <w>33</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>330</x>
+      <y>528</y>
+      <w>33</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>lt=-
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;40.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>539</x>
+      <y>473</y>
+      <w>33</w>
+      <h>121</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>737</x>
+      <y>528</y>
+      <w>33</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+</panel_attributes>
+    <additional_attributes>10.0;40.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>660</x>
+      <y>429</y>
+      <w>110</w>
+      <h>33</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>80.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>330</x>
+      <y>528</y>
+      <w>440</w>
+      <h>33</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;10.0;380.0;10.0</additional_attributes>
   </element>
 </diagram>
