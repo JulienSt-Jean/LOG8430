@@ -19,7 +19,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Paths;
 
-
+/**
+ * Classe "racine" de la Vue. Instancie le Java web engine, charge le code HTML/CSS et récupère les DOM de chaque frame
+ */
 public class Browser extends Region {
 
     public Document mainDOM;
@@ -48,8 +50,9 @@ public class Browser extends Region {
         return 1024;
     }
 
-
-
+    /**
+     * Constructeur
+     */
     public Browser() {
 
         this.controller = null;
@@ -63,10 +66,6 @@ public class Browser extends Region {
 
                         mainDOM  = webEngine.getDocument();
                         this.findFrameDOMs();
-
-
-
-
                     }
                     if(Worker.State.SUCCEEDED == newValue){
                         webEngine.setOnStatusChanged(webEvent -> {
@@ -86,9 +85,11 @@ public class Browser extends Region {
 
         //add the web View to the scene
         getChildren().add(browser);
-
     }
 
+    /**
+     * Récupère le DOM de chaque frame HTML et instancie les objets Frames correspondant
+     */
     private void findFrameDOMs(){
         HTMLFrameElement frame = (HTMLFrameElement) mainDOM.getElementById("frame_menu");
         menuFrame = new MenuFrame(frame.getContentDocument(), controller);
@@ -100,94 +101,43 @@ public class Browser extends Region {
         playerFrame = new PlayerFrame(frame.getContentDocument(), controller);
     }
 
-
-
-    /*
-    private void initiatePlaylists() {
-        // On récupère l'élément à l'Id "playlists" dans le DOM du left panel
-        Element playlists = this.leftPanelDOM.getElementById("playlists");
-
-
-        // Création de playlists bidon
-        for (Playlist playlist : controller.getPlaylistHandler().getPlaylists()) {
-            Element p = this.leftPanelDOM.createElement("li");
-            p.setTextContent(playlist.getName());
-
-            playlists.appendChild(p);
-        }
-    }*/
-
-    /*
-    EventListener handlePlaylist = new EventListener(){
-        public void handleEvent(Event ev) {
-            System.out.println(ev.getTarget());
-            System.out.println(((Element)ev.getTarget()).getAttribute("id"));
-
-        }
-    };*/
-
-    /*
-    EventListener createPlaylist = new EventListener() {
-        public void handleEvent(Event ev) {
-
-            TextInputDialog dialog = new TextInputDialog("Ma playlist");
-            dialog.setTitle("Créer votre playlist !");
-            dialog.setContentText("Donner un nom à votre playlist");
-
-            // Traditional way to get the response value.
-            Optional<String> result = dialog.showAndWait();
-            if (result.isPresent()){
-
-
-                try {
-                    controller.createPlaylist(result.get());
-                    leftPanel.addPlaylist(result.get());
-                } catch (PlaylistException e) {
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Avertissement");
-                    alert.setHeaderText("Une playlist existe déja avec le même nom");
-
-
-                    Optional<ButtonType> r = alert.showAndWait();
-                    if (r.get() == ButtonType.OK){
-                        // ... user chose OK
-                    } else {
-                        // ... user chose CANCEL or closed the dialog
-                    }
-                }
-
-            }
-        }
-    };
-    */
-
-    public Document getMainDOM() {
-        return mainDOM;
-    }
-
+    /**
+     * Le MainFrame est la zone d'affichage des pistes et de la recherche
+     * @return le DOM du MainFrame
+     */
     public MainFrame getMainFrame() {
         return mainFrame;
     }
 
+    /**
+     * Le MenuFrame est la zone d'affichage des playlists
+     * @return le DOM du MainFrame
+     */
     public MenuFrame getMenuFrame() {
         return menuFrame;
     }
 
+    /**
+     * Le PlaylistManagerFrame est la zone responsable de l'ajout des playlists
+     * @return le DOM du MainFrame
+     */
     public PlaylistManagerFrame getPlaylistManagerFrame() {
         return playlistManagerFrame;
     }
 
+    /**
+     * Le PlayerFrame est la zone d'affichage du lecteur
+     * @return le DOM du MainFrame
+     */
     public PlayerFrame getPlayerFrame() {
         return playerFrame;
     }
 
+    /**
+     * Set le controlleur
+     * @param controller référence sur le contrôleur de l'application
+     */
     public void setController(Controller controller){
         this.controller = controller;
-    }
-
-    private Node createSpacer() {
-        Region spacer = new Region();
-        HBox.setHgrow(spacer, Priority.ALWAYS);
-        return spacer;
     }
 }

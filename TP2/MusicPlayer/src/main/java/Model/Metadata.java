@@ -5,14 +5,26 @@ import com.google.gson.annotations.SerializedName;
 
 import java.lang.reflect.Type;
 
+/**
+ * Métadonnées d'une piste
+ * - nom
+ * - artiste
+ * - album
+ */
 public class Metadata {
-    @SerializedName("name")
+    @SerializedName(value = "name", alternate = {"trackName"})
     private String name;
-    @SerializedName(value = "artists", alternate = {"artist_name"})
+    @SerializedName(value = "artists", alternate = {"artist_name","artistName"})
     private String artists;
-    @SerializedName(value = "album", alternate = {"album_name"})
+    @SerializedName(value = "album", alternate = {"album_name","collectionName"})
     private String album;
 
+    /**
+     * Constructeur
+     * @param name
+     * @param artists
+     * @param album
+     */
     public Metadata(String name, String artists, String album) {
         this.name = name;
         this.artists = artists;
@@ -23,24 +35,12 @@ public class Metadata {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getArtists() {
         return artists;
     }
 
-    public void setArtists(String artists) {
-        this.artists = artists;
-    }
-
     public String getAlbum() {
         return album;
-    }
-
-    public void setAlbum(String album) {
-        this.album = album;
     }
 
     @Override

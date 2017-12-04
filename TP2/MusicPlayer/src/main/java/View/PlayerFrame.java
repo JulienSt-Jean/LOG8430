@@ -10,8 +10,16 @@ import org.w3c.dom.events.EventTarget;
 
 import java.util.Optional;
 
+/**
+ * Vue des contrôles liés au Player (play/pause, next...)
+ */
 public class PlayerFrame extends Frame {
 
+    /**
+     * Constructeur
+     * @param doc DOM du frame HTML
+     * @param c référence sur le Contrôleur de l'application
+     */
     public PlayerFrame(Document doc, Controller c){
         super(doc, c);
 
@@ -28,16 +36,26 @@ public class PlayerFrame extends Frame {
         ((EventTarget) nextButton).addEventListener("click", nextTrack, false);
     }
 
+    /**
+     * Affiche un bouton "Play"
+     */
     public void displayPlay(){
         Element play_pause_img = DOM.getElementById("play_pause_img");
         play_pause_img.setAttribute("src", "png/014-play-button.png");
     }
 
+    /**
+     * Affiche un bouton "Pause"
+     */
     public void displayPause(){
         Element play_pause_img = DOM.getElementById("play_pause_img");
         play_pause_img.setAttribute("src", "png/016-pause.png");
     }
 
+    /**
+     * Affiche les métadonnées de la piste jouée
+     * @param track piste en train d'être jouée
+     */
     public void displayTrackInfo(Track track){
         Element title = this.DOM.getElementById("title");
         title.setTextContent(track.getMetadata().getName());
@@ -47,6 +65,9 @@ public class PlayerFrame extends Frame {
         artist.setTextContent(track.getMetadata().getArtists());
     }
 
+    /**
+     * Efface les métadonnées de piste affichées
+     */
     public void hideTrackInfo(){
         Element title = this.DOM.getElementById("title");
         title.setTextContent("");
@@ -60,17 +81,28 @@ public class PlayerFrame extends Frame {
 
     // ===================
     // Event Listeners
+
+    /**
+     * Action lors d'un clic sur le bouton "Play/pause"
+     */
     EventListener play_pauseClicked = new EventListener() {
         public void handleEvent(Event ev) {
             controller.play_pauseClicked();
         }
     };
 
+    /**
+     * Action lors d'un clic sur "Previous"
+     */
     EventListener previousTrack = new EventListener() {
         public void handleEvent(Event ev) {
             controller.playPrevious();
         }
     };
+
+    /**
+     * Action lors d'un clic sur "Next"
+     */
     EventListener nextTrack = new EventListener() {
         public void handleEvent(Event ev) {
             controller.playNext();

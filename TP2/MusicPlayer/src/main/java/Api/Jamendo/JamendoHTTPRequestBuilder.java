@@ -17,6 +17,7 @@ import java.util.Base64;
 
 /**
  * Created by Philippe on 11/4/2017.
+ * Construit des requêtes HTTP pour l'API Jamendo
  */
 public class JamendoHTTPRequestBuilder {
     private final String CLIENT_ID = "116c8efc";
@@ -24,6 +25,13 @@ public class JamendoHTTPRequestBuilder {
     private final String API_URL = "https://api.jamendo.com/";
     private final String API_VERSION = "v3.0/";
 
+    /**
+     * Construit une requête de recherche de musique
+     * @param query mot clé de la recherche
+     * @param limit nombre maximal de résultat à retourner
+     * @return requête HTTP
+     * @throws MalformedURLException
+     */
     public HTTPRequest buildSearchTrackRequest(String query, int limit) throws MalformedURLException {
         HTTPRequest request = new HTTPRequest(buildAPIRequestURL("tracks"));
 
