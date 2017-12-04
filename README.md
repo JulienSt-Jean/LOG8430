@@ -1,6 +1,6 @@
 # LOG8430
 
-Pour lancer l'application :
+Pour lancer l'application MusicPlayer :
 
 1 - Install javafx
   - Sur une distribution Debian :
@@ -9,4 +9,6 @@ Pour lancer l'application :
     
 2 - Aller dans le dossier du projet MusicPlayer du TP voulu (TP2 ou TP3).
 
-3 - lancer launchApp.sh
+3 - Lancer launchApp.sh
+
+    `sh launchApp.sh`
