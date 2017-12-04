@@ -2,7 +2,12 @@
 
 Pour lancer l'application MusicPlayer :
 
-1 - Install javafx
+1 - Installer java :
+  - Sur une distribution Debian :
+    
+    `sudo apt install openjdk-8-jdk`
+
+2 - Installer javafx
   - Sur une distribution Debian :
     
     `sudo apt install openjfx`
